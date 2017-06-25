@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DBFunctions {
 
@@ -239,18 +241,18 @@ public class DBFunctions {
 
 		try {
 			stmt = connection.createStatement();
-			
+
 			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 					+ "user2016.csv' " + "INTO TABLE user";
-			
+
 			stmt.executeQuery(sql);
-			
+
 			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 					+ "tipps2016.csv' " + "INTO TABLE tipps";
-			
+
 			stmt.executeQuery(sql);
-			
-			
+
+
 			stmt.close();
 			return "succeed";
 
@@ -260,10 +262,56 @@ public class DBFunctions {
 		}
 	}
 
+	public static String datenEingebenAuswahl(String auswahl){
+		String sql = "";
+
+		try {
+
+			if(auswahl == "testdaten"){
+				stmt = connection.createStatement();
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
+				stmt.executeQuery(sql);
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "teams2016.csv' " + "INTO TABLE teams";
+				stmt.executeQuery(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "etappen2016.csv' " + "INTO TABLE etappen";
+				stmt.executeQuery(sql);
+
+				stmt.close();
+				
+			}else{
+				stmt = connection.createStatement();
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017"
+						+ "fahrer2017.csv' " + "INTO TABLE fahrer";
+				stmt.executeQuery(sql);
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
+						+ "teams2017.csv' " + "INTO TABLE teams";
+				stmt.executeQuery(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
+						+ "etappen2017.csv' " + "INTO TABLE etappen";
+				stmt.executeQuery(sql);
+
+				stmt.close();
+			}
+			return "succeed";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "failed";
+		}
+	}
+
 	/**
 	 * einen nach Datum und Uhrzeit sortierten Etappenplan der Tour de France
-	 * 2017 mit allen in der Tabelle „etappen“ enthaltenden Daten auf der
-	 * Konsole ausgeben
+	 * 2017 mit allen in der Tabelle „etappen“ enthaltenden Daten aus
 	 * 
 	 * @return
 	 */
@@ -271,9 +319,9 @@ public class DBFunctions {
 
 		try {
 			stmt = connection.createStatement();
+			List ll = new LinkedList();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM etappen ORDER BY datum");
 
-			// Fetch each row from the result set
 			while (rs.next()) {
 				int etapnummer = rs.getInt("etappennummer");
 				Date datum = rs.getDate("datum");
@@ -282,8 +330,10 @@ public class DBFunctions {
 				Double laenge = rs.getDouble("laenge");
 				int art = rs.getInt("art");
 
-				System.out.println(
-						etapnummer + "\t" + datum + "\t" + startort + "\t" + zielort + "\t" + laenge + "\t" + art);
+				//Muss noch rausfinden wie man datum und uhrzeit trennen kann für ausgabe..
+				
+				System.out.format(" %s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", 
+						etapnummer, datum, startort, zielort, laenge, art);
 			}
 			rs.close();
 			stmt.close();
