@@ -10,9 +10,9 @@ import java.sql.Statement;
 public class DBFunctions {
 
 	private static final String LOCAL_IP = "localhost";
-	private static final String LOCAL_PORT = "3306";
+	private static final String LOCAL_PORT = "3311";
 	private static final String LOCAL_USER = "root";
-	private static final String LOCAL_PW = "beerenfalle03";
+	private static final String LOCAL_PW = "chestworkout";
 	private static final String LOCAL_DB = "tourdefrance2017";
 
 	private static final String LIVE_IP = "localhost";
@@ -27,6 +27,7 @@ public class DBFunctions {
 	private static final String TABLENAMETEAMS = "teams";
 	private static final String TABLENAMERANKING = "ranking";
 	private static final String TABLENAMETIPPS = "tipps";
+	private static final String TABLENAMEETAPPENART = "etappenart";
 
 	private static String aktuelleConnection = "";
 	private static Connection connection = null;
@@ -81,17 +82,17 @@ public class DBFunctions {
 		try {
 			if (dbExists(connection, DATABASENAME)) {
 
-				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database + "?useSSL=false";
+				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
 				aktuelleConnection = "Connected to" + ipAdresse + ":" + port + "/" + database;
-				rt = "Connection succeed to " + DATABASENAME;
+				rt = "Connection succeed";
 
 			} else {
-				rt = "Die Datenbank " + DATABASENAME + " existiert (noch)nicht";
+				rt = "Die Datenbank existiert (noch)nicht";
 			}
 
 		} catch (Exception x) {
-			rt = "An error occurred. Maybe user/password is invalid " + x.getMessage();
+			rt = "Exception";
 		}
 		return rt;
 
@@ -209,20 +210,18 @@ public class DBFunctions {
 					System.out.println(dName + " successfully deleted");
 					dbvorhanden = true;
 				}
-
 			}
-
 			resultSet.close();
 
 			// Erstellt die Datenbank
 			stmt = connection.createStatement();
 			String databaseName2 = "CREATE DATABASE " + DATABASENAME;
 			stmt.executeUpdate(databaseName2);
-			rt = DATABASENAME + " successfully created";
+			rt = "succeed";
 
 		} catch (SQLException e) {
 
-			rt = ("An error occurred." + "/n" + e.getMessage());
+			rt = "failed";
 		}
 
 		return rt;
@@ -230,24 +229,35 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Lädt die lokale etappen.csv datei in die Tabelle etappen
+	 * Lädt die lokalen .csv dateien in die jeweiligen Tabellen 
 	 * 
 	 * @return
 	 */
 	public static String datenEingeben() {
 
-		String sql = "LOAD DATA LOCAL INFILE './resources/etappen.csv' " + "INTO TABLE etappen";
+		String sql = "";
 
 		try {
 			stmt = connection.createStatement();
+			
+			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+					+ "user2016.csv' " + "INTO TABLE user";
+			
 			stmt.executeQuery(sql);
-
-			return "Successfully loaded csv file into Table 'etappen'";
+			
+			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+					+ "tipps2016.csv' " + "INTO TABLE tipps";
+			
+			stmt.executeQuery(sql);
+			
+			
+			stmt.close();
+			return "succeed";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "";
 		}
-		return "";
 	}
 
 	/**
@@ -325,51 +335,67 @@ public class DBFunctions {
 			sql = "DROP TABLE IF EXISTS " + TABLENAMERANKING;
 			stmt.execute(sql);
 
-			// Erstellt die Tabelle user
-			stmt.execute("create table " + TABLENAMEUSER
+			sql = "DROP TABLE IF EXISTS " + TABLENAMEETAPPENART;
+			stmt.execute(sql);
+
+			// Erstellt die Tabelle user 
+			stmt.execute("create table " + TABLENAMEUSER 
 					+ "(userID int(11) not null auto_increment,userName varchar(100) not null,"
-					+ "sessionID varchar(50) not null," + "vorname varchar(50) not null,"
-					+ "nachname varchar(50) not null," + "passwort varchar(50) not null,"
-					+ "angelegt timestamp default CURRENT_TIMESTAMP not null," + "primary key (userID))");
+					+ "sessionID varchar(50) not null," + "vorname varchar(50) not null," + "nachname varchar(50) not null," 
+					+ "passwort varchar(50) not null," + "angelegt timestamp not null default CURRENT_TIMESTAMP," 
+					+ "primary key (userID))");
+
+			// Erstellt die Tabelle etappenart 
+			stmt.execute("create table " + TABLENAMEETAPPENART 
+					+ "(artID int(11) not null auto_increment,"
+					+ "bezeichnung varchar(50) null default null,"
+					+ "primary key (artID))");
 
 			// Erstellt die Tabelle etappen
-			stmt.execute("create table " + TABLENAMEETAPPEN
+			stmt.execute("create table " + TABLENAMEETAPPEN 
 					+ "(etappenID int(11) not null auto_increment,etappennummer int(11) not null,"
-					+ "datum DATETIME not null," + "startort varchar(50) not null," + "zielort varchar(50) not null,"
-					+ "laenge double not null," + "art int(11) not null," + "fahrerPlatz1 varchar(50),"
+					+ "datum DATETIME not null," + "startort varchar(50) not null," + "zielort varchar(50) not null," 
+					+ "laenge double not null," + "art int(11) not null," + "fahrerPlatz1 varchar(50)," 
 					+ "siegerzeit TIME," + "fahrerPlatz2 varchar(50)," + "fahrerPlatz3 varchar(50),"
-					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50)," + "teamPlatz3 varchar(50),"
-					+ "fahrerGelb varchar(50)," + "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
-					+ "dopingFahrer varchar(50)," + "dopingTeam varchar(50)," + "primary key (etappenID))");
-			// + "foreign key (art) references persons(sss)");
+					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50),"
+					+ "teamPlatz3 varchar(50)," + "fahrerGelb varchar(50),"
+					+ "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
+					+ "dopingFahrer varchar(50)," + "dopingTeam varchar(50),"
+					+ "primary key (etappenID),"
+					+ "INDEX art_ibfk_1 (art),"
+					+ "CONSTRAINT art_ibfk_1 FOREIGN KEY (art) REFERENCES etappenart(artID))");	
 
 			// Erstellt die Tabelle teams
-			stmt.execute("create table " + TABLENAMETEAMS
+			stmt.execute("create table " + TABLENAMETEAMS 
 					+ "(teamID int(11) not null auto_increment,teamName varchar(50) not null,"
-					+ "teamBildUrl varchar(50)," + "primary key (teamID))");
+					+ "teamBildUrl varchar(50),"
+					+ "primary key (teamID))");
 
 			// Erstellt die Tabelle fahrer
 			stmt.execute("create table " + TABLENAMEFAHRER
 					+ "(fahrerID int(11) not null auto_increment,startnummer int(11) not null,"
-					+ "fahrerVorname varchar(50) not null," + "fahrerNachname varchar(50) not null,"
-					+ "team int(11) not null," + "aktiv tinyint(1) not null," + "gesamtzeit time,"
-					+ "etappensiege int(11) not null," + "punkteGruen int(11) not null,"
-					+ "punkteBerg int(11) not null," + "primary key (fahrerID),"
+					+ "fahrerVorname varchar(50) not null," + "fahrerNachname varchar(50) not null," + "team int(11) not null," 
+					+ "aktiv tinyint(1) not null," + "gesamtzeit time," + "etappensiege int(11) not null default '0'," 
+					+ "punkteGruen int(11) not null default '0'," + "punkteBerg int(11) not null default '0',"
+					+ "primary key (fahrerID),"
 					+ "foreign key (team) references teams(teamID))");
 
 			// Erstellt die Tabelle ranking
-			stmt.execute("create table " + TABLENAMERANKING
-					+ "(rankingID int(11) not null auto_increment,datum DATETIME not null," + "userID int(11) not null,"
-					+ "punkte int(11) not null," + "platz int(11) not null," + "primary key (rankingID),"
+			stmt.execute("create table " + TABLENAMERANKING 
+					+ "(rankingID int(11) not null auto_increment,datum DATETIME not null,"
+					+ "userID int(11) not null," + "punkte int(11) not null default '0'," + "platz int(11) not null default '0'," 
+					+ "primary key (rankingID),"
 					+ "foreign key (userID) references user(userID))");
 
 			// Erstellt die Tabelle tipps
-			stmt.execute("create table " + TABLENAMETIPPS
+			stmt.execute("create table " + TABLENAMETIPPS 
 					+ "(tippID int(11) not null auto_increment,userID int(11) not null,etappenID int(11) not null,"
 					+ "fahrerPlatz1 varchar(50)," + "fahrerPlatz2 varchar(50)," + "fahrerPlatz3 varchar(50),"
-					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50)," + "teamPlatz3 varchar(50),"
-					+ "fahrerGelb varchar(50)," + "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
-					+ "fahrerDoping varchar(50)," + "teamDoping varchar(50)," + "primary key (tippID),"
+					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50),"
+					+ "teamPlatz3 varchar(50)," + "fahrerGelb varchar(50),"
+					+ "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
+					+ "fahrerDoping varchar(50)," + "teamDoping varchar(50),"
+					+ "primary key (tippID),"
 					+ "foreign key (userID) references user(userID),"
 					+ "foreign key (etappenID) references etappen(etappenID))");
 
@@ -379,23 +405,11 @@ public class DBFunctions {
 			return "succeed";
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return "failed";
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public static String tabelleEtappenartAnlegen() {
-
-		/*
-		 * Hier muss noch etwas rein
-		 */
-
-		return "";
-
-	}
 
 	public static String getAktuelleConnection() {
 		return aktuelleConnection;

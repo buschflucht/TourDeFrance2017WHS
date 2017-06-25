@@ -77,19 +77,20 @@ public class LoginController {
 	@FXML
 	public void connectLocalDB() {
 		String rt = "";
-		rt = DBFunctions.connectLocal();
+		rt = DBFunctions.connectLocalDB();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
 			alert.setHeaderText("Erfolgreiche Verbindung");
-			alert.setContentText("Erfolgreich mit dem Lokalen-Server verbunden!");
+			alert.setContentText("Erfolgreich mit der Lokalen DB verbunden!");
 			alert.showAndWait();
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
-			alert.setContentText("Verbindung mit dem Lokalem-Server zu tourdefrance2017 fehlgeschlagen");
+			alert.setContentText("Verbindung mit der Lokalen DB tourdefrance2017 fehlgeschlagen - "
+					+ "Die Datenbank tourdefrance2017 existiert (noch)nicht");
 			alert.showAndWait();
 		}
 
@@ -201,7 +202,7 @@ public class LoginController {
 				alert.setTitle("Fehlgeschlagen");
 				alert.setHeaderText("Oops");
 				alert.setContentText("Datenbankverbindung zu " + txtDatabase.getText()
-						+ " fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
+				+ " fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
 				alert.showAndWait();
 			}
 		}
