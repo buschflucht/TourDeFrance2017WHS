@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -231,7 +233,7 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Lädt die lokalen .csv dateien in die jeweiligen Tabellen 
+	 * Lädt Testdaten user und tipps in die jeweiligen Tabellen 
 	 * 
 	 * @return
 	 */
@@ -262,6 +264,12 @@ public class DBFunctions {
 		}
 	}
 
+	/**
+	 * Lädt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
+	 * 
+	 * @param auswahl Auswahl des nutzers ob Test-/Echtdaten
+	 * @return
+	 */
 	public static String datenEingebenAuswahl(String auswahl){
 		String sql = "";
 
@@ -277,13 +285,13 @@ public class DBFunctions {
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "teams2016.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
-				
+
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "etappen2016.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
 
 				stmt.close();
-				
+
 			}else{
 				stmt = connection.createStatement();
 
@@ -294,8 +302,8 @@ public class DBFunctions {
 				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
 						+ "teams2017.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
+
+				sql = "LOAD DATA LOCAL INFILE './resources/"
 						+ "etappen2017.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
 
@@ -310,30 +318,43 @@ public class DBFunctions {
 	}
 
 	/**
-	 * einen nach Datum und Uhrzeit sortierten Etappenplan der Tour de France
+	 * Gebe einen nach Datum und Uhrzeit sortierten Etappenplan der TourdeFrance
 	 * 2017 mit allen in der Tabelle „etappen“ enthaltenden Daten aus
 	 * 
 	 * @return
 	 */
 	public static String etappenplan() {
-
 		try {
 			stmt = connection.createStatement();
-			List ll = new LinkedList();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM etappen ORDER BY datum");
 
 			while (rs.next()) {
-				int etapnummer = rs.getInt("etappennummer");
-				Date datum = rs.getDate("datum");
+				int etappenID = rs.getInt("etappennummer");
+
+				//-------------- Datum lesen --------------
+				String datum = rs.getString("datum");
+				String[] datumString = datum.split(" ");
+				String[] date = datumString[0].split("-");
+				String[] hour = datumString[1].split(":");
+				Calendar date2 = Calendar.getInstance();
+				date2.set(Integer.parseInt(date[0]), 
+						Integer.parseInt(date[1])-1,
+						Integer.parseInt(date[2]),
+						Integer.parseInt(hour[0]),
+						Integer.parseInt(hour[1]), 0);
+				SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
+				SimpleDateFormat sdfHour = new SimpleDateFormat("HH:mm");
+				//Die ausgabe datum und Uhrzeit getrennt
+				String date3 = sdfDate.format(date2.getTime());
+				String hour3 = sdfHour.format(date2.getTime());
+
 				String startort = rs.getString("startort");
 				String zielort = rs.getString("zielort");
 				Double laenge = rs.getDouble("laenge");
 				int art = rs.getInt("art");
 
-				//Muss noch rausfinden wie man datum und uhrzeit trennen kann für ausgabe..
-				
-				System.out.format(" %s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", 
-						etapnummer, datum, startort, zielort, laenge, art);
+				System.out.format(" %s \t %-10s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", 
+						etappenID, date3, hour3, startort, zielort, laenge, art);
 			}
 			rs.close();
 			stmt.close();
