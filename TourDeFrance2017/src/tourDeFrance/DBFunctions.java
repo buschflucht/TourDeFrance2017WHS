@@ -13,9 +13,9 @@ public class DBFunctions {
 	private static DBFunctions instance;
 
 	private static final String LOCAL_IP = "localhost";
-	private static final String LOCAL_PORT = "3306";
+	private static final String LOCAL_PORT = "3311";
 	private static final String LOCAL_USER = "root";
-	private static final String LOCAL_PW = "beerenfalle03";
+	private static final String LOCAL_PW = "chestworkout";
 	private static final String LOCAL_DB = "tourdefrance2017";
 
 	private static final String LIVE_IP = "localhost";
