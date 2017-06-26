@@ -1,11 +1,14 @@
 package tourDeFrance.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -20,21 +23,43 @@ import javafx.stage.Stage;
 import tourDeFrance.DBFunctions;
 import tourDeFrance.Main;
 
-public class MainMenuController {
+public class MainMenuController implements Initializable {
 
 	public Main main;
 	@FXML
 	private Button btnLogin;
+	@FXML
+	private Button btnLogOut;
 	@FXML
 	private Button btnExit;
 	@FXML
 	private TabPane tbPane;
 	@FXML
 	private Label lblConnection;
+	@FXML
+	private Button btnCreateDB;
+	@FXML
+	private Button btnCreateTables;
+	@FXML
+	private Button btnShowEtappen;
+	@FXML
+	private Button btnErgebnisseEingeben;
+	@FXML
+	private Button btnErgebnisseAusgeben;
+	@FXML
+	private Button btnCreateRanking;
+	@FXML
+	private Button btnShowRanking;
 
-	public void setMain(Main main) {
-		this.main = main;
+	private static MainMenuController instance;
 
+	// public void setMain(Main main) {
+	// this.main = main;
+	//
+	// }
+
+	public static MainMenuController getInstance() {
+		return instance;
 	}
 
 	@FXML
@@ -61,7 +86,13 @@ public class MainMenuController {
 			fxmlLoader.setLocation(Main.class.getResource("view/CreateDatabase.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
 			Tab tb = new Tab("Create Database", anchor);
-			tbPane.getTabs().add(tb);
+			if (tbPane.getTabs().isEmpty()) {
+				tbPane.getTabs().add(tb);
+
+			} else {
+				closeTab();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +106,13 @@ public class MainMenuController {
 			fxmlLoader.setLocation(Main.class.getResource("view/CreateTables.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
 			Tab tb = new Tab("Create Tables", anchor);
-			tbPane.getTabs().add(tb);
+			if (tbPane.getTabs().isEmpty()) {
+				tbPane.getTabs().add(tb);
+
+			} else {
+				closeTab();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,7 +126,13 @@ public class MainMenuController {
 			fxmlLoader.setLocation(Main.class.getResource("view/DataEtappen.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
 			Tab tb = new Tab("Etappenplan", anchor);
-			tbPane.getTabs().add(tb);
+			if (tbPane.getTabs().isEmpty()) {
+				tbPane.getTabs().add(tb);
+
+			} else {
+				closeTab();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,7 +146,13 @@ public class MainMenuController {
 			fxmlLoader.setLocation(Main.class.getResource("view/ErgebnisseAusgeben.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
 			Tab tb = new Tab("beendete Ergebnisse", anchor);
-			tbPane.getTabs().add(tb);
+			if (tbPane.getTabs().isEmpty()) {
+				tbPane.getTabs().add(tb);
+
+			} else {
+				closeTab();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -117,15 +166,34 @@ public class MainMenuController {
 			fxmlLoader.setLocation(Main.class.getResource("view/ShowRanking.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
 			Tab tb = new Tab("show Ranking", anchor);
-			tbPane.getTabs().add(tb);
+			if (tbPane.getTabs().isEmpty()) {
+				tbPane.getTabs().add(tb);
+
+			} else {
+				closeTab();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@FXML
-	public void updateLabel() {
-		lblConnection.setText(DBFunctions.getAktuelleConnection());
+	public void updateMenu(String string) {
+		boolean ok = true;
+		lblConnection.setText(string);
+		if (DBFunctions.getInstance().getAktuelleConnection().isEmpty()) {
+			ok = false;
+		}
+		setButtonFields(ok);
+	}
+
+	public void updateMenuDB(String string) {
+		boolean ok = true;
+		lblConnection.setText(string);
+		if (DBFunctions.getInstance().getAktuelleConnection().isEmpty()) {
+			ok = false;
+		}
+		setButtonFieldsDB(ok);
 	}
 
 	@FXML
@@ -142,6 +210,42 @@ public class MainMenuController {
 
 		}
 
+	}
+
+	public void closeTab() {
+		tbPane.getTabs().remove(0);
+	}
+
+	@FXML
+	public void LogOut() {
+		DBFunctions.getInstance().closeConnection();
+		btnCreateDB.setVisible(false);
+		btnCreateTables.setVisible(false);
+		btnErgebnisseAusgeben.setVisible(false);
+		btnErgebnisseEingeben.setVisible(false);
+		btnShowEtappen.setVisible(false);
+		btnShowRanking.setVisible(false);
+		btnCreateRanking.setVisible(false);
+		lblConnection.setText("");
+	}
+
+	private void setButtonFields(boolean ok) {
+		btnCreateDB.setVisible(ok);
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		instance = this;
+
+	}
+
+	private void setButtonFieldsDB(boolean ok) {
+		btnCreateTables.setVisible(ok);
+		btnErgebnisseAusgeben.setVisible(ok);
+		btnErgebnisseEingeben.setVisible(ok);
+		btnShowEtappen.setVisible(ok);
+		btnShowRanking.setVisible(ok);
+		btnCreateRanking.setVisible(ok);
 	}
 
 }

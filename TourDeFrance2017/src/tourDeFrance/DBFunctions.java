@@ -1,22 +1,21 @@
 package tourDeFrance;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DBFunctions {
 
+	private static DBFunctions instance;
+
 	private static final String LOCAL_IP = "localhost";
-	private static final String LOCAL_PORT = "3311";
+	private static final String LOCAL_PORT = "3306";
 	private static final String LOCAL_USER = "root";
-	private static final String LOCAL_PW = "chestworkout";
+	private static final String LOCAL_PW = "beerenfalle03";
 	private static final String LOCAL_DB = "tourdefrance2017";
 
 	private static final String LIVE_IP = "localhost";
@@ -33,10 +32,20 @@ public class DBFunctions {
 	private static final String TABLENAMETIPPS = "tipps";
 	private static final String TABLENAMEETAPPENART = "etappenart";
 
-	private static String aktuelleConnection = "";
+	private String aktuelleConnection = "";
 	private static Connection connection = null;
 	private static final String DATABASENAME = "tourdefrance2017";
 	private static Statement stmt = null;
+
+	public static DBFunctions getInstance() {
+		if (instance == null)
+			instance = new DBFunctions();
+		return instance;
+	}
+
+	private DBFunctions() {
+		super();
+	}
 
 	/**
 	 * Stellt Verbindung zum DBMS her
@@ -47,14 +56,14 @@ public class DBFunctions {
 	 * @param password
 	 * @return
 	 */
-	public static String connect(String ipAdresse, String port, String benutzerName, String passwort) {
+	public String connect(String ipAdresse, String port, String benutzerName, String passwort) {
 
 		try {
 
 			String url = "jdbc:mariadb://" + ipAdresse + ":" + port + "?useSSL=false";
 			connection = DriverManager.getConnection(url, benutzerName, passwort);
 			System.out.println("Connect " + ipAdresse + "," + port + "," + benutzerName + "," + passwort);
-			aktuelleConnection = "Connected to " + ipAdresse + ":" + port;
+			aktuelleConnection = "Connected: " + ipAdresse + ":" + port;
 
 			return "Connection succeed";
 
@@ -80,15 +89,14 @@ public class DBFunctions {
 	 * @return String rt der Ok liefert oder falls Verbindung fehlgeschlagen den
 	 *         jeweiligen Error
 	 */
-	public static String connectDB(String ipAdresse, String port, String benutzerName, String passwort,
-			String database) {
+	public String connectDB(String ipAdresse, String port, String benutzerName, String passwort, String database) {
 		String rt;
 		try {
 			if (dbExists(connection, DATABASENAME)) {
 
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
-				aktuelleConnection = "Connected to" + ipAdresse + ":" + port + "/" + database;
+				aktuelleConnection = "Connected:" + ipAdresse + ":" + port + "/" + database;
 				rt = "Connection succeed";
 
 			} else {
@@ -111,7 +119,7 @@ public class DBFunctions {
 	 *            DatenbankName
 	 * @return ob eine Datenbank vorhanden ist
 	 */
-	private static boolean dbExists(Connection connection, String databaseName) {
+	private boolean dbExists(Connection connection, String databaseName) {
 		boolean dbvorhanden = false;
 		try {
 			if ((connection != null) && (!connection.isClosed())) {
@@ -151,7 +159,7 @@ public class DBFunctions {
 	 * 
 	 * @return verbinde Lokal
 	 */
-	public static String connectLocal() {
+	public String connectLocal() {
 		return connect(LOCAL_IP, LOCAL_PORT, LOCAL_USER, LOCAL_PW);
 	}
 
@@ -161,7 +169,7 @@ public class DBFunctions {
 	 * 
 	 * @return verbinde Live
 	 */
-	public static String connectLIVE() {
+	public String connectLIVE() {
 		return connect(LIVE_IP, LIVE_PORT, LIVE_USER, LIVE_PW);
 	}
 
@@ -171,7 +179,7 @@ public class DBFunctions {
 	 * 
 	 * @return verbinde Lokal mit DB
 	 */
-	public static String connectLocalDB() {
+	public String connectLocalDB() {
 		return connectDB(LOCAL_IP, LOCAL_PORT, LOCAL_USER, LOCAL_PW, LOCAL_DB);
 	}
 
@@ -181,7 +189,7 @@ public class DBFunctions {
 	 * 
 	 * @return verbinde Live mit DB
 	 */
-	public static String connectLIVEDB() {
+	public String connectLIVEDB() {
 		return connectDB(LIVE_IP, LIVE_PORT, LIVE_USER, LIVE_PW, LIVE_DB);
 	}
 
@@ -193,7 +201,7 @@ public class DBFunctions {
 	 *            Datenbankname der Datenbank die in PostgreSQL erstellt werden
 	 *            soll
 	 */
-	public static String createDb() {
+	public String createDb() {
 		String rt = "";
 		boolean dbvorhanden = false;
 		Statement stmt;
@@ -233,11 +241,11 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Lädt Testdaten user und tipps in die jeweiligen Tabellen 
+	 * Lädt Testdaten user und tipps in die jeweiligen Tabellen
 	 * 
 	 * @return
 	 */
-	public static String datenEingeben() {
+	public String datenEingeben() {
 
 		String sql = "";
 
@@ -254,7 +262,6 @@ public class DBFunctions {
 
 			stmt.executeQuery(sql);
 
-
 			stmt.close();
 			return "succeed";
 
@@ -267,15 +274,16 @@ public class DBFunctions {
 	/**
 	 * Lädt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
 	 * 
-	 * @param auswahl Auswahl des nutzers ob Test-/Echtdaten
+	 * @param auswahl
+	 *            Auswahl des nutzers ob Test-/Echtdaten
 	 * @return
 	 */
-	public static String datenEingebenAuswahl(String auswahl){
+	public String datenEingebenAuswahl(String auswahl) {
 		String sql = "";
 
 		try {
 
-			if(auswahl == "testdaten"){
+			if (auswahl == "testdaten") {
 				stmt = connection.createStatement();
 
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
@@ -292,7 +300,7 @@ public class DBFunctions {
 
 				stmt.close();
 
-			}else{
+			} else {
 				stmt = connection.createStatement();
 
 				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017"
@@ -303,8 +311,7 @@ public class DBFunctions {
 						+ "teams2017.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
 
-				sql = "LOAD DATA LOCAL INFILE './resources/"
-						+ "etappen2017.csv' " + "INTO TABLE etappen";
+				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
 
 				stmt.close();
@@ -323,7 +330,7 @@ public class DBFunctions {
 	 * 
 	 * @return
 	 */
-	public static String etappenplan() {
+	public String etappenplan() {
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM etappen ORDER BY datum");
@@ -331,20 +338,17 @@ public class DBFunctions {
 			while (rs.next()) {
 				int etappenID = rs.getInt("etappennummer");
 
-				//-------------- Datum lesen --------------
+				// -------------- Datum lesen --------------
 				String datum = rs.getString("datum");
 				String[] datumString = datum.split(" ");
 				String[] date = datumString[0].split("-");
 				String[] hour = datumString[1].split(":");
 				Calendar date2 = Calendar.getInstance();
-				date2.set(Integer.parseInt(date[0]), 
-						Integer.parseInt(date[1])-1,
-						Integer.parseInt(date[2]),
-						Integer.parseInt(hour[0]),
-						Integer.parseInt(hour[1]), 0);
+				date2.set(Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2]),
+						Integer.parseInt(hour[0]), Integer.parseInt(hour[1]), 0);
 				SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
 				SimpleDateFormat sdfHour = new SimpleDateFormat("HH:mm");
-				//Die ausgabe datum und Uhrzeit getrennt
+				// Die ausgabe datum und Uhrzeit getrennt
 				String date3 = sdfDate.format(date2.getTime());
 				String hour3 = sdfHour.format(date2.getTime());
 
@@ -353,8 +357,8 @@ public class DBFunctions {
 				Double laenge = rs.getDouble("laenge");
 				int art = rs.getInt("art");
 
-				System.out.format(" %s \t %-10s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", 
-						etappenID, date3, hour3, startort, zielort, laenge, art);
+				System.out.format(" %s \t %-10s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", etappenID, date3, hour3,
+						startort, zielort, laenge, art);
 			}
 			rs.close();
 			stmt.close();
@@ -375,7 +379,7 @@ public class DBFunctions {
 	 * @return liefert ob die Tabellen erfolgreich angelegt wurde nachdem
 	 *         eventuell vorhandene geloescht wurden.
 	 */
-	public static String tabellenAnlegen() {
+	public String tabellenAnlegen() {
 
 		Statement stmt = null;
 
@@ -409,64 +413,56 @@ public class DBFunctions {
 			sql = "DROP TABLE IF EXISTS " + TABLENAMEETAPPENART;
 			stmt.execute(sql);
 
-			// Erstellt die Tabelle user 
-			stmt.execute("create table " + TABLENAMEUSER 
+			// Erstellt die Tabelle user
+			stmt.execute("create table " + TABLENAMEUSER
 					+ "(userID int(11) not null auto_increment,userName varchar(100) not null,"
-					+ "sessionID varchar(50) not null," + "vorname varchar(50) not null," + "nachname varchar(50) not null," 
-					+ "passwort varchar(50) not null," + "angelegt timestamp not null default CURRENT_TIMESTAMP," 
-					+ "primary key (userID))");
+					+ "sessionID varchar(50) not null," + "vorname varchar(50) not null,"
+					+ "nachname varchar(50) not null," + "passwort varchar(50) not null,"
+					+ "angelegt timestamp not null default CURRENT_TIMESTAMP," + "primary key (userID))");
 
-			// Erstellt die Tabelle etappenart 
-			stmt.execute("create table " + TABLENAMEETAPPENART 
-					+ "(artID int(11) not null auto_increment,"
-					+ "bezeichnung varchar(50) null default null,"
-					+ "primary key (artID))");
+			// Erstellt die Tabelle etappenart
+			stmt.execute("create table " + TABLENAMEETAPPENART + "(artID int(11) not null auto_increment,"
+					+ "bezeichnung varchar(50) null default null," + "primary key (artID))");
 
 			// Erstellt die Tabelle etappen
-			stmt.execute("create table " + TABLENAMEETAPPEN 
+			stmt.execute("create table " + TABLENAMEETAPPEN
 					+ "(etappenID int(11) not null auto_increment,etappennummer int(11) not null,"
-					+ "datum DATETIME not null," + "startort varchar(50) not null," + "zielort varchar(50) not null," 
-					+ "laenge double not null," + "art int(11) not null," + "fahrerPlatz1 varchar(50)," 
+					+ "datum DATETIME not null," + "startort varchar(50) not null," + "zielort varchar(50) not null,"
+					+ "laenge double not null," + "art int(11) not null," + "fahrerPlatz1 varchar(50),"
 					+ "siegerzeit TIME," + "fahrerPlatz2 varchar(50)," + "fahrerPlatz3 varchar(50),"
-					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50),"
-					+ "teamPlatz3 varchar(50)," + "fahrerGelb varchar(50),"
-					+ "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
-					+ "dopingFahrer varchar(50)," + "dopingTeam varchar(50),"
-					+ "primary key (etappenID),"
+					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50)," + "teamPlatz3 varchar(50),"
+					+ "fahrerGelb varchar(50)," + "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
+					+ "dopingFahrer varchar(50)," + "dopingTeam varchar(50)," + "primary key (etappenID),"
 					+ "INDEX art_ibfk_1 (art),"
-					+ "CONSTRAINT art_ibfk_1 FOREIGN KEY (art) REFERENCES etappenart(artID))");	
+					+ "CONSTRAINT art_ibfk_1 FOREIGN KEY (art) REFERENCES etappenart(artID))");
 
 			// Erstellt die Tabelle teams
-			stmt.execute("create table " + TABLENAMETEAMS 
+			stmt.execute("create table " + TABLENAMETEAMS
 					+ "(teamID int(11) not null auto_increment,teamName varchar(50) not null,"
-					+ "teamBildUrl varchar(50),"
-					+ "primary key (teamID))");
+					+ "teamBildUrl varchar(50)," + "primary key (teamID))");
 
 			// Erstellt die Tabelle fahrer
 			stmt.execute("create table " + TABLENAMEFAHRER
 					+ "(fahrerID int(11) not null auto_increment,startnummer int(11) not null,"
-					+ "fahrerVorname varchar(50) not null," + "fahrerNachname varchar(50) not null," + "team int(11) not null," 
-					+ "aktiv tinyint(1) not null," + "gesamtzeit time," + "etappensiege int(11) not null default '0'," 
-					+ "punkteGruen int(11) not null default '0'," + "punkteBerg int(11) not null default '0',"
-					+ "primary key (fahrerID),"
+					+ "fahrerVorname varchar(50) not null," + "fahrerNachname varchar(50) not null,"
+					+ "team int(11) not null," + "aktiv tinyint(1) not null," + "gesamtzeit time,"
+					+ "etappensiege int(11) not null default '0'," + "punkteGruen int(11) not null default '0',"
+					+ "punkteBerg int(11) not null default '0'," + "primary key (fahrerID),"
 					+ "foreign key (team) references teams(teamID))");
 
 			// Erstellt die Tabelle ranking
-			stmt.execute("create table " + TABLENAMERANKING 
-					+ "(rankingID int(11) not null auto_increment,datum DATETIME not null,"
-					+ "userID int(11) not null," + "punkte int(11) not null default '0'," + "platz int(11) not null default '0'," 
-					+ "primary key (rankingID),"
-					+ "foreign key (userID) references user(userID))");
+			stmt.execute("create table " + TABLENAMERANKING
+					+ "(rankingID int(11) not null auto_increment,datum DATETIME not null," + "userID int(11) not null,"
+					+ "punkte int(11) not null default '0'," + "platz int(11) not null default '0',"
+					+ "primary key (rankingID)," + "foreign key (userID) references user(userID))");
 
 			// Erstellt die Tabelle tipps
-			stmt.execute("create table " + TABLENAMETIPPS 
+			stmt.execute("create table " + TABLENAMETIPPS
 					+ "(tippID int(11) not null auto_increment,userID int(11) not null,etappenID int(11) not null,"
 					+ "fahrerPlatz1 varchar(50)," + "fahrerPlatz2 varchar(50)," + "fahrerPlatz3 varchar(50),"
-					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50),"
-					+ "teamPlatz3 varchar(50)," + "fahrerGelb varchar(50),"
-					+ "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
-					+ "fahrerDoping varchar(50)," + "teamDoping varchar(50),"
-					+ "primary key (tippID),"
+					+ "teamPlatz1 varchar(50)," + "teamPlatz2 varchar(50)," + "teamPlatz3 varchar(50),"
+					+ "fahrerGelb varchar(50)," + "fahrerGruen varchar(50)," + "fahrerBerg varchar(50),"
+					+ "fahrerDoping varchar(50)," + "teamDoping varchar(50)," + "primary key (tippID),"
 					+ "foreign key (userID) references user(userID),"
 					+ "foreign key (etappenID) references etappen(etappenID))");
 
@@ -481,13 +477,12 @@ public class DBFunctions {
 		}
 	}
 
-
-	public static String getAktuelleConnection() {
+	public String getAktuelleConnection() {
 		return aktuelleConnection;
 	}
 
-	public static void setAktuelleConnection(String aktuelleConnection) {
-		DBFunctions.aktuelleConnection = aktuelleConnection;
+	public void setAktuelleConnection(String aktuelleConnection) {
+		this.aktuelleConnection = aktuelleConnection;
 	}
 
 }

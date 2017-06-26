@@ -57,7 +57,7 @@ public class LoginController {
 	public void connectLocal() {
 
 		String rt = "";
-		rt = DBFunctions.connectLocal();
+		rt = DBFunctions.getInstance().connectLocal();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -66,6 +66,11 @@ public class LoginController {
 			alert.setHeaderText("Erfolgreiche Verbindung");
 			alert.setContentText("Erfolgreich mit dem VM-Server verbunden!");
 			alert.showAndWait();
+			Stage stage = (Stage) btnLocal.getScene().getWindow();
+			String login = DBFunctions.getInstance().getAktuelleConnection();
+			MainMenuController control = MainMenuController.getInstance();
+			control.updateMenu(login);
+			stage.close();
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
@@ -77,7 +82,7 @@ public class LoginController {
 	@FXML
 	public void connectLocalDB() {
 		String rt = "";
-		rt = DBFunctions.connectLocalDB();
+		rt = DBFunctions.getInstance().connectLocalDB();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -86,6 +91,11 @@ public class LoginController {
 			alert.setHeaderText("Erfolgreiche Verbindung");
 			alert.setContentText("Erfolgreich mit der Lokalen DB verbunden!");
 			alert.showAndWait();
+			Stage stage = (Stage) btnLocalDB.getScene().getWindow();
+			String login = DBFunctions.getInstance().getAktuelleConnection();
+			MainMenuController control = MainMenuController.getInstance();
+			control.updateMenuDB(login);
+			stage.close();
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
@@ -100,7 +110,7 @@ public class LoginController {
 	public void connectLive() {
 
 		String rt = "";
-		rt = DBFunctions.connectLIVE();
+		rt = DBFunctions.getInstance().connectLIVE();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -109,6 +119,11 @@ public class LoginController {
 			alert.setHeaderText("Erfolgreiche Verbindung");
 			alert.setContentText("Erfolgreich mit dem Live-Server verbunden!");
 			alert.showAndWait();
+			Stage stage = (Stage) btnLive.getScene().getWindow();
+			String login = DBFunctions.getInstance().getAktuelleConnection();
+			MainMenuController control = MainMenuController.getInstance();
+			control.updateMenu(login);
+			stage.close();
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
@@ -121,7 +136,7 @@ public class LoginController {
 	public void connectLiveDB() {
 
 		String rt = "";
-		rt = DBFunctions.connectLIVEDB();
+		rt = DBFunctions.getInstance().connectLIVEDB();
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -130,6 +145,11 @@ public class LoginController {
 			alert.setHeaderText("Erfolgreiche Verbindung");
 			alert.setContentText("Erfolgreich mit dem Live-Server zu tourdefrance2017 verbunden!");
 			alert.showAndWait();
+			Stage stage = (Stage) btnLiveDB.getScene().getWindow();
+			String login = DBFunctions.getInstance().getAktuelleConnection();
+			MainMenuController control = MainMenuController.getInstance();
+			control.updateMenuDB(login);
+			stage.close();
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
@@ -153,7 +173,8 @@ public class LoginController {
 		} else {
 
 			String rt = "";
-			rt = DBFunctions.connect(txtIp.getText(), txtPort.getText(), txtUser.getText(), txtPW.getText());
+			rt = DBFunctions.getInstance().connect(txtIp.getText(), txtPort.getText(), txtUser.getText(),
+					txtPW.getText());
 			Alert alert = new Alert(AlertType.INFORMATION);
 
 			if (rt == "Connection succeed") {
@@ -161,6 +182,11 @@ public class LoginController {
 				alert.setHeaderText("Sehr schoen");
 				alert.setContentText("Erfolgreich mit dem Server verbunden!");
 				alert.showAndWait();
+				Stage stage = (Stage) btnManual.getScene().getWindow();
+				String login = DBFunctions.getInstance().getAktuelleConnection();
+				MainMenuController control = MainMenuController.getInstance();
+				control.updateMenu(login);
+				stage.close();
 
 			} else {
 				alert.setTitle("Fehlgeschlagen");
@@ -187,8 +213,8 @@ public class LoginController {
 		} else {
 
 			String rt = "";
-			rt = DBFunctions.connectDB(txtIpDB.getText(), txtPortDB.getText(), txtUserDB.getText(), txtPWDB.getText(),
-					txtDatabase.getText());
+			rt = DBFunctions.getInstance().connectDB(txtIpDB.getText(), txtPortDB.getText(), txtUserDB.getText(),
+					txtPWDB.getText(), txtDatabase.getText());
 			Alert alert = new Alert(AlertType.INFORMATION);
 
 			if (rt == "Connection succeed") {
@@ -197,12 +223,17 @@ public class LoginController {
 				alert.setContentText(
 						"Erfolgreich mit dem Server zur Datenbank " + txtDatabase.getText() + " verbunden!");
 				alert.showAndWait();
+				Stage stage = (Stage) btnManualDB.getScene().getWindow();
+				String login = DBFunctions.getInstance().getAktuelleConnection();
+				MainMenuController control = MainMenuController.getInstance();
+				control.updateMenuDB(login);
+				stage.close();
 
 			} else {
 				alert.setTitle("Fehlgeschlagen");
 				alert.setHeaderText("Oops");
 				alert.setContentText("Datenbankverbindung zu " + txtDatabase.getText()
-				+ " fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
+						+ " fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
 				alert.showAndWait();
 			}
 		}
