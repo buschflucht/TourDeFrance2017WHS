@@ -38,6 +38,7 @@ public class CreateTablesController {
 
 			alert.showAndWait();
 		}
+		DBFunctions.getInstance().datenEingeben();
 	}
 
 }

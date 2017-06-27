@@ -12,8 +12,8 @@
    <children>
       <ToolBar layoutY="6.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <Button mnemonicParsing="false" text="Refresh" />
-            <Button mnemonicParsing="false" text="Import" />
+          <Button fx:id="btnRefreshEtappenTable" mnemonicParsing="false" onAction="#refreshEtappenTable" text="Refresh" />
+            <Button fx:id="btnImportEtappenTable" mnemonicParsing="false" onAction="#importEtappenTable" text="Import" />
         </items>
       </ToolBar>
       <ToolBar layoutY="653.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -21,20 +21,20 @@
           <Button mnemonicParsing="false" text="Edit" />
             <TextField />
             <Button mnemonicParsing="false" text="Add" />
-            <Button fx:id="btnCloseEtappenPlan" mnemonicParsing="false" onAction="#closeEtappenTable" text="Close" />
+            <Button fx:id="btnCloseEtappenTable" mnemonicParsing="false" onAction="#closeEtappenTable" text="Close" />
          </items>
       </ToolBar>
       <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" prefHeight="514.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <content>
             <TableView prefHeight="506.0" prefWidth="786.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Etappe" />
-                <TableColumn prefWidth="105.0" text="Datum" />
-                  <TableColumn prefWidth="95.0" text="Uhrzeit" />
-                  <TableColumn prefWidth="134.0" text="Startort" />
-                  <TableColumn minWidth="7.0" prefWidth="150.0" text="Zielort" />
-                  <TableColumn minWidth="0.0" prefWidth="108.0" text="Laenge" />
-                  <TableColumn prefWidth="117.0" text="Etappenart" />
+                <TableColumn fx:id="colEtappe" prefWidth="75.0" text="Etappe" />
+                <TableColumn fx:id="colDatum" prefWidth="105.0" text="Datum" />
+                  <TableColumn fx:id="colUhrzeit" prefWidth="95.0" text="Uhrzeit" />
+                  <TableColumn fx:id="colStartort" prefWidth="134.0" text="Startort" />
+                  <TableColumn fx:id="colZielort" minWidth="7.0" prefWidth="150.0" text="Zielort" />
+                  <TableColumn fx:id="colLaenge" minWidth="0.0" prefWidth="108.0" text="Laenge" />
+                  <TableColumn fx:id="colEtappenart" prefWidth="117.0" text="Etappenart" />
               </columns>
             </TableView>
          </content>
