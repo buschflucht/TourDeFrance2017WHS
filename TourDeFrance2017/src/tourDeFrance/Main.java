@@ -3,14 +3,25 @@ package tourDeFrance;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import tourDeFrance.model.Etappen;
 
 public class Main extends Application {
 	private Stage primaryStage;
+	
+	 private ObservableList<Etappen> EtappenData = FXCollections.observableArrayList();
 
+	 
+	 public Main(){
+		 
+	 }
+	 
+	 
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
