@@ -1,16 +1,21 @@
 package tourDeFrance.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 public class Etappenart {
 
-	private int artID;
-	private String bezeichnung;
-	;
-	public int getArtID() {
+	private IntegerProperty artID;
+	private StringProperty bezeichnung;
+	
+	public IntegerProperty getArtID() {
 		return artID;
 	}
-	public String getBezeichnung() {
+	public StringProperty getBezeichnung() {
 		return bezeichnung;
 	}
+	
+	
 		
 	
 	

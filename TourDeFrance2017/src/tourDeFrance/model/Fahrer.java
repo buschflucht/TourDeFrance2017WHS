@@ -1,46 +1,52 @@
 package tourDeFrance.model;
 
-import java.sql.Time;
+import java.time.LocalTime;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 
 public class Fahrer {
 
-	private int fahrerID;
-	private String fahrerVorname;
-	private String fahrerNachname;
-	private int team;
-	private int aktiv;
-	private Time gesamtzeit;
-	private int etappensiege;
-	;
-	public int getFahrerID() {
+	private IntegerProperty fahrerID;
+	private StringProperty fahrerVorname;
+	private StringProperty fahrerNachname;
+	private IntegerProperty team;
+	private IntegerProperty aktiv;
+	private ObjectProperty<LocalTime> gesamtzeit;
+	private IntegerProperty etappensiege;
+	private IntegerProperty punkteGruen;
+	private IntegerProperty punkteBerg;
+	
+	public IntegerProperty getFahrerID() {
 		return fahrerID;
 	}
-	public String getFahrerVorname() {
+	public StringProperty getFahrerVorname() {
 		return fahrerVorname;
 	}
-	public String getFahrerNachname() {
+	public StringProperty getFahrerNachname() {
 		return fahrerNachname;
 	}
-	public int getTeam() {
+	public IntegerProperty getTeam() {
 		return team;
 	}
-	public int getAktiv() {
+	public IntegerProperty getAktiv() {
 		return aktiv;
 	}
-	public Time getGesamtzeit() {
+	public ObjectProperty<LocalTime> getGesamtzeit() {
 		return gesamtzeit;
 	}
-	public int getEtappensiege() {
+	public IntegerProperty getEtappensiege() {
 		return etappensiege;
 	}
-	public int getPunkteGruen() {
+	public IntegerProperty getPunkteGruen() {
 		return punkteGruen;
 	}
-	public int getPunkteBerg() {
+	public IntegerProperty getPunkteBerg() {
 		return punkteBerg;
 	}
-	private int punkteGruen;
-	private int punkteBerg;
+	
+	
 	
 	
 	

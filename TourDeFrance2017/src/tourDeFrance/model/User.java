@@ -1,39 +1,46 @@
 package tourDeFrance.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 
 public class User {
 
-	private int userID;
-	private int userName;
-	private int sessionID;
-	private String vorname;
-	private String nachname;
-	private String passwort;
-	private Date angelegt;
-	;
-	public int getUserID() {
+	private IntegerProperty userID;
+	private IntegerProperty userName;
+	private IntegerProperty sessionID;
+	private StringProperty vorname;
+	private StringProperty nachname;
+	private StringProperty passwort;
+	private ObjectProperty<LocalDate> angelegt;
+	
+	public IntegerProperty getUserID() {
 		return userID;
 	}
-	public int getUserName() {
+	public IntegerProperty getUserName() {
 		return userName;
 	}
-	public int getSessionID() {
+	public IntegerProperty getSessionID() {
 		return sessionID;
 	}
-	public String getVorname() {
+	public StringProperty getVorname() {
 		return vorname;
 	}
-	public String getNachname() {
+	public StringProperty getNachname() {
 		return nachname;
 	}
-	public String getPasswort() {
+	public StringProperty getPasswort() {
 		return passwort;
 	}
-	public Date getAngelegt() {
+	public ObjectProperty<LocalDate> getAngelegt() {
 		return angelegt;
 	}
 	
+	
+	
+
 	
 	
 }

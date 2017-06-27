@@ -1,65 +1,74 @@
 package tourDeFrance.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 public class Tipps {
 
-	private int tippID;
-	private int userID;
-	private int etappenID;
-	private String fahrerPlatz1;
-	private String fahrerPlatz2;
-	private String fahrerPlatz3;
-	private String teamPlatz1;
-	private String teamPlatz2;
-	private String teamPlatz3;
-	private String fahrerGelb;
-	private String fahrerGruen;
-	private String fahrerBerg;
-	private String fahrerDoping;
-	private String teamDoping;
-	;
-	public int getTippID() {
+	private IntegerProperty tippID;
+	private IntegerProperty userID;
+	private IntegerProperty etappenID;
+	private StringProperty fahrerPlatz1;
+	private StringProperty fahrerPlatz2;
+	private StringProperty fahrerPlatz3;
+	private StringProperty teamPlatz1;
+	private StringProperty teamPlatz2;
+	private StringProperty teamPlatz3;
+	private StringProperty fahrerGelb;
+	private StringProperty fahrerGruen;
+	private StringProperty fahrerBerg;
+	private StringProperty fahrerDoping;
+	private StringProperty teamDoping;
+	
+	
+	public IntegerProperty getTippID() {
 		return tippID;
 	}
-	public int getUserID() {
+	public IntegerProperty getUserID() {
 		return userID;
 	}
-	public int getEtappenID() {
+	public IntegerProperty getEtappenID() {
 		return etappenID;
 	}
-	public String getFahrerPlatz1() {
+	public StringProperty getFahrerPlatz1() {
 		return fahrerPlatz1;
 	}
-	public String getFahrerPlatz2() {
+	public StringProperty getFahrerPlatz2() {
 		return fahrerPlatz2;
 	}
-	public String getFahrerPlatz3() {
+	public StringProperty getFahrerPlatz3() {
 		return fahrerPlatz3;
 	}
-	public String getTeamPlatz1() {
+	public StringProperty getTeamPlatz1() {
 		return teamPlatz1;
 	}
-	public String getTeamPlatz2() {
+	public StringProperty getTeamPlatz2() {
 		return teamPlatz2;
 	}
-	public String getTeamPlatz3() {
+	public StringProperty getTeamPlatz3() {
 		return teamPlatz3;
 	}
-	public String getFahrerGelb() {
+	public StringProperty getFahrerGelb() {
 		return fahrerGelb;
 	}
-	public String getFahrerGruen() {
+	public StringProperty getFahrerGruen() {
 		return fahrerGruen;
 	}
-	public String getFahrerBerg() {
+	public StringProperty getFahrerBerg() {
 		return fahrerBerg;
 	}
-	public String getFahrerDoping() {
+	public StringProperty getFahrerDoping() {
 		return fahrerDoping;
 	}
-	public String getTeamDoping() {
+	public StringProperty getTeamDoping() {
 		return teamDoping;
 	}
+	
+	
+	
 
+	
+	
 	
 	
 }

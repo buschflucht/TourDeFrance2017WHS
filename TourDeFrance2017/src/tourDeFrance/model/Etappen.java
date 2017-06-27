@@ -1,106 +1,93 @@
 package tourDeFrance.model;
 
 import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 
 public class Etappen {
 
-	private int etappenID;
-	private int etappennummer;
-	;
-
-	public int getEtappenID() {
+	private IntegerProperty etappenID;
+	private IntegerProperty etappennummer;
+	private ObjectProperty<LocalDate> datum;
+	private StringProperty startort;
+	private StringProperty zielort;
+	private DoubleProperty laenge;
+	private IntegerProperty art;
+	private StringProperty fahrerPlatz1;
+	private Time siegerzeit;
+	private StringProperty fahrerPlatz2;
+	private StringProperty fahrerPlatz3;
+	private StringProperty teamPlatz1;
+	private StringProperty teamPlatz2;
+	private StringProperty teamPlatz3;
+	private StringProperty fahrerGelb;
+	private StringProperty fahrerGruen;
+	private StringProperty fahrerBerg;
+	private StringProperty dopingFahrer;
+	private StringProperty dopingTeam;
+	public IntegerProperty getEtappenID() {
 		return etappenID;
 	}
-
-	public int getEtappennummer() {
+	public IntegerProperty getEtappennummer() {
 		return etappennummer;
 	}
-
-	public Date getDatum() {
+	public ObjectProperty<LocalDate> getDatum() {
 		return datum;
 	}
-
-	public String getStartort() {
+	public StringProperty getStartort() {
 		return startort;
 	}
-
-	public String getZielort() {
+	public StringProperty getZielort() {
 		return zielort;
 	}
-
-	public double getLaenge() {
+	public DoubleProperty getLaenge() {
 		return laenge;
 	}
-
-	public int getArt() {
+	public IntegerProperty getArt() {
 		return art;
 	}
-
-	public String getFahrerPlatz1() {
+	public StringProperty getFahrerPlatz1() {
 		return fahrerPlatz1;
 	}
-
 	public Time getSiegerzeit() {
 		return siegerzeit;
 	}
-
-	public String getFahrerPlatz2() {
+	public StringProperty getFahrerPlatz2() {
 		return fahrerPlatz2;
 	}
-
-	public String getFahrerPlatz3() {
+	public StringProperty getFahrerPlatz3() {
 		return fahrerPlatz3;
 	}
-
-	public String getTeamPlatz1() {
+	public StringProperty getTeamPlatz1() {
 		return teamPlatz1;
 	}
-
-	public String getTeamPlatz2() {
+	public StringProperty getTeamPlatz2() {
 		return teamPlatz2;
 	}
-
-	public String getTeamPlatz3() {
+	public StringProperty getTeamPlatz3() {
 		return teamPlatz3;
 	}
-
-	public String getFahrerGelb() {
+	public StringProperty getFahrerGelb() {
 		return fahrerGelb;
 	}
-
-	public String getFahrerGruen() {
+	public StringProperty getFahrerGruen() {
 		return fahrerGruen;
 	}
-
-	public String getFahrerBerg() {
+	public StringProperty getFahrerBerg() {
 		return fahrerBerg;
 	}
-
-	public String getDopingFahrer() {
+	public StringProperty getDopingFahrer() {
 		return dopingFahrer;
 	}
-
-	public String getDopingTeam() {
+	public StringProperty getDopingTeam() {
 		return dopingTeam;
 	}
-
-	private Date datum;
-	private String startort;
-	private String zielort;
-	private double laenge;
-	private int art;
-	private String fahrerPlatz1;
-	private Time siegerzeit;
-	private String fahrerPlatz2;
-	private String fahrerPlatz3;
-	private String teamPlatz1;
-	private String teamPlatz2;
-	private String teamPlatz3;
-	private String fahrerGelb;
-	private String fahrerGruen;
-	private String fahrerBerg;
-	private String dopingFahrer;
-	private String dopingTeam;
+	
+	
+	
 
 }

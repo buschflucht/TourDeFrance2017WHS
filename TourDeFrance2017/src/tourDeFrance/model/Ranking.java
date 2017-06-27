@@ -1,30 +1,40 @@
 package tourDeFrance.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 
 public class Ranking {
 	
-	private int rankingID;
-	private Date datum;
-	private int userID;
-	private int punkte;
-	private int platz;
-	;
-	public int getRankingID() {
+	private IntegerProperty rankingID;
+	private ObjectProperty<LocalDate> datum;
+	private IntegerProperty userID;
+	private IntegerProperty punkte;
+	private IntegerProperty platz;
+	
+	public IntegerProperty getRankingID() {
 		return rankingID;
 	}
-	public Date getDatum() {
+	public ObjectProperty<LocalDate> getDatum() {
 		return datum;
 	}
-	public int getUserID() {
+	public IntegerProperty getUserID() {
 		return userID;
 	}
-	public int getPunkte() {
+	public IntegerProperty getPunkte() {
 		return punkte;
 	}
-	public int getPlatz() {
+	public IntegerProperty getPlatz() {
 		return platz;
 	}
+
+	
+	
+	
+	
+	
+	
 	
 	
 	

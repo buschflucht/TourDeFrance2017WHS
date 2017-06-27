@@ -1,20 +1,26 @@
 package tourDeFrance.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 public class Teams {
 
-	private int teamID;
-	private String teamName;
-	private String teamBildUrl;
-	;
-	public int getTeamID() {
+	private IntegerProperty teamID;
+	private StringProperty teamName;
+	private StringProperty teamBildUrl;
+	
+	public IntegerProperty getTeamID() {
 		return teamID;
 	}
-	public String getTeamName() {
+	public StringProperty getTeamName() {
 		return teamName;
 	}
-	public String getTeamBildUrl() {
+	public StringProperty getTeamBildUrl() {
 		return teamBildUrl;
 	}
+	
+	
+
 	
 	
 }
