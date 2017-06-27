@@ -29,7 +29,7 @@ public class CreateTablesController {
 			alert.setTitle("Erfolgreiche Erstellung");
 			alert.setHeaderText(null);
 			alert.setContentText("Erfolgreich alle Tabellen in der Datenbank 'tourdefrance2017' erstellt!");
-
+DBFunctions.getInstance().datenEingeben();
 			alert.showAndWait();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
