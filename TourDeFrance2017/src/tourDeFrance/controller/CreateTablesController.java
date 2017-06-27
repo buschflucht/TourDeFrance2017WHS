@@ -17,7 +17,7 @@ public class CreateTablesController {
 	public void closeCreateTables() {
 		MainMenuController.getInstance().closeTab();
 	}
-
+	
 	@FXML
 	public void createTables() {
 		String dummy = "";
