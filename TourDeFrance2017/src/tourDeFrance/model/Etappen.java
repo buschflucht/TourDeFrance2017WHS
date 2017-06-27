@@ -36,9 +36,8 @@ public class Etappen {
 	private StringProperty dopingFahrer;
 	private StringProperty dopingTeam;
 
-	public Etappen(Integer etappenID, Date datum, Time uhrzeit, String startort, String zielort, Double laenge) {
+	public Etappen(Integer etappenID, String startort, String zielort, Double laenge) {
 		this.etappenID = new SimpleIntegerProperty(etappenID);
-		this.datum = new SimpleObjectProperty<LocalDateTime>();
 		this.startort = new SimpleStringProperty(startort);
 		this.zielort = new SimpleStringProperty(zielort);
 		this.laenge = new SimpleDoubleProperty(laenge);

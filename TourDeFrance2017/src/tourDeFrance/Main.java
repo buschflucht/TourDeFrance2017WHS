@@ -18,8 +18,20 @@ public class Main extends Application {
 
 	 
 	 public Main(){
-		 
-	 }
+		 EtappenData.add(new Etappen(1,"Duesseldorf","Herne",14.0));
+		 EtappenData.add(new Etappen(2,"Duesseldorf","Gelsenkirchen",13.8));
+		 EtappenData.add(new Etappen(3,"Berlin","Bocholt",12.1));
+		 EtappenData.add(new Etappen(4,"Augsburg","Friedberg",123.3));
+
+	 }	 
+	   /**
+	     * Returns the data as an observable list of Persons. 
+	     * @return
+	     */
+	    public ObservableList<Etappen> getEtappenData() {
+	        return EtappenData;
+	    }
+
 	 
 	 
 	@Override
