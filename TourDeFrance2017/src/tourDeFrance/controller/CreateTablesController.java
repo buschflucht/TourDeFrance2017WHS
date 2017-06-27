@@ -38,6 +38,7 @@ DBFunctions.getInstance().datenEingeben();
 
 			alert.showAndWait();
 		}
+		DBFunctions.getInstance().datenEingeben();
 	}
 
 }

@@ -107,7 +107,6 @@ public class DBFunctions {
 			rt = "Exception";
 		}
 		return rt;
-
 	}
 
 	/**
