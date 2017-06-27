@@ -7,6 +7,7 @@ public class Etappen {
 
 	private int etappenID;
 	private int etappennummer;
+	;
 
 	public int getEtappenID() {
 		return etappenID;

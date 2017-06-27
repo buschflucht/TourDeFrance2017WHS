@@ -9,6 +9,7 @@ public class Ranking {
 	private int userID;
 	private int punkte;
 	private int platz;
+	;
 	public int getRankingID() {
 		return rankingID;
 	}

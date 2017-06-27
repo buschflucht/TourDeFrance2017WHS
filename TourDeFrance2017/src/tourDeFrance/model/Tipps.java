@@ -16,6 +16,7 @@ public class Tipps {
 	private String fahrerBerg;
 	private String fahrerDoping;
 	private String teamDoping;
+	;
 	public int getTippID() {
 		return tippID;
 	}
