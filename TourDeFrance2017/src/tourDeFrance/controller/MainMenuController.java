@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tourDeFrance.DBFunctions;
 import tourDeFrance.Main;
+import tourDeFrance.model.Etappen;
 
 public class MainMenuController implements Initializable {
 
@@ -50,14 +53,30 @@ public class MainMenuController implements Initializable {
 	private Button btnCreateRanking;
 	@FXML
 	private Button btnShowRanking;
-
+	
 	private static MainMenuController instance;
 
-	// public void setMain(Main main) {
-	// this.main = main;
-	//
-	// }
+	 private ObservableList<Etappen> EtappenData = FXCollections.observableArrayList();
 
+	 
+	 public MainMenuController(){
+		 EtappenData.add(new Etappen(1,"Duesseldorf","Herne",14.0));
+		 EtappenData.add(new Etappen(2,"Duesseldorf","Gelsenkirchen",13.8));
+		 EtappenData.add(new Etappen(3,"Berlin","Bocholt",12.1));
+		 EtappenData.add(new Etappen(4,"Augsburg","Friedberg",123.3));
+
+	 }	 
+	   /**
+	     * Returns the data as an observable list of Persons. 
+	     * @return
+	     */
+	    public ObservableList<Etappen> getEtappenData() {
+	        return EtappenData;
+	    }
+
+	
+	
+	
 	public static MainMenuController getInstance() {
 		return instance;
 	}
@@ -128,7 +147,9 @@ public class MainMenuController implements Initializable {
 			Tab tb = new Tab("Etappenplan", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
-
+			// Give the controller access to the main app.
+		       EtappenController controller = fxmlLoader.getController();
+		       controller.setMainApp(this);
 			} else {
 				closeTab();
 			}

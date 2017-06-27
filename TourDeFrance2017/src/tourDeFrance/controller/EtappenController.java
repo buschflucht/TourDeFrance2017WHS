@@ -1,34 +1,32 @@
 package tourDeFrance.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.security.GeneralSecurityException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.control.TableView;
+import tourDeFrance.Main;
+import tourDeFrance.model.Etappen;
 
 public class EtappenController{
 
-	//	@FXML
-	//	private TableColumn<etappen, String> colEtappe;
-	//	@FXML
-	//	private TableColumn<etappen, String> colDatum;
-	//	@FXML
-	//	private TableColumn<etappen, String> colUhrzeit;
-	//	@FXML
-	//	private TableColumn<etappen, String> colStartort;
-	//	@FXML
-	//	private TableColumn<etappen, String> colZielort;
-	//	@FXML
-	//	private TableColumn<etappen, String> colLaenge;
-	//	@FXML
-	//	private TableColumn<etappen, String> colEtappenart;
+		@FXML
+		private TableColumn<Etappen, String> colEtappe;
+		@FXML
+		private TableColumn<Etappen, String> colDatum;
+		@FXML
+		private TableColumn<Etappen, String> colUhrzeit;
+		@FXML
+		private TableColumn<Etappen, String> colStartort;
+		@FXML
+		private TableColumn<Etappen, String> colZielort;
+		@FXML
+		private TableColumn<Etappen, String> colLaenge;
+		@FXML
+		private TableColumn<Etappen, String> colEtappenart;
+		@FXML
+		private TableView<Etappen> tbview;
+		
+		private MainMenuController main;
 
 
 	@FXML
@@ -52,5 +50,28 @@ public class EtappenController{
 	public void importEtappenTable(){
 		
 	}
-
+	@FXML
+	public void initialize() {
+			
+	colEtappe.setCellValueFactory(cellData -> cellData.getValue().getEtappenID().asString());
+	colStartort.setCellValueFactory(cellData -> cellData.getValue().getStartort());
+	colZielort.setCellValueFactory(cellData -> cellData.getValue().getZielort());
+	colLaenge.setCellValueFactory(cellData -> cellData.getValue().getLaenge().asString());
+	   
+	}
+	
+	 /**
+     * Is called by the main application to give a reference back to itself.
+     * 
+     * @param mainApp
+     */
+    public void setMainApp(MainMenuController main) {
+        this.main = main;
+	
+        // Add observable list data to the table
+        tbview.setItems(main.getEtappenData());
+    }
+    
+    
+   
 }

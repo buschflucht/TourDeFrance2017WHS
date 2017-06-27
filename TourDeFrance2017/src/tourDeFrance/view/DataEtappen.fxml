@@ -26,7 +26,7 @@
       </ToolBar>
       <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" prefHeight="514.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <content>
-            <TableView prefHeight="506.0" prefWidth="786.0">
+            <TableView fx:id="tbview" prefHeight="506.0" prefWidth="786.0">
               <columns>
                 <TableColumn fx:id="colEtappe" prefWidth="75.0" text="Etappe" />
                 <TableColumn fx:id="colDatum" prefWidth="105.0" text="Datum" />
