@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tourDeFrance.controller.LoginController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" styleClass="root" stylesheets="@../tourDeFrance.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tourDeFrance.controller.LoginController">
    <children>
       <SplitPane dividerPositions="0.5" layoutX="206.0" layoutY="100.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="root">
                <children>
                   <Label layoutX="21.0" layoutY="2.0" text="Connect to Server without Database" AnchorPane.topAnchor="0.0">
                      <font>
@@ -67,7 +67,7 @@
                   <Separator layoutX="49.0" layoutY="343.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="root">
                <children>
                   <Label layoutX="42.0" layoutY="14.0" text="Connect to Server with Database" AnchorPane.topAnchor="0.0">
                      <font>

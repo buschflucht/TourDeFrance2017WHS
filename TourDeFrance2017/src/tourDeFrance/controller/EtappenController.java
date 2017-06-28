@@ -1,30 +1,41 @@
 package tourDeFrance.controller;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import tourDeFrance.Main;
-import tourDeFrance.model.Etappen;
+import tourDeFrance.DBFunctions;
+import tourDeFrance.model.Etappe;
+import tourDeFrance.model.EtappenDAO;
 
 public class EtappenController{
 
 		@FXML
-		private TableColumn<Etappen, String> colEtappe;
+		private TableColumn<Etappe, String> colEtappe;
 		@FXML
-		private TableColumn<Etappen, String> colDatum;
+		private TableColumn<Etappe, String> colDatum;
 		@FXML
-		private TableColumn<Etappen, String> colUhrzeit;
+		private TableColumn<Etappe, String> colUhrzeit;
 		@FXML
-		private TableColumn<Etappen, String> colStartort;
+		private TableColumn<Etappe, String> colStartort;
 		@FXML
-		private TableColumn<Etappen, String> colZielort;
+		private TableColumn<Etappe, String> colZielort;
 		@FXML
-		private TableColumn<Etappen, String> colLaenge;
+		private TableColumn<Etappe, String> colLaenge;
 		@FXML
-		private TableColumn<Etappen, String> colEtappenart;
+		private TableColumn<Etappe, String> colEtappenart;
 		@FXML
-		private TableView<Etappen> tbview;
+		private TableView<Etappe> tbview;
 		
 		private MainMenuController main;
 
@@ -48,30 +59,58 @@ public class EtappenController{
 	
 	@FXML
 	public void importEtappenTable(){
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("");
+		alert.setHeaderText("Choose wisely");
+		alert.setContentText("Choose import");
 		
+		ButtonType buttonTestData = new ButtonType("TestData");
+		ButtonType buttonRealData = new ButtonType("RealData");
+		ButtonType buttonCancel = new ButtonType("Cancel",ButtonData.CANCEL_CLOSE);
+		
+		alert.getButtonTypes().setAll(buttonTestData,buttonRealData,buttonCancel);
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == buttonTestData){
+			DBFunctions.getInstance().datenEingeben();
+			try {
+				populateEtappen(EtappenDAO.searchEtappen("1"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else if(result.get() == buttonRealData){
+			DBFunctions.getInstance().datenEingebenAuswahl("test");
+		}else{
+			
+		}
 	}
 	@FXML
 	public void initialize() {
 			
-	colEtappe.setCellValueFactory(cellData -> cellData.getValue().getEtappenID().asString());
-	colStartort.setCellValueFactory(cellData -> cellData.getValue().getStartort());
-	colZielort.setCellValueFactory(cellData -> cellData.getValue().getZielort());
-	colLaenge.setCellValueFactory(cellData -> cellData.getValue().getLaenge().asString());
+	colEtappe.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
+	colStartort.setCellValueFactory(cellData -> cellData.getValue().startOrtProperty());
+	colZielort.setCellValueFactory(cellData -> cellData.getValue().zielOrtProperty());
+	colLaenge.setCellValueFactory(cellData -> cellData.getValue().laengeProperty().asString());
 	   
 	}
+	private void populateEtappen(List<Etappe> etappen){
+	ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
+	etappenData.addAll(etappen);
+	tbview.setItems(etappenData);
+	}
 	
-	 /**
-     * Is called by the main application to give a reference back to itself.
-     * 
-     * @param mainApp
-     */
-    public void setMainApp(MainMenuController main) {
-        this.main = main;
-	
-        // Add observable list data to the table
-        tbview.setItems(main.getEtappenData());
-    }
-    
+//	
+//	 /**
+//     * Is called by the main application to give a reference back to itself.
+//     * 
+//     * @param mainApp
+//     */
+//    public void setMainApp(MainMenuController main) {
+//        this.main = main;
+//	
+//        // Add observable list data to the table
+//        tbview.setItems(main.getEtappenData());
+//    }
+//    
     
    
 }

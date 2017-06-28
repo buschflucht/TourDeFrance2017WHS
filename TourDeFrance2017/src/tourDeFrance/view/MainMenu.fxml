@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="690.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tourDeFrance.controller.MainMenuController">
+<AnchorPane prefHeight="690.0" prefWidth="800.0" stylesheets="@../tourDeFrance.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tourDeFrance.controller.MainMenuController">
    <children>
       <ToolBar layoutX="7.0" layoutY="14.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -38,7 +38,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="448.0" prefWidth="158.0">
                <children>
-                  <VBox layoutX="14.0" layoutY="7.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox layoutX="14.0" layoutY="7.0" prefHeight="200.0" prefWidth="100.0" styleClass="root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Button fx:id="btnCreateDB" alignment="CENTER" mnemonicParsing="false" onAction="#openCreateDB" text="CreateDatabase" visible="false">
                            <opaqueInsets>
@@ -132,7 +132,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TabPane fx:id="tbPane" layoutX="116.0" layoutY="94.0" prefHeight="319.0" prefWidth="302.0" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TabPane fx:id="tbPane" layoutX="116.0" layoutY="94.0" prefHeight="319.0" prefWidth="302.0" styleClass="root" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>

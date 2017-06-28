@@ -33,7 +33,7 @@ public class DBFunctions {
 	private static final String TABLENAMEETAPPENART = "etappenart";
 
 	private String aktuelleConnection = "";
-	private static Connection connection = null;
+	private Connection connection = null;
 	private static final String DATABASENAME = "tourdefrance2017";
 	private static Statement stmt = null;
 
@@ -45,6 +45,10 @@ public class DBFunctions {
 
 	private DBFunctions() {
 		super();
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 
 	/**
@@ -68,6 +72,7 @@ public class DBFunctions {
 			return "Connection succeed";
 
 		} catch (SQLException e) {
+			System.out.println("Connection failed! Check output console" + e);
 			return "failed";
 		}
 	}
@@ -255,9 +260,10 @@ public class DBFunctions {
 					+ "user2016.csv' " + "INTO TABLE user";
 
 			stmt.executeQuery(sql);
-
+			
 			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 					+ "tipps2016.csv' " + "INTO TABLE tipps";
+//			+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
 
 			stmt.executeQuery(sql);
 
@@ -284,6 +290,10 @@ public class DBFunctions {
 
 			if (auswahl == "testdaten") {
 				stmt = connection.createStatement();
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "etappen2016.csv' " + "INTO TABLE etappen";
+				stmt.executeQuery(sql);
 
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
@@ -293,14 +303,15 @@ public class DBFunctions {
 						+ "teams2016.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
 
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
-						+ "etappen2016.csv' " + "INTO TABLE etappen";
-				stmt.executeQuery(sql);
+				
 
 				stmt.close();
 
 			} else {
 				stmt = connection.createStatement();
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
+				stmt.executeQuery(sql);
 
 				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017"
 						+ "fahrer2017.csv' " + "INTO TABLE fahrer";
@@ -310,8 +321,7 @@ public class DBFunctions {
 						+ "teams2017.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
 
-				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
-				stmt.executeQuery(sql);
+			
 
 				stmt.close();
 			}

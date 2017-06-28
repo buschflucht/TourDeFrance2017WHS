@@ -24,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tourDeFrance.DBFunctions;
 import tourDeFrance.Main;
-import tourDeFrance.model.Etappen;
+import tourDeFrance.model.Etappe;
 
 public class MainMenuController implements Initializable {
 
@@ -56,25 +56,22 @@ public class MainMenuController implements Initializable {
 	
 	private static MainMenuController instance;
 
-	 private ObservableList<Etappen> EtappenData = FXCollections.observableArrayList();
-
-	 
-	 public MainMenuController(){
-		 EtappenData.add(new Etappen(1,"Duesseldorf","Herne",14.0));
-		 EtappenData.add(new Etappen(2,"Duesseldorf","Gelsenkirchen",13.8));
-		 EtappenData.add(new Etappen(3,"Berlin","Bocholt",12.1));
-		 EtappenData.add(new Etappen(4,"Augsburg","Friedberg",123.3));
-
-	 }	 
-	   /**
-	     * Returns the data as an observable list of Persons. 
-	     * @return
-	     */
-	    public ObservableList<Etappen> getEtappenData() {
-	        return EtappenData;
-	    }
-
-	
+//	 private ObservableList<Etappen> EtappenData = FXCollections.observableArrayList();
+//
+//	 
+//	 public MainMenuController(Etappen etappen){
+//		 EtappenData.add(etappen);
+//		
+//	 }	 
+//	   /**
+//	     * Returns the data as an observable list of Persons. 
+//	     * @return
+//	     */
+//	    public ObservableList<Etappen> getEtappenData() {
+//	        return EtappenData;
+//	    }
+//
+//	
 	
 	
 	public static MainMenuController getInstance() {
@@ -148,8 +145,8 @@ public class MainMenuController implements Initializable {
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
 			// Give the controller access to the main app.
-		       EtappenController controller = fxmlLoader.getController();
-		       controller.setMainApp(this);
+//		       EtappenController controller = fxmlLoader.getController();
+//		       controller.setMainApp(this);
 			} else {
 				closeTab();
 			}
@@ -248,6 +245,12 @@ public class MainMenuController implements Initializable {
 		btnShowRanking.setVisible(false);
 		btnCreateRanking.setVisible(false);
 		lblConnection.setText("");
+		if (tbPane.getTabs().isEmpty()) {
+
+
+		} else {
+			closeTab();
+		}
 	}
 
 	private void setButtonFields(boolean ok) {

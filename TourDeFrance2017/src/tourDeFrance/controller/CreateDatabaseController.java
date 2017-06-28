@@ -31,6 +31,7 @@ public class CreateDatabaseController {
 			alert.setContentText("Datenbank tourdefrance2017 erstellt!");
 			alert.showAndWait();
 			MainMenuController.getInstance().openLogin();
+			closeCreateDB();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
 			alert.setHeaderText(null);
