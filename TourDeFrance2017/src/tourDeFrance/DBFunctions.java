@@ -18,11 +18,11 @@ public class DBFunctions {
 	private static final String LOCAL_PW = "beerenfalle03";
 	private static final String LOCAL_DB = "tourdefrance2017";
 
-	private static final String LIVE_IP = "localhost";
+	private static final String LIVE_IP = "193.175.198.25";
 	private static final String LIVE_PORT = "3306";
-	private static final String LIVE_USER = "root";
-	private static final String LIVE_PW = "beerenfalle03";
-	private static final String LIVE_DB = "tourdefrance2017";
+	private static final String LIVE_USER = "tdf2017_c";
+	private static final String LIVE_PW = "tdf2017";
+	private static final String LIVE_DB = "tourdefrance2017_c";
 
 	private static final String TABLENAMEUSER = "user";
 	private static final String TABLENAMEETAPPEN = "etappen";
@@ -97,7 +97,7 @@ public class DBFunctions {
 	public String connectDB(String ipAdresse, String port, String benutzerName, String passwort, String database) {
 		String rt;
 		try {
-			if (dbExists(connection, DATABASENAME)) {
+			if (dbExists(connection, LIVE_DB)) {
 
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
@@ -219,7 +219,7 @@ public class DBFunctions {
 
 				String dName = resultSet.getString(1);
 				System.out.println(dName);
-				if (DATABASENAME.toUpperCase().equals(dName.toUpperCase())) {
+				if (LIVE_DB.toUpperCase().equals(dName.toUpperCase())) {
 					// falls vorhanden loeschen
 					stmt = connection.createStatement();
 					stmt.execute("drop schema " + dName);
@@ -231,7 +231,7 @@ public class DBFunctions {
 
 			// Erstellt die Datenbank
 			stmt = connection.createStatement();
-			String databaseName2 = "CREATE DATABASE " + DATABASENAME;
+			String databaseName2 = "CREATE DATABASE " + LIVE_DB;
 			stmt.executeUpdate(databaseName2);
 			rt = "succeed";
 
@@ -290,20 +290,18 @@ public class DBFunctions {
 
 			if (auswahl == "testdaten") {
 				stmt = connection.createStatement();
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
-						+ "etappen2016.csv' " + "INTO TABLE etappen";
-				stmt.executeQuery(sql);
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
-						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
-				stmt.executeQuery(sql);
 
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "teams2016.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
-
 				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
+				stmt.executeQuery(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+						+ "etappen2016.csv' " + "INTO TABLE etappen";
+				stmt.executeQuery(sql);
 
 				stmt.close();
 
@@ -432,6 +430,15 @@ public class DBFunctions {
 			// Erstellt die Tabelle etappenart
 			stmt.execute("create table " + TABLENAMEETAPPENART + "(artID int(11) not null auto_increment,"
 					+ "bezeichnung varchar(50) null default null," + "primary key (artID))");
+			// Befüllt die Tabelle Etappenart
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
+					+"VALUES (1, 'einzelzeitfahren')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
+					+"VALUES (2, 'flachetappe')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
+					+"VALUES (3, 'gebirge')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
+					+"VALUES (4, 'huegelig')");
 
 			// Erstellt die Tabelle etappen
 			stmt.execute("create table " + TABLENAMEETAPPEN

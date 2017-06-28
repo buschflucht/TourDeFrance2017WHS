@@ -72,6 +72,7 @@ public class EtappenController{
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == buttonTestData){
 			DBFunctions.getInstance().datenEingeben();
+			DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
 			try {
 				populateEtappen(EtappenDAO.searchEtappen("1"));
 			} catch (SQLException e) {
