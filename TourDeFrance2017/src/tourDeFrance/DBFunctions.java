@@ -31,6 +31,7 @@ public class DBFunctions {
 	private static final String TABLENAMERANKING = "ranking";
 	private static final String TABLENAMETIPPS = "tipps";
 	private static final String TABLENAMEETAPPENART = "etappenart";
+	private static final String BAYO = "bayomayo";
 
 	private String aktuelleConnection = "";
 	private Connection connection = null;

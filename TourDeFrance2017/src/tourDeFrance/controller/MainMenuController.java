@@ -246,8 +246,6 @@ public class MainMenuController implements Initializable {
 		btnCreateRanking.setVisible(false);
 		lblConnection.setText("");
 		if (tbPane.getTabs().isEmpty()) {
-
-
 		} else {
 			closeTab();
 		}
