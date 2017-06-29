@@ -38,16 +38,16 @@ public class CreateDatabaseController implements Initializable {
 		Alert alert = new Alert(AlertType.INFORMATION);
 
 		if (dummy == "succeed") {
-			alert.setTitle("Erfolgreiche Verbindung");
+			alert.setTitle("Successful Connection");
 			alert.setHeaderText(null);
-			alert.setContentText("Datenbank "+ txtDataBaseName.getText() + " erstellt!");
+			alert.setContentText("Database "+ txtDataBaseName.getText() + " created!");
 			alert.showAndWait();
 			MainMenuController.getInstance().openLogin();
 			closeCreateDB();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
 			alert.setHeaderText(null);
-			alert.setContentText("Erstellung Datenbank "+ txtDataBaseName.getText() + " fehlgeschlagen");
+			alert.setContentText("Creation of "+ txtDataBaseName.getText() + " failed");
 
 			alert.showAndWait();
 		}

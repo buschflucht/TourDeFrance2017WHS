@@ -22,19 +22,19 @@ public class CreateTablesController {
 	public void createTables() {
 		String dummy = "";
 		dummy = DBFunctions.getInstance().tabellenAnlegen();
-
+		String dataBaseName = DBFunctions.getInstance().getDatabaseName();
 		Alert alert = new Alert(AlertType.INFORMATION);
 
 		if (dummy == "succeed") {
-			alert.setTitle("Erfolgreiche Erstellung");
+			alert.setTitle("Success");
 			alert.setHeaderText(null);
-			alert.setContentText("Erfolgreich alle Tabellen in der Datenbank 'tourdefrance2017' erstellt!");
+			alert.setContentText("Created all Tables in " + dataBaseName + "!");
 			alert.showAndWait();
 			MainMenuController.getInstance().closeTab();
 		} else {
-			alert.setTitle("Fehlgeschlagen");
+			alert.setTitle("Failed");
 			alert.setHeaderText(null);
-			alert.setContentText("Tabellen konnten nicht angelegt werden!");
+			alert.setContentText("Tables could not be created!");
 
 			alert.showAndWait();
 		}

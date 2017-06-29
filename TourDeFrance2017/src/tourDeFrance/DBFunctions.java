@@ -115,7 +115,7 @@ public class DBFunctions {
 		String rt;
 		try {
 			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort))
-					&& (dbExists(connection, LIVE_DB))) {
+					&& (dbExists(connection, LIVE_DB)||(dbExists(connection,LOCAL_DB)))) {
 				
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
