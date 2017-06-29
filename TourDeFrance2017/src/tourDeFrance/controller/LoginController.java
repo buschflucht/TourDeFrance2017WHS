@@ -89,7 +89,7 @@ public class LoginController {
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
 			alert.setHeaderText("Succesful Connection");
-			alert.setContentText("Connected with Local DataBase!");
+			alert.setContentText("Connected with Local Database!");
 			alert.showAndWait();
 			Stage stage = (Stage) btnLocalDB.getScene().getWindow();
 			String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -99,8 +99,8 @@ public class LoginController {
 		} else {
 			alert.setTitle("Failed");
 			alert.setHeaderText("Something went wrong");
-			alert.setContentText("Connection with Local DB 'tourdefrance2017' failed - "
-					+ "Database tourdefrance2017 doesn't exist");
+			alert.setContentText("Connection with LocalDatabase failed - "
+					+ "Maybe Database doesn't exist");
 			alert.showAndWait();
 		}
 
@@ -153,7 +153,7 @@ public class LoginController {
 		} else {
 			alert.setTitle("Failed");
 			alert.setHeaderText("Something went wrong");
-			alert.setContentText("Connection with Live DB 'tourdefrance2017' failed");
+			alert.setContentText("Connection with Live Database  failed");
 			alert.showAndWait();
 		}
 	}
@@ -278,7 +278,6 @@ public class LoginController {
 
 	@FXML
 	public void selectDB() {
-		boolean b = chboxManualDB.isSelected();
 		if (chboxManualDB.isSelected()) {
 			txtIp.setDisable(true);
 			txtPort.setDisable(true);
