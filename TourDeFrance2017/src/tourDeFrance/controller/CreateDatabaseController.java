@@ -1,19 +1,25 @@
 package tourDeFrance.controller;
 
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import tourDeFrance.DBFunctions;
 
-public class CreateDatabaseController {
+public class CreateDatabaseController implements Initializable {
 
 	@FXML
 	private Button btnCloseCreateDB;
 	@FXML
 	private Button btnCreateDB;
+	@FXML
+	private TextField txtDataBaseName;
 
 	@FXML
 	public void closeCreateDB() {
@@ -24,7 +30,7 @@ public class CreateDatabaseController {
 	public void createDB() {
 		String dummy = "";
 		try {
-			dummy = DBFunctions.getInstance().createDb();
+			dummy = DBFunctions.getInstance().createDb(txtDataBaseName.getText());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,17 +40,23 @@ public class CreateDatabaseController {
 		if (dummy == "succeed") {
 			alert.setTitle("Erfolgreiche Verbindung");
 			alert.setHeaderText(null);
-			alert.setContentText("Datenbank tourdefrance2017 erstellt!");
+			alert.setContentText("Datenbank "+ txtDataBaseName.getText() + " erstellt!");
 			alert.showAndWait();
 			MainMenuController.getInstance().openLogin();
 			closeCreateDB();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
 			alert.setHeaderText(null);
-			alert.setContentText("Erstellung Datenbank tourdefrance2017 fehlgeschlagen");
+			alert.setContentText("Erstellung Datenbank "+ txtDataBaseName.getText() + " fehlgeschlagen");
 
 			alert.showAndWait();
 		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		txtDataBaseName.setText(DBFunctions.getInstance().getDatabaseName());
+		
 	}
 
 }

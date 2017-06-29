@@ -16,7 +16,7 @@
          </font>
       </Label>
       <Separator layoutX="7.0" layoutY="58.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <TextField layoutX="22.0" layoutY="123.0" text="tourdefrance2017" />
+      <TextField fx:id="txtDataBaseName" layoutX="22.0" layoutY="123.0" promptText="DatabaseName" />
       <ToolBar layoutY="353.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
           <Button fx:id="btnCreateDB" mnemonicParsing="false" onAction="#createDB" text="Create">

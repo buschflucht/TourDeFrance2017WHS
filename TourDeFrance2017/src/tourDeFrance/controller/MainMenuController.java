@@ -56,6 +56,7 @@ public class MainMenuController implements Initializable {
 	private Button btnShowRanking;
 	@FXML
 	private Button btnImportCsv;
+	
 
 	private static MainMenuController instance;
 

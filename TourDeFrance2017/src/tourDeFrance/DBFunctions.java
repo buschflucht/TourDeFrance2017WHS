@@ -10,6 +10,15 @@ import java.sql.Statement;
 public class DBFunctions {
 
 	private static DBFunctions instance;
+	private String databaseName = "";
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
+	}
+
 	// Lokale Anmeldedaten
 	private static final String LOCAL_IP = "localhost";
 	private static final String LOCAL_PORT = "3306";
@@ -74,7 +83,7 @@ public class DBFunctions {
 			String url = "jdbc:mariadb://" + ipAdresse + ":" + port + "?useSSL=false";
 			connection = DriverManager.getConnection(url, benutzerName, passwort);
 			aktuelleConnection = "Connected to " + ipAdresse + ":" +"\n" + port;
-
+			
 			rt = CONNECTION_OK;
 
 		} catch (SQLException e) {
@@ -107,11 +116,11 @@ public class DBFunctions {
 		try {
 			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort))
 					&& (dbExists(connection, LIVE_DB))) {
-
+				
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
 				aktuelleConnection = "Connected to " + ipAdresse + ":"+"\n"  + port + "/" + database;
-
+				
 				rt = CONNECTION_OK;
 
 			} else {
@@ -147,6 +156,7 @@ public class DBFunctions {
 	 * @return verbinde Lokal
 	 */
 	public String connectLocal() {
+		databaseName = LOCAL_DB;
 		return connect(LOCAL_IP, LOCAL_PORT, LOCAL_USER, LOCAL_PW);
 	}
 
@@ -156,6 +166,7 @@ public class DBFunctions {
 	 * @return verbinde Live
 	 */
 	public String connectLIVE() {
+		databaseName = LIVE_DB;
 		return connect(LIVE_IP, LIVE_PORT, LIVE_USER, LIVE_PW);
 	}
 
@@ -166,6 +177,7 @@ public class DBFunctions {
 	 * @return verbinde Lokal mit DB
 	 */
 	public String connectLocalDB() {
+		
 		return connectDB(LOCAL_IP, LOCAL_PORT, LOCAL_USER, LOCAL_PW, LOCAL_DB);
 	}
 
@@ -176,6 +188,7 @@ public class DBFunctions {
 	 * @return verbinde Live mit DB
 	 */
 	public String connectLIVEDB() {
+		
 		return connectDB(LIVE_IP, LIVE_PORT, LIVE_USER, LIVE_PW, LIVE_DB);
 	}
 
@@ -215,11 +228,11 @@ public class DBFunctions {
 	 * Erzeugt eine Datenbank in MariaDB, falls bereits die Datenbank vorhanden ist
 	 * soll diese zuvor geloescht werden
 	 * 
-	 * @param databaseName
+	 * @param dataBaseName
 	 * 
 	 * @throws SQLException
 	 */
-	public String createDb() throws SQLException {
+	public String createDb(String dataBaseName) throws SQLException {
 		String rt = "";
 		boolean dbvorhanden = false;
 		Statement stmt;
@@ -233,7 +246,7 @@ public class DBFunctions {
 
 				String dName = resultSet.getString(1);
 				System.out.println(dName);
-				if (LIVE_DB.toUpperCase().equals(dName.toUpperCase())) {
+				if (dataBaseName.toUpperCase().equals(dName.toUpperCase())) {
 					// loescht Datenbank
 					stmt = connection.createStatement();
 					stmt.execute("drop schema " + dName);
@@ -244,7 +257,7 @@ public class DBFunctions {
 
 			// Erstellt die Datenbank
 			stmt = connection.createStatement();
-			String databaseName2 = "CREATE DATABASE " + LIVE_DB;
+			String databaseName2 = "CREATE DATABASE " + dataBaseName;
 			stmt.executeUpdate(databaseName2);
 			rt = "succeed";
 
