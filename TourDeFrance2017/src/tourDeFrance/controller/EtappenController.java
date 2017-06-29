@@ -55,33 +55,33 @@ public class EtappenController {
 
 	}
 
-	@FXML
-	public void importEtappenTable() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("");
-		alert.setHeaderText("Choose wisely");
-		alert.setContentText("Choose import");
-
-		ButtonType buttonTestData = new ButtonType("TestData");
-		ButtonType buttonRealData = new ButtonType("RealData");
-		ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().setAll(buttonTestData, buttonRealData, buttonCancel);
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTestData) {
-			// DBFunctions.getInstance().datenEingeben();
-			// DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
-//			try {
-////				populateEtappen(EtappenDAO.selectEtappen());
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-		} else if (result.get() == buttonRealData) {
-			// DBFunctions.getInstance().datenEingebenAuswahl("test");
-		} else {
-
-		}
-	}
+//	@FXML
+//	public void importEtappenTable() {
+//		Alert alert = new Alert(AlertType.CONFIRMATION);
+//		alert.setTitle("");
+//		alert.setHeaderText("Choose wisely");
+//		alert.setContentText("Choose import");
+//
+//		ButtonType buttonTestData = new ButtonType("TestData");
+//		ButtonType buttonRealData = new ButtonType("RealData");
+//		ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+//
+//		alert.getButtonTypes().setAll(buttonTestData, buttonRealData, buttonCancel);
+//		Optional<ButtonType> result = alert.showAndWait();
+//		if (result.get() == buttonTestData) {
+//			// DBFunctions.getInstance().datenEingeben();
+//			// DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
+////			try {
+//////				populateEtappen(EtappenDAO.selectEtappen());
+////			} catch (SQLException e) {
+////				e.printStackTrace();
+////			}
+//		} else if (result.get() == buttonRealData) {
+//			// DBFunctions.getInstance().datenEingebenAuswahl("test");
+//		} else {
+//
+//		}
+//	}
 
 	@FXML
 	public void initialize() {
@@ -96,7 +96,6 @@ public class EtappenController {
 		try {
 			populateEtappen(EtappenDAO.selectEtappen());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

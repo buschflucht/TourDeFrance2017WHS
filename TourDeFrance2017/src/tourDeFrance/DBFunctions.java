@@ -287,6 +287,28 @@ public class DBFunctions {
 			return "";
 		}
 	}
+	
+	
+	public String datenEinlesen(String verzeichnis, String datei, String table ) {
+
+		String sql = "";
+
+		try {
+			stmt = connection.createStatement();
+
+			sql = "LOAD DATA LOCAL INFILE './resources/" + verzeichnis + "/" + datei
+					+  " INTO TABLE " + table;
+
+			stmt.executeQuery(sql);
+
+			stmt.close();
+			return "succeed";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 
 	/**
 	 * Laedt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
