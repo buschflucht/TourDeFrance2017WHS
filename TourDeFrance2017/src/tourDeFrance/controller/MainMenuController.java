@@ -3,6 +3,7 @@ package tourDeFrance.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -175,6 +176,23 @@ public class MainMenuController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	@FXML
+	public void pressErgebnisseEinlesen() {
+//		  Pattern pattern;
+		  String directory = "resources/Testdaten_Ergebnisse_Bergwertung_2016/";
+//		  ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+		  List<String> files;
+	 
+			files = DBFunctions.getInstance().getResourcesFromDirectory(directory);
+	
+		  for (String file : files) {
+			  System.out.println(file);
+		  }
+	 
+		  
+		  
+//		String dir = DBFunctions.getInstance().getResourcesFromDirectory(classLoader.getResource(fileName).getFile(), Pattern.compile(".*\\.csv"));
+	}
 
 	@FXML
 	public void importCsv() {
@@ -223,6 +241,7 @@ public class MainMenuController implements Initializable {
 
 		}
 	}
+	
 
 	public void messageDialogImport(String a, String b, String c, String d, String e) {
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -292,6 +311,7 @@ public class MainMenuController implements Initializable {
 		btnShowEtappen.setVisible(false);
 		btnShowRanking.setVisible(false);
 		btnCreateRanking.setVisible(false);
+		btnImportCsv.setVisible(false);
 		lblConnection.setText("");
 		if (tbPane.getTabs().isEmpty()) {
 		} else {
@@ -316,6 +336,7 @@ public class MainMenuController implements Initializable {
 		btnShowEtappen.setVisible(ok);
 		btnShowRanking.setVisible(ok);
 		btnCreateRanking.setVisible(ok);
+		btnImportCsv.setVisible(ok);
 	}
 
 }

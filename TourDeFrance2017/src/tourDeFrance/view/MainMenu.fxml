@@ -40,7 +40,7 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" styleClass="root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="btnCreateDB" alignment="CENTER" mnemonicParsing="false" onAction="#openCreateDB" text="CreateDatabase">
+                        <Button fx:id="btnCreateDB" alignment="CENTER" mnemonicParsing="false" onAction="#openCreateDB" text="CreateDatabase" visible="false">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -54,7 +54,7 @@
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnCreateTables" mnemonicParsing="false" onAction="#openCreateTables" text="CreateTables">
+                        <Button fx:id="btnCreateTables" mnemonicParsing="false" onAction="#openCreateTables" text="CreateTables" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -65,7 +65,7 @@
                               <Insets bottom="10.0" left="55.0" right="60.0" top="10.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="btnImportCsv" mnemonicParsing="false" onAction="#importCsv" text="Import Data">
+                        <Button fx:id="btnImportCsv" mnemonicParsing="false" onAction="#importCsv" text="Import Data" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -76,7 +76,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnShowEtappen" mnemonicParsing="false" onAction="#openEtappenPlan" text="ShowEtappenplan">
+                        <Button fx:id="btnShowEtappen" mnemonicParsing="false" onAction="#openEtappenPlan" text="ShowEtappenplan" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -87,7 +87,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnErgebnisseEingeben" mnemonicParsing="false" text="Ergebnisse eingeben">
+                        <Button fx:id="btnErgebnisseEingeben" mnemonicParsing="false" onAction="#pressErgebnisseEinlesen" text="Ergebnisse eingeben" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -98,7 +98,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnErgebnisseAusgeben" mnemonicParsing="false" onAction="#openErgebnisseAusgeben" text="Ergebnisse ausgeben">
+                        <Button fx:id="btnErgebnisseAusgeben" mnemonicParsing="false" onAction="#openErgebnisseAusgeben" text="Ergebnisse ausgeben" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -109,7 +109,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnCreateRanking" mnemonicParsing="false" text="CreateRanking">
+                        <Button fx:id="btnCreateRanking" mnemonicParsing="false" text="CreateRanking" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnShowRanking" mnemonicParsing="false" onAction="#openShowRanking" text="ShowRanking">
+                        <Button fx:id="btnShowRanking" mnemonicParsing="false" onAction="#openShowRanking" text="ShowRanking" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>
