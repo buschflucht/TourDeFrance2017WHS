@@ -213,6 +213,8 @@ public class MainMenuController implements Initializable {
 			String data3 = "";
 			String data4 = "";
 			String data5 = "";
+			
+			DBFunctions.getInstance().ergebnisseEingeben();
 			data1 = DBFunctions.getInstance()
 					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "user");
 			data2 = DBFunctions.getInstance()
