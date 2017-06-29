@@ -40,7 +40,7 @@ public class Etappe {
 	private StringProperty dopingTeam;
 
 	private StringProperty bezeichnung;
-
+	// Datums Formatter
 	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
 			.withLocale(Locale.GERMAN);
 	private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)

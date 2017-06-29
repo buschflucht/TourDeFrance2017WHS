@@ -3,7 +3,6 @@ package tourDeFrance.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -179,15 +178,15 @@ public class MainMenuController implements Initializable {
 
 	@FXML
 	public void pressErgebnisseEinlesen() {
-
+		DBFunctions.getInstance().ergebnisseEingeben();
 	}
 
 	@FXML
 	public void importCsv() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("");
+		alert.setTitle("Import");
 		alert.setHeaderText("Choose how to import your .csv Data");
-		alert.setContentText("TestData or RealData");
+		alert.setContentText("Test Data or Real Data");
 
 		ButtonType buttonTestData = new ButtonType("TestData");
 		ButtonType buttonRealData = new ButtonType("RealData");
@@ -231,7 +230,14 @@ public class MainMenuController implements Initializable {
 
 		}
 	}
-
+	/**
+	 * Erzeugt eine MessageBox für den Dateiimport
+	 * @param a 
+	 * @param b
+	 * @param c
+	 * @param d
+	 * @param e
+	 */
 	public void messageDialogImport(String a, String b, String c, String d, String e) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		if (a == "succeed" && b == "succeed" && c == "succeed" && d == "succeed" && e == "succeed") {
@@ -248,6 +254,11 @@ public class MainMenuController implements Initializable {
 		}
 	}
 
+	/**
+	 * Aktualisiert das ConnectionLabel bei Verbindung ohne DB
+	 * 
+	 * @param string
+	 */
 	public void updateMenu(String string) {
 		boolean ok = true;
 		lblConnection.setText(string);
@@ -257,6 +268,11 @@ public class MainMenuController implements Initializable {
 		setButtonFields(ok);
 	}
 
+	/**
+	 * Aktualisiert das ConnectionLabel bei Verbindung mit DB
+	 * 
+	 * @param string
+	 */
 	public void updateMenuDB(String string) {
 		boolean ok = true;
 		lblConnection.setText(string);
@@ -269,9 +285,9 @@ public class MainMenuController implements Initializable {
 	@FXML
 	public void closeApp() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Programm beenden");
-		alert.setHeaderText("Sie sind dabei das Programm zu schließen");
-		alert.setContentText("Bist du dir sicher?");
+		alert.setTitle("Close Program");
+		alert.setHeaderText("You are about to close the Application");
+		alert.setContentText("Are you sure?");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
@@ -282,6 +298,9 @@ public class MainMenuController implements Initializable {
 
 	}
 
+	/**
+	 * Schließt den aktuellen Tab
+	 */
 	public void closeTab() {
 		tbPane.getTabs().remove(0);
 	}
@@ -308,6 +327,12 @@ public class MainMenuController implements Initializable {
 		}
 	}
 
+	/**
+	 * Setzt Datenbank erstellen auf sichtbar bei Verbindung ohne Auswahl der
+	 * Datenbank
+	 * 
+	 * @param ok
+	 */
 	private void setButtonFields(boolean ok) {
 		btnCreateDB.setVisible(ok);
 	}
@@ -318,6 +343,12 @@ public class MainMenuController implements Initializable {
 
 	}
 
+	/**
+	 * Setzt die Buttons auf sichtbar/unsichtbar bei Verbindung mit Auswahl der
+	 * Datenbank
+	 * 
+	 * @param ok
+	 */
 	private void setButtonFieldsDB(boolean ok) {
 		btnCreateTables.setVisible(ok);
 		btnErgebnisseAusgeben.setVisible(ok);

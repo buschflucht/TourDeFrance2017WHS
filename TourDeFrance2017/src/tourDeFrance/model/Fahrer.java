@@ -17,37 +17,41 @@ public class Fahrer {
 	private IntegerProperty etappensiege;
 	private IntegerProperty punkteGruen;
 	private IntegerProperty punkteBerg;
-	
+
 	public IntegerProperty getFahrerID() {
 		return fahrerID;
 	}
+
 	public StringProperty getFahrerVorname() {
 		return fahrerVorname;
 	}
+
 	public StringProperty getFahrerNachname() {
 		return fahrerNachname;
 	}
+
 	public IntegerProperty getTeam() {
 		return team;
 	}
+
 	public IntegerProperty getAktiv() {
 		return aktiv;
 	}
+
 	public ObjectProperty<LocalTime> getGesamtzeit() {
 		return gesamtzeit;
 	}
+
 	public IntegerProperty getEtappensiege() {
 		return etappensiege;
 	}
+
 	public IntegerProperty getPunkteGruen() {
 		return punkteGruen;
 	}
+
 	public IntegerProperty getPunkteBerg() {
 		return punkteBerg;
 	}
-	
-	
-	
-	
-	
+
 }

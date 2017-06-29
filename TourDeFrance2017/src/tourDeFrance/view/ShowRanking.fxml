@@ -14,7 +14,7 @@
           <Button fx:id="btnCloseRanking" mnemonicParsing="false" onAction="#closeShowRanking" text="Close" />
         </items>
       </ToolBar>
-      <ScrollPane hbarPolicy="ALWAYS" layoutX="66.0" layoutY="66.0" prefHeight="414.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane hbarPolicy="ALWAYS" layoutX="66.0" layoutY="66.0" prefHeight="414.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <TableView prefHeight="399.0" prefWidth="786.0">
               <columns>

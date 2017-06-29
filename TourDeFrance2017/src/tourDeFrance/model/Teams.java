@@ -8,19 +8,17 @@ public class Teams {
 	private IntegerProperty teamID;
 	private StringProperty teamName;
 	private StringProperty teamBildUrl;
-	
+
 	public IntegerProperty getTeamID() {
 		return teamID;
 	}
+
 	public StringProperty getTeamName() {
 		return teamName;
 	}
+
 	public StringProperty getTeamBildUrl() {
 		return teamBildUrl;
 	}
-	
-	
 
-	
-	
 }

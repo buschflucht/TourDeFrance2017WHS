@@ -11,15 +11,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	private Stage primaryStage;
-	
 
-	 
-	 
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Tour de France Main Menu");
-		this.primaryStage.getIcons().add(new Image("file:resources/images/address_Book.png"));
+		this.primaryStage.getIcons().add(new Image("file:resources/images/monitor.png"));
 		showMainView();
 	}
 
@@ -38,7 +35,6 @@ public class Main extends Application {
 
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String[] args) {

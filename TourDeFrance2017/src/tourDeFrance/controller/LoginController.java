@@ -72,8 +72,8 @@ public class LoginController {
 			control.updateMenu(login);
 			stage.close();
 		} else {
-			alert.setTitle("Hoppala");
-			alert.setHeaderText("Hoppala da laeuft was falsch");
+			alert.setTitle("Failed");
+			alert.setHeaderText("Something went wrong");
 			alert.setContentText("Connection to Local-Server failed!");
 			alert.showAndWait();
 		}
@@ -97,8 +97,8 @@ public class LoginController {
 			control.updateMenuDB(login);
 			stage.close();
 		} else {
-			alert.setTitle("FAIL");
-			alert.setHeaderText("Hoppala da laeuft was falsch");
+			alert.setTitle("Failed");
+			alert.setHeaderText("Something went wrong");
 			alert.setContentText("Connection with Local DB 'tourdefrance2017' failed - "
 					+ "Database tourdefrance2017 doesn't exist");
 			alert.showAndWait();
@@ -125,8 +125,8 @@ public class LoginController {
 			control.updateMenu(login);
 			stage.close();
 		} else {
-			alert.setTitle("FAIL");
-			alert.setHeaderText("Hoppala da laeuft was falsch");
+			alert.setTitle("Failed");
+			alert.setHeaderText("Something went wrong");
 			alert.setContentText("Connection to Live-Server failed");
 			alert.showAndWait();
 		}
@@ -151,8 +151,8 @@ public class LoginController {
 			control.updateMenuDB(login);
 			stage.close();
 		} else {
-			alert.setTitle("FAIL");
-			alert.setHeaderText("Hoppala da laeuft was falsch");
+			alert.setTitle("Failed");
+			alert.setHeaderText("Something went wrong");
 			alert.setContentText("Connection with Live DB 'tourdefrance2017' failed");
 			alert.showAndWait();
 		}
@@ -165,9 +165,9 @@ public class LoginController {
 				|| txtPW.getText().isEmpty()) {
 
 			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Achtung");
+			alert2.setTitle("Attention");
 			alert2.setHeaderText(null);
-			alert2.setContentText("Bitte alle Felder ausfuellen!");
+			alert2.setContentText("Please fill in all fields!");
 			alert2.showAndWait();
 
 		} else {
@@ -189,8 +189,8 @@ public class LoginController {
 				stage.close();
 
 			} else {
-				alert.setTitle("Fehlgeschlagen");
-				alert.setHeaderText("Oops");
+				alert.setTitle("Failed");
+				alert.setHeaderText("Something went wrong");
 				alert.setContentText("Connection failed. Check UserInput!");
 				alert.showAndWait();
 			}
@@ -205,9 +205,9 @@ public class LoginController {
 				|| txtPWDB.getText().isEmpty() || txtDatabase.getText().isEmpty()) {
 
 			Alert alert2 = new Alert(AlertType.WARNING);
-			alert2.setTitle("Achtung");
+			alert2.setTitle("Attention");
 			alert2.setHeaderText(null);
-			alert2.setContentText("Bitte alle Felder ausfuellen!");
+			alert2.setContentText("Please fill in all fields!");
 			alert2.showAndWait();
 
 		} else {
@@ -220,8 +220,7 @@ public class LoginController {
 			if (rt == "Connection succeed") {
 				alert.setTitle("Success");
 				alert.setHeaderText("Succesful Connection");
-				alert.setContentText(
-						"Connected to " + txtDatabase.getText() + " !");
+				alert.setContentText("Connected to " + txtDatabase.getText() + " !");
 				alert.showAndWait();
 				Stage stage = (Stage) btnManualDB.getScene().getWindow();
 				String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -231,9 +230,8 @@ public class LoginController {
 
 			} else {
 				alert.setTitle("Failed");
-				alert.setHeaderText("Oops");
-				alert.setContentText("Connection to " + txtDatabase.getText()
-						+ " failed. Check UserInput");
+				alert.setHeaderText("Something went wrong");
+				alert.setContentText("Connection to " + txtDatabase.getText() + " failed. Check UserInput");
 				alert.showAndWait();
 			}
 		}
@@ -263,9 +261,10 @@ public class LoginController {
 			txtPortDB.setDisable(true);
 			txtUserDB.setDisable(true);
 			txtPWDB.setDisable(true);
+			txtDatabase.setDisable(true);
 			btnManualDB.setDisable(true);
 			btnClearDB.setDisable(true);
-			txtDatabase.setDisable(true);
+		 
 			txtIp.setDisable(false);
 			txtPort.setDisable(false);
 			txtUser.setDisable(false);
@@ -279,6 +278,7 @@ public class LoginController {
 
 	@FXML
 	public void selectDB() {
+		boolean b = chboxManualDB.isSelected();
 		if (chboxManualDB.isSelected()) {
 			txtIp.setDisable(true);
 			txtPort.setDisable(true);
@@ -286,13 +286,14 @@ public class LoginController {
 			txtPW.setDisable(true);
 			btnManual.setDisable(true);
 			btnClear.setDisable(true);
+			txtDatabase.setDisable(false);
 			txtIpDB.setDisable(false);
 			txtPortDB.setDisable(false);
 			txtUserDB.setDisable(false);
 			txtPWDB.setDisable(false);
 			btnManualDB.setDisable(false);
 			btnClearDB.setDisable(false);
-			txtDatabase.setDisable(true);
+		 
 			chboxManual.setSelected(false);
 			chboxManualDB.setSelected(true);
 

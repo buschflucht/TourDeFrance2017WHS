@@ -2,19 +2,13 @@ package tourDeFrance.controller;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import tourDeFrance.DBFunctions;
 import tourDeFrance.model.Etappe;
 import tourDeFrance.model.EtappenDAO;
 
@@ -43,7 +37,6 @@ public class EtappenController {
 	private Button btnRefreshEtappenTable;
 	@FXML
 	private Button btnCloseEtappenTable;
-
 
 	@FXML
 	public void closeEtappenTable() {

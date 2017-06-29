@@ -37,5 +37,8 @@
             </Button>
         </items>
       </ToolBar>
+      <TextField editable="false" layoutX="239.0" layoutY="75.0" text="ergebnisseberg" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="75.0" />
+      <TextField editable="false" layoutX="239.0" layoutY="110.0" text="ergebnissegelb" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="110.0" />
+      <TextField editable="false" layoutX="239.0" layoutY="145.0" text="ergebnissegruen" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="145.0" />
    </children>
 </AnchorPane>

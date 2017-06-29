@@ -11,10 +11,10 @@
    <children>
       <ToolBar layoutY="474.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
-          <Button mnemonicParsing="false" text="Close" />
+          <Button fx:id="btnCloseErgebnisse" mnemonicParsing="false" onAction="#closeErgebnisseAusgeben" text="Close" />
         </items>
       </ToolBar>
-      <ScrollPane hbarPolicy="ALWAYS" layoutX="139.0" prefHeight="472.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ScrollPane hbarPolicy="ALWAYS" layoutX="139.0" prefHeight="472.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <TableView fx:id="tbview" prefHeight="458.0" prefWidth="784.0">
               <columns>

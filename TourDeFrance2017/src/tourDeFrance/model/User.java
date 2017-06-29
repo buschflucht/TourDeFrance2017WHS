@@ -15,32 +15,33 @@ public class User {
 	private StringProperty nachname;
 	private StringProperty passwort;
 	private ObjectProperty<LocalDate> angelegt;
-	
+
 	public IntegerProperty getUserID() {
 		return userID;
 	}
+
 	public IntegerProperty getUserName() {
 		return userName;
 	}
+
 	public IntegerProperty getSessionID() {
 		return sessionID;
 	}
+
 	public StringProperty getVorname() {
 		return vorname;
 	}
+
 	public StringProperty getNachname() {
 		return nachname;
 	}
+
 	public StringProperty getPasswort() {
 		return passwort;
 	}
+
 	public ObjectProperty<LocalDate> getAngelegt() {
 		return angelegt;
 	}
-	
-	
-	
 
-	
-	
 }
