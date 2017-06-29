@@ -1,21 +1,11 @@
 package tourDeFrance;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
 
 public class DBFunctions {
 
@@ -40,9 +30,6 @@ public class DBFunctions {
 	private static final String TABLENAMERANKING = "ranking";
 	private static final String TABLENAMETIPPS = "tipps";
 	private static final String TABLENAMEETAPPENART = "etappenart";
-	private static final String TABLENAMEERGEBNISSEBERG = "ergebnisseberg";
-	private static final String TABLENAMEERGEBNISSEGELB = "ergebnissegelb";
-	private static final String TABLENAMEERGEBNISSEGRUEN = "ergebnissegruen";
 	// Verbindungen
 	private static final String CONNECTION_OK = "Connection succeed";
 	private String aktuelleConnection = "";
@@ -310,14 +297,6 @@ public class DBFunctions {
 			sql = "DROP TABLE IF EXISTS " + TABLENAMEETAPPENART;
 			stmt.execute(sql);
 
-			sql = "DROP TABLE IF EXISTS " + TABLENAMEERGEBNISSEBERG;
-			stmt.execute(sql);
-			sql = "DROP TABLE IF EXISTS " + TABLENAMEERGEBNISSEGELB;
-			stmt.execute(sql);
-			sql = "DROP TABLE IF EXISTS " + TABLENAMEERGEBNISSEGRUEN;
-			stmt.execute(sql);
-
-
 			// Erstellt die Tabelle user
 			stmt.execute("create table " + TABLENAMEUSER
 					+ "(userID int(11) not null auto_increment,userName varchar(100) not null,"
@@ -375,124 +354,43 @@ public class DBFunctions {
 					+ "fahrerDoping varchar(50)," + "teamDoping varchar(50)," + "primary key (tippID),"
 					+ "foreign key (userID) references user(userID),"
 					+ "foreign key (etappenID) references etappen(etappenID))");
-			// Tabelle ergebnisseberg
-			stmt.execute("CREATE TABLE " + TABLENAMEERGEBNISSEBERG 
-					+"	(ergebnisID INT(11) NOT NULL AUTO_INCREMENT,"
-					+"	etappe INT(11) NOT NULL,"
-					+"	startnummer INT(11) NOT NULL,"
-					+"	punkteTemp VARCHAR(50) NOT NULL COLLATE 'utf8_german2_ci',"
-					+"	punkte INT(11) NOT NULL,"
-					+"	PRIMARY KEY (ergebnisID)"
-					+")"
-					+" COLLATE='utf8_german2_ci'"
-					+" ENGINE=InnoDB"
-					+" AUTO_INCREMENT=300"
-					);
-			// Tabelle ergebnissegelb
-			stmt.execute("CREATE TABLE "  + TABLENAMEERGEBNISSEGELB 
-					+"	(ergebnisID INT(11) NOT NULL AUTO_INCREMENT,"
-					+"	etappe INT(11) NOT NULL,"
-					+"	platz INT(11) NOT NULL,"
-					+"	startnummer INT(11) NOT NULL,"
-					+"	zeit VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',"
-					+"	PRIMARY KEY (ergebnisID)"
-					+")"
-					+" COLLATE='utf8_german2_ci'"
-					+" ENGINE=InnoDB"
-					+" AUTO_INCREMENT=5356"
-					);
-			//Tabelle ergebnissegruen
-			stmt.execute("CREATE TABLE " + TABLENAMEERGEBNISSEGRUEN
-					+"	(ergebnisID INT(11) NOT NULL AUTO_INCREMENT,"
-					+"	etappe INT(11) NOT NULL,"
-					+"	startnummer INT(11) NOT NULL,"
-					+"	punkteTemp VARCHAR(50) NOT NULL COLLATE 'utf8_german2_ci',"
-					+"	punkte INT(11) NOT NULL,"
-					+"	PRIMARY KEY (ergebnisID)"
-					+")"
-					+" COLLATE='utf8_german2_ci'"
-					+" ENGINE=InnoDB"
-					+" AUTO_INCREMENT=620"
-					);
-			
+
+			// Erstellt die Tabelle ergebnisseberg
+			stmt.execute("create table " + "ergebnisseberg"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,startnummer int(11) not null,"
+					+ "punkteTemp varchar(50) not null collate 'utf8_german2_ci'," + "punkte int(11) not null," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=300");
+
+			// Erstellt die Tabelle ergebnissegelb
+			stmt.execute("create table " + "ergebnissegelb"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,platz int(11) not null,"
+					+ "startnummer int(11) not null," + "zeit varchar(50) not null collate 'utf8_german2_ci'," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=5356");
+
+			// Erstellt die Tabelle ergebnissegruen
+			stmt.execute("create table " + "ergebnissegruen"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,startnummer int(11) not null,"
+					+ "punkteTemp varchar(50) not null collate 'utf8_german2_ci'," + "punkte int(11) not null," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=620");
 
 			sql = "SET foreign_key_checks = 1";
 			stmt.execute(sql);
-			
+
 			return "succeed";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "failed";
 		}
-	}
-
-	private List<String> getFilesFromDirectory(String path) throws IOException {
-		List<String> filenames = new ArrayList<>();
-
-		try (InputStream in = getResourceAsStream(path);
-				BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-			String resource;
-
-			while ((resource = br.readLine()) != null) {
-				if (resource.toLowerCase().endsWith(".csv"))
-					filenames.add(resource);
-			}
-		}
-
-		return filenames;
-	}
-
-	private InputStream getResourceAsStream(String resource) {
-		final InputStream in = getContextClassLoader().getResourceAsStream(resource);
-
-		return in == null ? getClass().getResourceAsStream(resource) : in;
-	}
-
-	private ClassLoader getContextClassLoader() {
-		return Thread.currentThread().getContextClassLoader();
-	}
-
-	public List<String> getResourcesFromDirectory(final String directory) {
-		List<String> retval = new ArrayList<String>();
-		// URL dirURL = ClassLoader.getSystemClassLoader().getResource(directory);
-		URL dirURL = this.getClass().getClassLoader().getResource(directory);
-		// Enumeration<URL> urls =
-		// getClass().getClassLoader().findResources("resources/" + directory);
-		try {
-			String s = "";
-			if (dirURL == null) {
-				/*
-				 * In case of a jar file, we can't actually find a directory. Have to assume the
-				 * same jar as clazz.
-				 */
-				String me = this.getClass().getName().replace(".", "/") + ".class";
-				dirURL = this.getClass().getClassLoader().getResource(me);
-
-				s = dirURL.toURI().toString().replace("bin/tourDeFrance/DBFunctions.class", directory);
-			} else
-				s = dirURL.toURI().toString();
-			// C:\Users\julian\git\TourDeFrance2017WHS\TourDeFrance2017\resources
-			/// C:/Users/julian/git/TourDeFrance2017WHS/TourDeFrance2017/resources/Testdaten_Ergebnisse_Bergwertung_2016/
-			System.out.println(s);
-			// File dir = new File(s);
-			// final File[] fileList = dir.listFiles();
-			// for (final File file : fileList) {
-			// if (file.isFile()) {
-			//
-			// final String fileName = file.getCanonicalPath();
-			// final boolean accept = fileName.toLowerCase().endsWith(".csv");
-			// if (accept) {
-			// retval.add(fileName);
-			// }
-			// }
-			// }
-			retval = getFilesFromDirectory(s);
-		} catch (final Exception e) {
-			throw new Error(e);
-		}
-
-		return retval;
 	}
 
 	/**
@@ -526,12 +424,14 @@ public class DBFunctions {
 		}
 	}
 
-	public void vergebePunkte() throws SQLException {
-		ResultSet tip = stmt.executeQuery("SELECT * FROM tipps ORDER BY userID");
-		ResultSet eid = stmt.executeQuery("SELECT * FROM etappen ORDER BY etappenID");
-		ResultSet points = stmt.executeQuery("SELECT * FROM ranking ORDER BY userID");
+	public String ergebnisseEingeben(){
 
-		boolean Continue = true;
+		File fileBerg = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Bergwertung_2016");
+		File fileGelb = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Gesamtwertung_2016");
+		File fileGruen = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Punktewertung_2016");
 
 		while (Continue) {
 			if (tip.isLast()) {
@@ -540,89 +440,174 @@ public class DBFunctions {
 			if (eid.isLast()) {
 				int punkte = 0;
 				int punkteOld = points.getInt("punkte");
+		String sql = "";;
 
-				if (eid.getString("fahrerPlatz1").equals(tip.getString("fahrerPlatz1"))) {
-					punkte += 15;
-				}
-				if (eid.getString("fahrerPlatz2").equals(tip.getString("fahrerPlatz2"))) {
-					punkte += 12;
-				}
-				if (eid.getString("fahrerPlatz3").equals(tip.getString("fahrerPlatz3"))) {
-					punkte += 10;
-				}
-				if (eid.getString("teamPlatz1").equals(tip.getString("teamPlatz1"))) {
-					punkte += 15;
-				}
-				if (eid.getString("teamPlatz2").equals(tip.getString("teamPlatz2"))) {
-					punkte += 12;
-				}
-				if (eid.getString("teamPlatz3").equals(tip.getString("teamPlatz3"))) {
-					punkte += 10;
-				}
-				if (eid.getString("fahrerGelb").equals(tip.getString("fahrerGelb"))) {
-					punkte += 10;
-				}
-				if (eid.getString("fahrerGruen").equals(tip.getString("fahrerGruen"))) {
-					punkte += 8;
-				}
-				if (eid.getString("fahrerBerg").equals(tip.getString("fahrerBerg"))) {
-					punkte += 8;
-				}
-				if (eid.getString("fahrerDoping").equals(tip.getString("fahrerDoping"))) {
-					punkte += 20;
-				} else {
-					if (tip.getString("fahrerDoping") != null) {
-						punkte -= 3;
-					}
-				}
-				if (eid.getString("teamDoping").equals(tip.getString("teamDoping"))) {
-					punkte += 20;
-				} else {
-					if (tip.getString("teamDoping") != null) {
-						punkte -= 3;
-					}
-				}
-				points.updateInt("punkte", punkteOld + punkte);
-				tip.next();
-				points.next();
-			} else {
-				eid.next();
+		try {
+			stmt = connection.createStatement();
+
+			for (int i = 1; i < fileBerg.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Bergwertung_2016/"
+						+ "ergebnisseberg" + i + "-2016.csv' " + "INTO TABLE ergebnisseberg";
+
+				stmt.execute(sql);
 			}
-		}
+
+			for (int i = 1; i < fileGelb.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Gesamtwertung_2016/"
+						+ "ergebnissegelb" + i + "-2016.csv' " + "INTO TABLE ergebnissegelb";
+
+				stmt.execute(sql);
+			}
+
+			for (int i = 1; i < fileGruen.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Punktewertung_2016/"
+						+ "ergebnissegruen" + i + "-2016.csv' " + "INTO TABLE ergebnissegruen";
+
+				stmt.execute(sql);
+			}
+
+			stmt.close();
+			return "succeed";
+
+		} catch (SQLException e) {System.out.println(e); return "failed";}
 	}
 
-	/**
-	 * 
-	 * @throws SQLException
-	 */
-	public void vergebePlatz() throws SQLException {
-		ResultSet rank = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
-		ResultSet rankPrev = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
-
-		boolean Cont = true;
-
-		while (Cont) {
-			if (rank.isLast()) {
-				Cont = false;
-			}
-
-			int rang = 1;
-
-			if (rank.isFirst()) {
-				rank.updateInt("platz", rang);
-				rank.next();
-			} else {
-				if (rank.getInt("punkte") == rankPrev.getInt("punkte")) {
-					rank.updateInt("platz", rang);
-				} else {
-					rang++;
-					rank.updateInt("platz", rang);
-					rank.next();
-					rankPrev.next();
-				}
-			}
-		}
-	}
+	// RANKING
+	// public void vergebePunkte() throws SQLException
+	// {
+	// ResultSet tip = stmt.executeQuery("SELECT * FROM tipps ORDER BY userID");
+	// ResultSet eid = stmt.executeQuery("SELECT * FROM etappen ORDER BY
+	// etappenID");
+	// ResultSet points = stmt.executeQuery("SELECT * FROM ranking ORDER BY
+	// userID");
+	//
+	// boolean Continue = true;
+	//
+	// while(Continue)
+	// {
+	// if(tip.isLast())
+	// {
+	// Continue = false;
+	// }
+	// if(eid.isLast())
+	// {
+	// int punkte = 0;
+	// int punkteOld = points.getInt("punkte");
+	//
+	// if(eid.getString("fahrerPlatz1").equals(tip.getString("fahrerPlatz1")))
+	// {
+	// punkte+=15;
+	// }
+	// if(eid.getString("fahrerPlatz2").equals(tip.getString("fahrerPlatz2")))
+	// {
+	// punkte+=12;
+	// }
+	// if(eid.getString("fahrerPlatz3").equals(tip.getString("fahrerPlatz3")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("teamPlatz1").equals(tip.getString("teamPlatz1")))
+	// {
+	// punkte+=15;
+	// }
+	// if(eid.getString("teamPlatz2").equals(tip.getString("teamPlatz2")))
+	// {
+	// punkte+=12;
+	// }
+	// if(eid.getString("teamPlatz3").equals(tip.getString("teamPlatz3")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("fahrerGelb").equals(tip.getString("fahrerGelb")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("fahrerGruen").equals(tip.getString("fahrerGruen")))
+	// {
+	// punkte+=8;
+	// }
+	// if(eid.getString("fahrerBerg").equals(tip.getString("fahrerBerg")))
+	// {
+	// punkte+=8;
+	// }
+	// if(eid.getString("fahrerDoping").equals(tip.getString("fahrerDoping")))
+	// {
+	// punkte+=20;
+	// }
+	// else
+	// {
+	// if(tip.getString("fahrerDoping")!= null)
+	// {
+	// punkte-=3;
+	// }
+	// }
+	// if(eid.getString("teamDoping").equals(tip.getString("teamDoping")))
+	// {
+	// punkte+=20;
+	// }
+	// else
+	// {
+	// if(tip.getString("teamDoping")!= null)
+	// {
+	// punkte-=3;
+	// }
+	// }
+	// points.updateInt("punkte", punkteOld + punkte);
+	// tip.next();
+	// points.next();
+	// }
+	// else
+	// {
+	// eid.next();
+	// }
+	// }
+	// }
+	//
+	// public void vergebePlatz() throws SQLException
+	// {
+	// ResultSet rank = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte
+	// DESC LIMIT 1000");
+	// ResultSet rankPrev = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte
+	// DESC LIMIT 1000");
+	//
+	// boolean Cont = true;
+	//
+	// while(Cont)
+	// {
+	// if(rank.isLast())
+	// {
+	// Cont = false;
+	// }
+	//
+	// int rang = 1;
+	//
+	// if(rank.isFirst())
+	// {
+	// rank.updateInt("platz", rang);
+	// rank.next();
+	// }
+	// else
+	// {
+	// if(rank.getInt("punkte")==rankPrev.getInt("punkte"))
+	// {
+	// rank.updateInt("platz", rang);
+	// }
+	// else
+	// {
+	// rang++;
+	// rank.updateInt("platz", rang);
+	// rank.next();
+	// rankPrev.next();
+	// }
+	// }
+	// }
+	// }
+	//
+	//
+	//
 
 	public String getAktuelleConnection() {
 		return aktuelleConnection;

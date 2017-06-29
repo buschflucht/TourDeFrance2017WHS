@@ -176,22 +176,10 @@ public class MainMenuController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	public void pressErgebnisseEinlesen() {
-//		  Pattern pattern;
-		  String directory = "resources/Testdaten_Ergebnisse_Bergwertung_2016/";
-//		  ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-		  List<String> files;
-	 
-			files = DBFunctions.getInstance().getResourcesFromDirectory(directory);
-	
-		  for (String file : files) {
-			  System.out.println(file);
-		  }
-	 
-		  
-		  
-//		String dir = DBFunctions.getInstance().getResourcesFromDirectory(classLoader.getResource(fileName).getFile(), Pattern.compile(".*\\.csv"));
+
 	}
 
 	@FXML
@@ -213,7 +201,7 @@ public class MainMenuController implements Initializable {
 			String data3 = "";
 			String data4 = "";
 			String data5 = "";
-			
+
 			DBFunctions.getInstance().ergebnisseEingeben();
 			data1 = DBFunctions.getInstance()
 					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "user");
@@ -243,7 +231,6 @@ public class MainMenuController implements Initializable {
 
 		}
 	}
-	
 
 	public void messageDialogImport(String a, String b, String c, String d, String e) {
 		Alert alert = new Alert(AlertType.INFORMATION);
