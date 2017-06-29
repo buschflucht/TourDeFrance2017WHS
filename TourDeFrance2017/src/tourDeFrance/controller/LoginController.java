@@ -99,8 +99,7 @@ public class LoginController {
 		} else {
 			alert.setTitle("Failed");
 			alert.setHeaderText("Something went wrong");
-			alert.setContentText("Connection with LocalDatabase failed - "
-					+ "Maybe Database doesn't exist");
+			alert.setContentText("Connection with LocalDatabase failed - " + "Maybe Database doesn't exist");
 			alert.showAndWait();
 		}
 
@@ -264,7 +263,7 @@ public class LoginController {
 			txtDatabase.setDisable(true);
 			btnManualDB.setDisable(true);
 			btnClearDB.setDisable(true);
-		 
+
 			txtIp.setDisable(false);
 			txtPort.setDisable(false);
 			txtUser.setDisable(false);
@@ -292,12 +291,9 @@ public class LoginController {
 			txtPWDB.setDisable(false);
 			btnManualDB.setDisable(false);
 			btnClearDB.setDisable(false);
-		 
 			chboxManual.setSelected(false);
 			chboxManualDB.setSelected(true);
-
 		}
-
 	}
 
 	@FXML

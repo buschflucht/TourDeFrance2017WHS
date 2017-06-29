@@ -20,13 +20,14 @@ public class EtappenDAO {
 	 */
 	public static List<Etappe> selectEtappen() throws SQLException {
 		String selectStmt = "SELECT e.etappenID, e.startort, e.zielort, e.laenge, e.datum, a.bezeichnung"
-				+ " FROM etappen e left join etappenart a on e.art=a.artID"; // WHERE etappenID=" + etappenID;
+				+ " FROM etappen e left join etappenart a on e.art=a.artID"; 
 		Statement stmt = DBFunctions.getInstance().getConnection().createStatement();
 		ResultSet rsEtappe = stmt.executeQuery(selectStmt);
 		List<Etappe> etappen = getEtappenFromResultSet(rsEtappe);
 		return etappen;
 
 	}
+	
 
 	/**
 	 * Holt die Daten aus der Datenbank fuer die TableView

@@ -20,6 +20,7 @@ public class Etappe {
 	private IntegerProperty etappennummer;
 	private LocalDate ldatum;
 	private LocalTime lzeit;
+	private LocalTime lsiegerzeit;
 	private StringProperty datum;
 	private StringProperty zeit;
 	private StringProperty startort;
@@ -149,4 +150,32 @@ public class Etappe {
 	public StringProperty bezeichnungProperty() {
 		return bezeichnung;
 	}
+
+	// EtappenNummer
+	public int getEtappenNummer() {
+		return etappennummer.get();
+	}
+
+	public void setEtappenNummer(int etappenNummer) {
+		this.etappennummer.set(etappenNummer);
+	}
+
+	public IntegerProperty etappenNummerProperty() {
+		return etappennummer;
+	}
+
+	// Siegerzeit
+	public Time SiegerZeitProperty() {
+		return siegerzeit;
+	}
+
+	public LocalTime getSiegerZeit() {
+		return lsiegerzeit;
+	}
+
+	public void setSiegerZeit(LocalTime siegerZeit) {
+		this.lsiegerzeit = siegerZeit;
+		this.zeit.set(timeFormatter.format(siegerZeit));
+	}
+
 }

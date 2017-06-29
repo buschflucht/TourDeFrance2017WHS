@@ -121,7 +121,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Label layoutX="14.0" layoutY="10.0" text="Choose a method to Login" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="10.0">
+      <Label layoutX="221.0" layoutY="10.0" text="Choose a method to Login" AnchorPane.rightAnchor="221.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="20.0" />
          </font>

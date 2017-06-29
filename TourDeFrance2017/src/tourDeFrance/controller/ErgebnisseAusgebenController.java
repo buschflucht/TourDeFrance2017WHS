@@ -28,26 +28,15 @@ public class ErgebnisseAusgebenController {
 		MainMenuController.getInstance().closeTab();
 	}
 
-	 @FXML
-	 public void initialize() {
-	
-	 colEtappenNummer.setCellValueFactory(cellData ->
-	 cellData.getValue().etappenIDProperty().asString());
-	 colEtappenSieger.setCellValueFactory(cellData ->
-	 cellData.getValue().startOrtProperty());
-	 colSiegerTeam.setCellValueFactory(cellData ->
-	 cellData.getValue().zielOrtProperty());
-	 colSiegerZeit.setCellValueFactory(cellData ->
-	 cellData.getValue().laengeProperty().asString());
-	 colDatum.setCellValueFactory(cellData ->
-	 cellData.getValue().datumProperty());
-	
-	 }
-	// private void populateErgebnisse(List<Etappe> etappen){
-	// ObservableList<Etappe> ergebnisData = FXCollections.observableArrayList();
-	// ergebnisData.addAll(etappen);
-	// tbview.setItems(ergebnisData);
-	// }
-	//
+	@FXML
+	public void initialize() {
+
+		colEtappenNummer.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
+		colEtappenSieger.setCellValueFactory(cellData -> cellData.getValue().startOrtProperty());
+		colSiegerTeam.setCellValueFactory(cellData -> cellData.getValue().zielOrtProperty());
+		colSiegerZeit.setCellValueFactory(cellData -> cellData.getValue().laengeProperty().asString());
+		colDatum.setCellValueFactory(cellData -> cellData.getValue().datumProperty());
+
+	}
 
 }

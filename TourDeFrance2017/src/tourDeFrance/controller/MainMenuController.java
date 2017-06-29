@@ -20,6 +20,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tourDeFrance.DBFunctions;
@@ -60,6 +62,18 @@ public class MainMenuController implements Initializable {
 	public static MainMenuController getInstance() {
 		return instance;
 	}
+	
+  
+
+  private static ImageView buildImage(String imgPatch) {
+          Image i = new Image(imgPatch);
+          ImageView imageView = new ImageView();
+          imageView.setFitHeight(16);
+          imageView.setFitWidth(16);
+          imageView.setImage(i);
+          return imageView;
+      }
+	
 
 	@FXML
 	public void openLogin() {
@@ -87,6 +101,7 @@ public class MainMenuController implements Initializable {
 			Tab tb = new Tab("Create Database", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
+				tb.setGraphic(buildImage("file:resources/images/database.png"));
 
 			} else {
 				closeTab();
@@ -107,7 +122,7 @@ public class MainMenuController implements Initializable {
 			Tab tb = new Tab("Create Tables", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
-
+				tb.setGraphic(buildImage("file:resources/images/table.png"));
 			} else {
 				closeTab();
 			}
