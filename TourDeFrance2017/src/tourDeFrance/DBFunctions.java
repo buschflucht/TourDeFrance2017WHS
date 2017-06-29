@@ -1,5 +1,6 @@
 package tourDeFrance;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -354,6 +355,33 @@ public class DBFunctions {
 					+ "foreign key (userID) references user(userID),"
 					+ "foreign key (etappenID) references etappen(etappenID))");
 
+			// Erstellt die Tabelle ergebnisseberg
+			stmt.execute("create table " + "ergebnisseberg"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,startnummer int(11) not null,"
+					+ "punkteTemp varchar(50) not null collate 'utf8_german2_ci'," + "punkte int(11) not null," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=300");
+
+			// Erstellt die Tabelle ergebnissegelb
+			stmt.execute("create table " + "ergebnissegelb"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,platz int(11) not null,"
+					+ "startnummer int(11) not null," + "zeit varchar(50) not null collate 'utf8_german2_ci'," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=5356");
+
+			// Erstellt die Tabelle ergebnissegruen
+			stmt.execute("create table " + "ergebnissegruen"
+					+ "(ergebnisID int(11) not null auto_increment,etappe int(11) not null,startnummer int(11) not null,"
+					+ "punkteTemp varchar(50) not null collate 'utf8_german2_ci'," + "punkte int(11) not null," 
+					+ "primary key (ergebnisID))"
+					+ " COLLATE='utf8_german2_ci'"
+					+ " ENGINE=InnoDB"
+					+ " AUTO_INCREMENT=620");
+
 			sql = "SET foreign_key_checks = 1";
 			stmt.execute(sql);
 
@@ -394,6 +422,50 @@ public class DBFunctions {
 			e.printStackTrace();
 			return "failed";
 		}
+	}
+
+	public String ergebnisseEingeben(){
+
+		File fileBerg = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Bergwertung_2016");
+		File fileGelb = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Gesamtwertung_2016");
+		File fileGruen = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+				+ "Testdaten_Ergebnisse_Punktewertung_2016");
+
+		String sql = "";
+
+		try {
+			stmt = connection.createStatement();
+
+			for (int i = 1; i < fileBerg.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Bergwertung_2016/"
+						+ "ergebnisseberg" + i + "-2016.csv' " + "INTO TABLE ergebnisseberg";
+
+				stmt.execute(sql);
+			}
+
+			for (int i = 1; i < fileGelb.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Gesamtwertung_2016/"
+						+ "ergebnissegelb" + i + "-2016.csv' " + "INTO TABLE ergebnissegelb";
+
+				stmt.execute(sql);
+			}
+
+			for (int i = 1; i < fileGruen.list().length; i++) {
+
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_Ergebnisse_Punktewertung_2016/"
+						+ "ergebnissegruen" + i + "-2016.csv' " + "INTO TABLE ergebnissegruen";
+
+				stmt.execute(sql);
+			}
+
+			stmt.close();
+			return "succeed";
+
+		} catch (SQLException e) {System.out.println(e); return "failed";}
 	}
 
 	// RANKING
