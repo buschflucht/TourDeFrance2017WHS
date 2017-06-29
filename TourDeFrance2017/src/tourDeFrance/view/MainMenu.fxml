@@ -109,7 +109,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="btnCreateRanking" mnemonicParsing="false" text="CreateRanking" visible="false">
+                        <Button fx:id="btnCreateRanking" mnemonicParsing="false" onAction="#pressCreateRanking" text="CreateRanking" visible="false">
                            <font>
                               <Font size="20.0" />
                            </font>

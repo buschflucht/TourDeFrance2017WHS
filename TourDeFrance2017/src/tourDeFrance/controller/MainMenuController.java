@@ -182,6 +182,22 @@ public class MainMenuController implements Initializable {
 	}
 
 	@FXML
+	public void pressCreateRanking() {
+		try {
+			DBFunctions.getInstance().fahrerAktiv();
+			DBFunctions.getInstance().gelbesTrikot();
+			DBFunctions.getInstance().gruenesTrikot();
+			DBFunctions.getInstance().bergTrikot();
+			DBFunctions.getInstance().etappenSiege();
+			DBFunctions.getInstance().vergebePunkte();
+			DBFunctions.getInstance().vergebePlatz();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@FXML
 	public void importCsv() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Import");
@@ -230,9 +246,11 @@ public class MainMenuController implements Initializable {
 
 		}
 	}
+
 	/**
 	 * Erzeugt eine MessageBox für den Dateiimport
-	 * @param a 
+	 * 
+	 * @param a
 	 * @param b
 	 * @param c
 	 * @param d

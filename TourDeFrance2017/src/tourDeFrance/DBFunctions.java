@@ -73,7 +73,7 @@ public class DBFunctions {
 
 			String url = "jdbc:mariadb://" + ipAdresse + ":" + port + "?useSSL=false";
 			connection = DriverManager.getConnection(url, benutzerName, passwort);
-			aktuelleConnection = "Connected: " + ipAdresse + ":" + port;
+			aktuelleConnection = "Connected to " + ipAdresse + ":" +"\n" + port;
 
 			rt = CONNECTION_OK;
 
@@ -110,7 +110,7 @@ public class DBFunctions {
 
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
-				aktuelleConnection = "Connected:" + ipAdresse + ":" + port + "/" + database;
+				aktuelleConnection = "Connected to " + ipAdresse + ":"+"\n"  + port + "/" + database;
 
 				rt = CONNECTION_OK;
 
