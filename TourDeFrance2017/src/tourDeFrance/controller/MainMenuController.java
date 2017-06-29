@@ -7,8 +7,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -25,7 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tourDeFrance.DBFunctions;
 import tourDeFrance.Main;
-import tourDeFrance.model.Etappe;
 
 public class MainMenuController implements Initializable {
 
@@ -54,10 +52,11 @@ public class MainMenuController implements Initializable {
 	private Button btnCreateRanking;
 	@FXML
 	private Button btnShowRanking;
-	
+	@FXML
+	private Button btnImportCsv;
+
 	private static MainMenuController instance;
 
-	
 	public static MainMenuController getInstance() {
 		return instance;
 	}
@@ -174,6 +173,70 @@ public class MainMenuController implements Initializable {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void importCsv() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("");
+		alert.setHeaderText("Choose how to import your .csv Data");
+		alert.setContentText("TestData or RealData");
+
+		ButtonType buttonTestData = new ButtonType("TestData");
+		ButtonType buttonRealData = new ButtonType("RealData");
+		ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTestData, buttonRealData, buttonCancel);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTestData) {
+			String data1 = "";
+			String data2 = "";
+			String data3 = "";
+			String data4 = "";
+			String data5 = "";
+			data1 = DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "user");
+			data2 = DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/teams2016.csv", "teams");
+			data3 = DBFunctions.getInstance().datenEinlesen(
+					"./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/fahrer2016.csv", "fahrer");
+			data4 = DBFunctions.getInstance().datenEinlesen(
+					"./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/etappen2016.csv", "etappen");
+			data5 = DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/tipps2016.csv", "tipps");
+			messageDialogImport(data1, data2, data3, data4, data5);
+		} else if (result.get() == buttonRealData) {
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "user");
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "teams");
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "fahrer");
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "etappen");
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "user");
+			DBFunctions.getInstance()
+					.datenEinlesen("./resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/user2016.csv", "tipps");
+		} else {
+
+		}
+	}
+
+	public void messageDialogImport(String a, String b, String c, String d, String e) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		if (a == "succeed" && b == "succeed" && c == "succeed" && d == "succeed" && e == "succeed") {
+			alert.setTitle("Import successful");
+			alert.setHeaderText(null);
+			alert.setContentText("Data was successfully imported");
+			alert.showAndWait();
+		} else {
+			alert.setTitle("Import failed");
+			alert.setHeaderText(null);
+			alert.setContentText("Data could not be imported");
+
+			alert.showAndWait();
 		}
 	}
 

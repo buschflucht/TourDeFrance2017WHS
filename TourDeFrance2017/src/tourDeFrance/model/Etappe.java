@@ -2,19 +2,15 @@ package tourDeFrance.model;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Date;
 import java.util.Locale;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -42,12 +38,14 @@ public class Etappe {
 	private StringProperty fahrerBerg;
 	private StringProperty dopingFahrer;
 	private StringProperty dopingTeam;
-	
-	
+
 	private StringProperty bezeichnung;
-	
-	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.GERMAN);
-	private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.GERMAN);
+
+	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+			.withLocale(Locale.GERMAN);
+	private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+			.withLocale(Locale.GERMAN);
+
 	public Etappe() {
 		this.etappenID = new SimpleIntegerProperty();
 		this.startort = new SimpleStringProperty();
@@ -111,6 +109,7 @@ public class Etappe {
 		return laenge;
 	}
 
+	// Datum
 	public StringProperty datumProperty() {
 		return datum;
 	}
@@ -119,13 +118,16 @@ public class Etappe {
 		this.ldatum = datum;
 		this.datum.set(dateFormatter.format(datum));
 	}
+
 	public LocalDate getDatum() {
 		return ldatum;
 	}
 
+	// Zeit
 	public StringProperty zeitProperty() {
 		return zeit;
 	}
+
 	public LocalTime getZeit() {
 		return lzeit;
 	}
@@ -134,6 +136,8 @@ public class Etappe {
 		this.lzeit = zeit;
 		this.zeit.set(timeFormatter.format(zeit));
 	}
+
+	// Bezeichnung
 	public String getBezeichnung() {
 		return bezeichnung.get();
 	}

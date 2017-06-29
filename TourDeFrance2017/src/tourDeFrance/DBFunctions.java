@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class DBFunctions {
 
@@ -35,7 +33,6 @@ public class DBFunctions {
 	private static final String CONNECTION_OK = "Connection succeed";
 	private String aktuelleConnection = "";
 	private Connection connection = null;
-	private static final String DATABASENAME = "tourdefrance2017";
 	private static Statement stmt = null;
 
 	// Singleton
@@ -122,39 +119,6 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Prüft ob eine Datenbank existiert
-	 * 
-	 * @param con
-	 *            Verbindung
-	 * @param databaseName
-	 *            DatenbankName
-	 * @return ob eine Datenbank vorhanden ist
-	 * @throws SQLException
-	 */
-	private boolean dbExists(Connection connection, String databaseName) throws SQLException {
-		boolean dbvorhanden = false;
-		try {
-			if ((connection != null) && (!connection.isClosed())) {
-				ResultSet resultSet = null;
-				resultSet = connection.getMetaData().getCatalogs();
-				resultSet.beforeFirst();
-				while (resultSet.next() && (dbvorhanden == false)) {
-					String dName = resultSet.getString(1);
-					System.out.println(dName);
-					if (databaseName.toUpperCase().equals(dName.toUpperCase())) {
-						dbvorhanden = true;
-					}
-				}
-				resultSet.close();
-			}
-		} catch (SQLException e) {
-			throw e;
-		}
-		return dbvorhanden;
-
-	}
-
-	/**
 	 * Schließt die Verbindung
 	 * 
 	 * @throws Exception
@@ -210,6 +174,39 @@ public class DBFunctions {
 	}
 
 	/**
+	 * Prüft ob eine Datenbank existiert
+	 * 
+	 * @param con
+	 *            Verbindung
+	 * @param databaseName
+	 *            DatenbankName
+	 * @return ob eine Datenbank vorhanden ist
+	 * @throws SQLException
+	 */
+	private boolean dbExists(Connection connection, String databaseName) throws SQLException {
+		boolean dbvorhanden = false;
+		try {
+			if ((connection != null) && (!connection.isClosed())) {
+				ResultSet resultSet = null;
+				resultSet = connection.getMetaData().getCatalogs();
+				resultSet.beforeFirst();
+				while (resultSet.next() && (dbvorhanden == false)) {
+					String dName = resultSet.getString(1);
+					System.out.println(dName);
+					if (databaseName.toUpperCase().equals(dName.toUpperCase())) {
+						dbvorhanden = true;
+					}
+				}
+				resultSet.close();
+			}
+		} catch (SQLException e) {
+			throw e;
+		}
+		return dbvorhanden;
+
+	}
+
+	/**
 	 * Erzeugt eine Datenbank in MariaDB, falls bereits die Datenbank vorhanden ist
 	 * soll diese zuvor geloescht werden
 	 * 
@@ -255,166 +252,6 @@ public class DBFunctions {
 
 		return rt;
 
-	}
-
-	/**
-	 * Laedt Testdaten user und tipps in die jeweiligen Tabellen
-	 * 
-	 * @return
-	 */
-	public String datenEingeben() {
-
-		String sql = "";
-
-		try {
-			stmt = connection.createStatement();
-
-			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
-					+ "user2016.csv' " + "INTO TABLE user";
-
-			stmt.execute(sql);			
-
-			stmt.close();
-			return "succeed";
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-	
-	
-	public String datenEinlesen(String verzeichnis, String datei, String table ) {
-
-		String sql = "";
-
-		try {
-			stmt = connection.createStatement();
-
-			sql = "LOAD DATA LOCAL INFILE './resources/" + verzeichnis + "/" + datei
-					+  " INTO TABLE " + table;
-
-			stmt.executeQuery(sql);
-
-			stmt.close();
-			return "succeed";
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-
-	/**
-	 * Laedt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
-	 * 
-	 * @param auswahl
-	 *            Auswahl des nutzers ob Test-/Echtdaten
-	 * @return
-	 */
-	public String datenEingebenAuswahl(String auswahl) {
-		String sql = "";
-
-		try {
-
-			if (auswahl == "testdaten") {
-				stmt = connection.createStatement();
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
-						+ "teams2016.csv' " + "INTO TABLE teams";
-				stmt.execute(sql);
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
-						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
-				stmt.execute(sql);
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/"
-						+ "etappen2017.csv' " + "INTO TABLE etappen";
-				stmt.execute(sql);
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
-//						+ "tipps2016.csv' " + "INTO TABLE tipps";
-				+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
-				stmt.execute(sql);
-
-				stmt.close();
-
-			} else {
-				stmt = connection.createStatement();
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
-				stmt.executeQuery(sql);
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps2017"
-						+ "fahrer2017.csv' " + "INTO TABLE fahrer";
-				stmt.executeQuery(sql);
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps2017/"
-						+ "teams2017.csv' " + "INTO TABLE teams";
-				stmt.executeQuery(sql);
-				
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
-//						+ "tipps2016.csv' " + "INTO TABLE tipps";
-				+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
-				stmt.execute(sql);
-
-			
-
-				stmt.close();
-			}
-			return "succeed";
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return "failed";
-		}
-	}
-
-	/**
-	 * Gebe einen nach Datum und Uhrzeit sortierten Etappenplan der TourdeFrance
-	 * 2017 mit allen in der Tabelle „etappen“ enthaltenden Daten aus
-	 * 
-	 * @return
-	 */
-	public String etappenplan() {
-		try {
-			stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM etappen ORDER BY datum");
-
-			while (rs.next()) {
-				int etappenID = rs.getInt("etappennummer");
-
-				// -------------- Datum lesen --------------
-				String datum = rs.getString("datum");
-				String[] datumString = datum.split(" ");
-				String[] date = datumString[0].split("-");
-				String[] hour = datumString[1].split(":");
-				Calendar date2 = Calendar.getInstance();
-				date2.set(Integer.parseInt(date[0]), Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2]),
-						Integer.parseInt(hour[0]), Integer.parseInt(hour[1]), 0);
-				SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
-				SimpleDateFormat sdfHour = new SimpleDateFormat("HH:mm");
-				// Die ausgabe datum und Uhrzeit getrennt
-				String date3 = sdfDate.format(date2.getTime());
-				String hour3 = sdfHour.format(date2.getTime());
-
-				String startort = rs.getString("startort");
-				String zielort = rs.getString("zielort");
-				Double laenge = rs.getDouble("laenge");
-				int art = rs.getInt("art");
-
-				System.out.format(" %s \t %-10s \t %-10s \t %-25s \t %-25s \t %-5s %4s \n", etappenID, date3, hour3,
-						startort, zielort, laenge, art);
-			}
-			rs.close();
-			stmt.close();
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-		return "";
 	}
 
 	/**
@@ -527,6 +364,38 @@ public class DBFunctions {
 			return "failed";
 		}
 	}
+
+	/**
+	 * Laedt Daten in eine tabelle in der Datenbank
+	 * 
+	 * @param pfad
+	 *            URL zur Datei
+	 * @param table
+	 *            tabellenName
+	 * @return erfolgreich
+	 */
+	// pfad = ./resources/" + verzeichnis + "/" + datei
+	// pfad = "C:/dev/daten/" + datei
+	public String datenEinlesen(String pfad, String table) {
+
+		String sql = "";
+
+		try {
+			stmt = connection.createStatement();
+
+			sql = "LOAD DATA LOCAL INFILE '" + pfad + "' INTO TABLE " + table;
+
+			stmt.executeQuery(sql);
+
+			stmt.close();
+			return "succeed";
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "failed";
+		}
+	}
+
 	// RANKING
 	// public void vergebePunkte() throws SQLException
 	// {
