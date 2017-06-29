@@ -73,7 +73,7 @@ public class EtappenController {
 			// DBFunctions.getInstance().datenEingeben();
 			// DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
 			try {
-				populateEtappen(EtappenDAO.searchEtappen());
+				populateEtappen(EtappenDAO.selectEtappen());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

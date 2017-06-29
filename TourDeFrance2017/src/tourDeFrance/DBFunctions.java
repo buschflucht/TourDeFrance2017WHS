@@ -496,6 +496,135 @@ public class DBFunctions {
 			return "failed";
 		}
 	}
+	//RANKING
+//	public void vergebePunkte() throws SQLException
+//    {
+//        ResultSet tip = stmt.executeQuery("SELECT * FROM tipps ORDER BY userID");
+//        ResultSet eid = stmt.executeQuery("SELECT * FROM etappen ORDER BY etappenID");
+//        ResultSet points = stmt.executeQuery("SELECT * FROM ranking ORDER BY userID");
+//       
+//        boolean Continue = true;
+//       
+//        while(Continue)
+//        {
+//            if(tip.isLast())
+//            {
+//                Continue = false;
+//            }
+//            if(eid.isLast())
+//            {
+//                int punkte = 0;
+//                int punkteOld = points.getInt("punkte");
+//               
+//                if(eid.getString("fahrerPlatz1").equals(tip.getString("fahrerPlatz1")))
+//                {
+//                    punkte+=15;
+//                }
+//                if(eid.getString("fahrerPlatz2").equals(tip.getString("fahrerPlatz2")))
+//                {
+//                    punkte+=12;
+//                }
+//                if(eid.getString("fahrerPlatz3").equals(tip.getString("fahrerPlatz3")))
+//                {
+//                    punkte+=10;
+//                }
+//                if(eid.getString("teamPlatz1").equals(tip.getString("teamPlatz1")))
+//                {
+//                    punkte+=15;
+//                }
+//                if(eid.getString("teamPlatz2").equals(tip.getString("teamPlatz2")))
+//                {
+//                    punkte+=12;
+//                }
+//                if(eid.getString("teamPlatz3").equals(tip.getString("teamPlatz3")))
+//                {
+//                    punkte+=10;
+//                }
+//                if(eid.getString("fahrerGelb").equals(tip.getString("fahrerGelb")))
+//                {
+//                    punkte+=10;
+//                }
+//                if(eid.getString("fahrerGruen").equals(tip.getString("fahrerGruen")))
+//                {
+//                    punkte+=8;
+//                }
+//                if(eid.getString("fahrerBerg").equals(tip.getString("fahrerBerg")))
+//                {
+//                    punkte+=8;
+//                }
+//                if(eid.getString("fahrerDoping").equals(tip.getString("fahrerDoping")))
+//                {
+//                    punkte+=20;
+//                }
+//                else
+//                {
+//                    if(tip.getString("fahrerDoping")!= null)
+//                    {
+//                        punkte-=3;
+//                    }
+//                }
+//                if(eid.getString("teamDoping").equals(tip.getString("teamDoping")))
+//                {
+//                    punkte+=20;
+//                }
+//                else
+//                {
+//                    if(tip.getString("teamDoping")!= null)
+//                    {
+//                        punkte-=3;
+//                    }
+//                }
+//                points.updateInt("punkte", punkteOld + punkte);
+//                tip.next();
+//                points.next();
+//            }
+//            else
+//            {
+//                eid.next();
+//            }
+//        }
+//    }
+//   
+//    public void vergebePlatz() throws SQLException
+//    {
+//        ResultSet rank = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
+//        ResultSet rankPrev = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
+//       
+//        boolean Cont = true;
+//       
+//        while(Cont)
+//        {
+//            if(rank.isLast())
+//            {
+//                Cont = false;
+//            }
+//           
+//            int rang = 1;
+//           
+//            if(rank.isFirst())
+//            {
+//                rank.updateInt("platz", rang);
+//                rank.next();
+//            }
+//            else
+//            {
+//                if(rank.getInt("punkte")==rankPrev.getInt("punkte"))
+//                {
+//                    rank.updateInt("platz", rang);
+//                }
+//                else
+//                {
+//                    rang++;
+//                    rank.updateInt("platz", rang);
+//                    rank.next();
+//                    rankPrev.next();
+//                }
+//            }
+//        }
+//    }
+//	
+//	
+//	
 
 	public String getAktuelleConnection() {
 		return aktuelleConnection;

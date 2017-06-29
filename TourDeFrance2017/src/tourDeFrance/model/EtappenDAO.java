@@ -15,7 +15,7 @@ import tourDeFrance.DBFunctions;
 
 public class EtappenDAO {
 
-	public static List<Etappe> searchEtappen() throws SQLException {
+	public static List<Etappe> selectEtappen() throws SQLException {
 		String selectStmt = "SELECT e.etappenID, e.startort, e.zielort, e.laenge, e.datum, a.bezeichnung"
 				+ " FROM etappen e left join etappenart a on e.art=a.artID"; // WHERE etappenID=" + etappenID;
 		Statement stmt = DBFunctions.getInstance().getConnection().createStatement();
