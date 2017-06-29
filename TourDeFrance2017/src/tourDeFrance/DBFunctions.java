@@ -101,7 +101,7 @@ public class DBFunctions {
 		String rt;
 		try {
 			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort))
-					&& (dbExists(connection, LOCAL_DB))) {
+					&& (dbExists(connection, LIVE_DB))) {
 
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
@@ -269,15 +269,10 @@ public class DBFunctions {
 		try {
 			stmt = connection.createStatement();
 
-			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
 					+ "user2016.csv' " + "INTO TABLE user";
 
-			stmt.executeQuery(sql);
-
-			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
-					+ "tipps2016.csv' " + "INTO TABLE tipps";
-
-			stmt.executeQuery(sql);
+			stmt.execute(sql);			
 
 			stmt.close();
 			return "succeed";
@@ -303,33 +298,45 @@ public class DBFunctions {
 			if (auswahl == "testdaten") {
 				stmt = connection.createStatement();
 
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
 						+ "teams2016.csv' " + "INTO TABLE teams";
-				stmt.executeQuery(sql);
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
+				stmt.execute(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
 						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
-				stmt.executeQuery(sql);
-
-				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
-						+ "etappen2016.csv' " + "INTO TABLE etappen";
-				stmt.executeQuery(sql);
+				stmt.execute(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/"
+						+ "etappen2017.csv' " + "INTO TABLE etappen";
+				stmt.execute(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
+//						+ "tipps2016.csv' " + "INTO TABLE tipps";
+				+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
+				stmt.execute(sql);
 
 				stmt.close();
 
 			} else {
 				stmt = connection.createStatement();
-
+				
 				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
 
-				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017"
+				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps2017"
 						+ "fahrer2017.csv' " + "INTO TABLE fahrer";
 				stmt.executeQuery(sql);
 
-				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
+				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps2017/"
 						+ "teams2017.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
+				
+				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps2016/"
+//						+ "tipps2016.csv' " + "INTO TABLE tipps";
+				+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
+				stmt.execute(sql);
+
+			
 
 				stmt.close();
 			}
