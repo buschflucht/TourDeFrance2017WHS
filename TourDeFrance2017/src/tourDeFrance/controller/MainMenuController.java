@@ -56,23 +56,6 @@ public class MainMenuController implements Initializable {
 	
 	private static MainMenuController instance;
 
-//	 private ObservableList<Etappen> EtappenData = FXCollections.observableArrayList();
-//
-//	 
-//	 public MainMenuController(Etappen etappen){
-//		 EtappenData.add(etappen);
-//		
-//	 }	 
-//	   /**
-//	     * Returns the data as an observable list of Persons. 
-//	     * @return
-//	     */
-//	    public ObservableList<Etappen> getEtappenData() {
-//	        return EtappenData;
-//	    }
-//
-//	
-	
 	
 	public static MainMenuController getInstance() {
 		return instance;
@@ -144,9 +127,6 @@ public class MainMenuController implements Initializable {
 			Tab tb = new Tab("Etappenplan", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
-			// Give the controller access to the main app.
-//		       EtappenController controller = fxmlLoader.getController();
-//		       controller.setMainApp(this);
 			} else {
 				closeTab();
 			}

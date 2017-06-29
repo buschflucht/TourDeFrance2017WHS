@@ -4,7 +4,10 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
+import java.util.Locale;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,8 +22,10 @@ public class Etappe {
 
 	private IntegerProperty etappenID;
 	private IntegerProperty etappennummer;
-	private ObjectProperty<LocalDate> datum;
-	private ObjectProperty<LocalTime> zeit;
+	private LocalDate ldatum;
+	private LocalTime lzeit;
+	private StringProperty datum;
+	private StringProperty zeit;
 	private StringProperty startort;
 	private StringProperty zielort;
 	private DoubleProperty laenge;
@@ -37,14 +42,20 @@ public class Etappe {
 	private StringProperty fahrerBerg;
 	private StringProperty dopingFahrer;
 	private StringProperty dopingTeam;
-
+	
+	
+	private StringProperty bezeichnung;
+	
+	private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.GERMAN);
+	private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(Locale.GERMAN);
 	public Etappe() {
 		this.etappenID = new SimpleIntegerProperty();
 		this.startort = new SimpleStringProperty();
 		this.zielort = new SimpleStringProperty();
 		this.laenge = new SimpleDoubleProperty();
-		this.datum = new SimpleObjectProperty<LocalDate>();
-		this.zeit = new SimpleObjectProperty<LocalTime>();
+		this.datum = new SimpleStringProperty();
+		this.zeit = new SimpleStringProperty();
+		this.bezeichnung = new SimpleStringProperty();
 
 	}
 
@@ -100,26 +111,38 @@ public class Etappe {
 		return laenge;
 	}
 
-	public ObjectProperty<LocalDate> datumProperty() {
+	public StringProperty datumProperty() {
 		return datum;
 	}
 
 	public void setDatum(LocalDate datum) {
-		this.datum.set(datum);
+		this.ldatum = datum;
+		this.datum.set(dateFormatter.format(datum));
 	}
 	public LocalDate getDatum() {
-		return datum.get();
+		return ldatum;
 	}
 
-	public ObjectProperty<LocalTime> zeitProperty() {
+	public StringProperty zeitProperty() {
 		return zeit;
 	}
 	public LocalTime getZeit() {
-		return zeit.get();
+		return lzeit;
 	}
 
 	public void setZeit(LocalTime zeit) {
-		this.zeit.set(zeit);
+		this.lzeit = zeit;
+		this.zeit.set(timeFormatter.format(zeit));
+	}
+	public String getBezeichnung() {
+		return bezeichnung.get();
 	}
 
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung.set(bezeichnung);
+	}
+
+	public StringProperty bezeichnungProperty() {
+		return bezeichnung;
+	}
 }

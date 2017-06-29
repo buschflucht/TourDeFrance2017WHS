@@ -24,7 +24,7 @@
             <Button fx:id="btnCloseEtappenTable" mnemonicParsing="false" onAction="#closeEtappenTable" text="Close" />
          </items>
       </ToolBar>
-      <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" prefHeight="514.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" vbarPolicy="ALWAYS">
          <content>
             <TableView fx:id="tbview" prefHeight="506.0" prefWidth="786.0">
               <columns>

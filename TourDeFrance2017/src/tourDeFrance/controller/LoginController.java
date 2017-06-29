@@ -63,8 +63,8 @@ public class LoginController {
 
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
-			alert.setHeaderText("Erfolgreiche Verbindung");
-			alert.setContentText("Erfolgreich mit dem VM-Server verbunden!");
+			alert.setHeaderText("Successful Connection");
+			alert.setContentText("Connected to Local-Server!");
 			alert.showAndWait();
 			Stage stage = (Stage) btnLocal.getScene().getWindow();
 			String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -72,9 +72,9 @@ public class LoginController {
 			control.updateMenu(login);
 			stage.close();
 		} else {
-			alert.setTitle("FAIL");
+			alert.setTitle("Hoppala");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
-			alert.setContentText("Verbindung mit dem Lokalem-Server fehlgeschlagen");
+			alert.setContentText("Connection to Local-Server failed!");
 			alert.showAndWait();
 		}
 	}
@@ -88,8 +88,8 @@ public class LoginController {
 
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
-			alert.setHeaderText("Erfolgreiche Verbindung");
-			alert.setContentText("Erfolgreich mit der Lokalen DB verbunden!");
+			alert.setHeaderText("Succesful Connection");
+			alert.setContentText("Connected with Local DataBase!");
 			alert.showAndWait();
 			Stage stage = (Stage) btnLocalDB.getScene().getWindow();
 			String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -99,8 +99,8 @@ public class LoginController {
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
-			alert.setContentText("Verbindung mit der Lokalen DB tourdefrance2017 fehlgeschlagen - "
-					+ "Die Datenbank tourdefrance2017 existiert (noch)nicht");
+			alert.setContentText("Connection with Local DB 'tourdefrance2017' failed - "
+					+ "Database tourdefrance2017 doesn't exist");
 			alert.showAndWait();
 		}
 
@@ -116,8 +116,8 @@ public class LoginController {
 
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
-			alert.setHeaderText("Erfolgreiche Verbindung");
-			alert.setContentText("Erfolgreich mit dem Live-Server verbunden!");
+			alert.setHeaderText("Succesful Connection");
+			alert.setContentText("Connected to Live-Server!");
 			alert.showAndWait();
 			Stage stage = (Stage) btnLive.getScene().getWindow();
 			String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -127,7 +127,7 @@ public class LoginController {
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
-			alert.setContentText("Verbindung mit dem Live-Server fehlgeschlagen");
+			alert.setContentText("Connection to Live-Server failed");
 			alert.showAndWait();
 		}
 	}
@@ -142,8 +142,8 @@ public class LoginController {
 
 		if (rt == "Connection succeed") {
 			alert.setTitle("Success");
-			alert.setHeaderText("Erfolgreiche Verbindung");
-			alert.setContentText("Erfolgreich mit dem Live-Server zu tourdefrance2017 verbunden!");
+			alert.setHeaderText("Succesful Connection");
+			alert.setContentText("Connected with Live-Database!");
 			alert.showAndWait();
 			Stage stage = (Stage) btnLiveDB.getScene().getWindow();
 			String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -153,7 +153,7 @@ public class LoginController {
 		} else {
 			alert.setTitle("FAIL");
 			alert.setHeaderText("Hoppala da laeuft was falsch");
-			alert.setContentText("Verbindung mit dem Live-Server zu tourdefrance2017 fehlgeschlagen");
+			alert.setContentText("Connection with Live DB 'tourdefrance2017' failed");
 			alert.showAndWait();
 		}
 	}
@@ -178,9 +178,9 @@ public class LoginController {
 			Alert alert = new Alert(AlertType.INFORMATION);
 
 			if (rt == "Connection succeed") {
-				alert.setTitle("Erfolgreiche Verbindung");
-				alert.setHeaderText("Sehr schoen");
-				alert.setContentText("Erfolgreich mit dem Server verbunden!");
+				alert.setTitle("Success");
+				alert.setHeaderText("Successful Connection");
+				alert.setContentText("Connected to Local-Server!");
 				alert.showAndWait();
 				Stage stage = (Stage) btnManual.getScene().getWindow();
 				String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -191,7 +191,7 @@ public class LoginController {
 			} else {
 				alert.setTitle("Fehlgeschlagen");
 				alert.setHeaderText("Oops");
-				alert.setContentText("Datenbankverbindung fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
+				alert.setContentText("Connection failed. Check UserInput!");
 				alert.showAndWait();
 			}
 		}
@@ -218,10 +218,10 @@ public class LoginController {
 			Alert alert = new Alert(AlertType.INFORMATION);
 
 			if (rt == "Connection succeed") {
-				alert.setTitle("Erfolgreiche Verbindung");
-				alert.setHeaderText("Sehr schoen");
+				alert.setTitle("Success");
+				alert.setHeaderText("Succesful Connection");
 				alert.setContentText(
-						"Erfolgreich mit dem Server zur Datenbank " + txtDatabase.getText() + " verbunden!");
+						"Connected to " + txtDatabase.getText() + " !");
 				alert.showAndWait();
 				Stage stage = (Stage) btnManualDB.getScene().getWindow();
 				String login = DBFunctions.getInstance().getAktuelleConnection();
@@ -230,10 +230,10 @@ public class LoginController {
 				stage.close();
 
 			} else {
-				alert.setTitle("Fehlgeschlagen");
+				alert.setTitle("Failed");
 				alert.setHeaderText("Oops");
-				alert.setContentText("Datenbankverbindung zu " + txtDatabase.getText()
-						+ " fehlgeschlagen. Ueberpruefen Sie Ihre Nutzereingaben");
+				alert.setContentText("Connection to " + txtDatabase.getText()
+						+ " failed. Check UserInput");
 				alert.showAndWait();
 			}
 		}

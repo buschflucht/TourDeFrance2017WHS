@@ -31,10 +31,8 @@ public class CreateTablesController {
 			alert.setContentText("Erfolgreich alle Tabellen in der Datenbank 'tourdefrance2017' erstellt!");
 			DBFunctions.getInstance().datenEingeben();
 			DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
-			
-		
-			
 			alert.showAndWait();
+			MainMenuController.getInstance().closeTab();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
 			alert.setHeaderText(null);

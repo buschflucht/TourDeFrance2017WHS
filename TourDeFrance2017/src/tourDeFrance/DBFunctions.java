@@ -31,7 +31,7 @@ public class DBFunctions {
 	private static final String TABLENAMERANKING = "ranking";
 	private static final String TABLENAMETIPPS = "tipps";
 	private static final String TABLENAMEETAPPENART = "etappenart";
-	private static final String BAYO = "bayomayo";
+	private static final String CONNECTION_OK = "Connection succeed";
 
 	private String aktuelleConnection = "";
 	private Connection connection = null;
@@ -70,7 +70,7 @@ public class DBFunctions {
 			System.out.println("Connect " + ipAdresse + "," + port + "," + benutzerName + "," + passwort);
 			aktuelleConnection = "Connected: " + ipAdresse + ":" + port;
 
-			return "Connection succeed";
+			return CONNECTION_OK;
 
 		} catch (SQLException e) {
 			System.out.println("Connection failed! Check output console" + e);
@@ -98,19 +98,22 @@ public class DBFunctions {
 	public String connectDB(String ipAdresse, String port, String benutzerName, String passwort, String database) {
 		String rt;
 		try {
-			if (dbExists(connection, LIVE_DB)) {
-
+			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort)) 
+			 && (dbExists(connection, LOCAL_DB))) {
+ 
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
 				aktuelleConnection = "Connected:" + ipAdresse + ":" + port + "/" + database;
-				rt = "Connection succeed";
+				
+				
+				rt = CONNECTION_OK;
 
 			} else {
 				rt = "Die Datenbank existiert (noch)nicht";
 			}
 
 		} catch (Exception x) {
-			rt = "Exception";
+			rt = "Exception:" + x.getLocalizedMessage();
 		}
 		return rt;
 	}
@@ -433,13 +436,13 @@ public class DBFunctions {
 					+ "bezeichnung varchar(50) null default null," + "primary key (artID))");
 			// Befüllt die Tabelle Etappenart
 			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (1, 'einzelzeitfahren')");
+					+"VALUES (1, 'Einzelzeitfahren')");
 			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (2, 'flachetappe')");
+					+"VALUES (2, 'Flachetappe')");
 			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (3, 'gebirge')");
+					+"VALUES (3, 'Gebirge')");
 			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (4, 'huegelig')");
+					+"VALUES (4, 'Huegelig')");
 
 			// Erstellt die Tabelle etappen
 			stmt.execute("create table " + TABLENAMEETAPPEN

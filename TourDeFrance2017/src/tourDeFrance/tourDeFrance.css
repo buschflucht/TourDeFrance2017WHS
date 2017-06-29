@@ -1,3 +1,15 @@
 .root {
      -fx-background-image: url("background.jpg");
 }
+.button:hover {
+  -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+.button {
+	-fx-background-color: darkslateblue;
+	-fx-text-fill: white;
+   
+}
+
+.label {
+	-fx-font: normal bold 15px 'serif' 
+}

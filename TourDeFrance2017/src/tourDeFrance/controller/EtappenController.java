@@ -18,30 +18,29 @@ import tourDeFrance.DBFunctions;
 import tourDeFrance.model.Etappe;
 import tourDeFrance.model.EtappenDAO;
 
-public class EtappenController{
-
-		@FXML
-		private TableColumn<Etappe, String> colEtappe;
-		@FXML
-		private TableColumn<Etappe, String> colDatum;
-		@FXML
-		private TableColumn<Etappe, String> colUhrzeit;
-		@FXML
-		private TableColumn<Etappe, String> colStartort;
-		@FXML
-		private TableColumn<Etappe, String> colZielort;
-		@FXML
-		private TableColumn<Etappe, String> colLaenge;
-		@FXML
-		private TableColumn<Etappe, String> colEtappenart;
-		@FXML
-		private TableView<Etappe> tbview;
-		
-		private MainMenuController main;
-
+public class EtappenController {
 
 	@FXML
-	private Button btnRefreshEtappenTable;	
+	private TableColumn<Etappe, String> colEtappe;
+	@FXML
+	private TableColumn<Etappe, String> colDatum;
+	@FXML
+	private TableColumn<Etappe, String> colUhrzeit;
+	@FXML
+	private TableColumn<Etappe, String> colStartort;
+	@FXML
+	private TableColumn<Etappe, String> colZielort;
+	@FXML
+	private TableColumn<Etappe, String> colLaenge;
+	@FXML
+	private TableColumn<Etappe, String> colEtappenart;
+	@FXML
+	private TableView<Etappe> tbview;
+
+	private MainMenuController main;
+
+	@FXML
+	private Button btnRefreshEtappenTable;
 	@FXML
 	private Button btnCloseEtappenTable;
 	@FXML
@@ -51,67 +50,57 @@ public class EtappenController{
 	public void closeEtappenTable() {
 		MainMenuController.getInstance().closeTab();
 	}
-	
+
 	@FXML
-	public void refreshEtappenTable(){
+	public void refreshEtappenTable() {
 
 	}
-	
+
 	@FXML
-	public void importEtappenTable(){
+	public void importEtappenTable() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("");
 		alert.setHeaderText("Choose wisely");
 		alert.setContentText("Choose import");
-		
+
 		ButtonType buttonTestData = new ButtonType("TestData");
 		ButtonType buttonRealData = new ButtonType("RealData");
-		ButtonType buttonCancel = new ButtonType("Cancel",ButtonData.CANCEL_CLOSE);
-		
-		alert.getButtonTypes().setAll(buttonTestData,buttonRealData,buttonCancel);
+		ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTestData, buttonRealData, buttonCancel);
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == buttonTestData){
-			DBFunctions.getInstance().datenEingeben();
-			DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
+		if (result.get() == buttonTestData) {
+			// DBFunctions.getInstance().datenEingeben();
+			// DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
 			try {
-				populateEtappen(EtappenDAO.searchEtappen("1"));
+				populateEtappen(EtappenDAO.searchEtappen());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else if(result.get() == buttonRealData){
-			DBFunctions.getInstance().datenEingebenAuswahl("test");
-		}else{
-			
+		} else if (result.get() == buttonRealData) {
+			// DBFunctions.getInstance().datenEingebenAuswahl("test");
+		} else {
+
 		}
 	}
+
 	@FXML
 	public void initialize() {
-			
-	colEtappe.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
-	colStartort.setCellValueFactory(cellData -> cellData.getValue().startOrtProperty());
-	colZielort.setCellValueFactory(cellData -> cellData.getValue().zielOrtProperty());
-	colLaenge.setCellValueFactory(cellData -> cellData.getValue().laengeProperty().asString());
-	   
+
+		colEtappe.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
+		colStartort.setCellValueFactory(cellData -> cellData.getValue().startOrtProperty());
+		colZielort.setCellValueFactory(cellData -> cellData.getValue().zielOrtProperty());
+		colLaenge.setCellValueFactory(cellData -> cellData.getValue().laengeProperty().asString());
+		colDatum.setCellValueFactory(cellData -> cellData.getValue().datumProperty());
+		colUhrzeit.setCellValueFactory(cellData -> cellData.getValue().zeitProperty());
+		colEtappenart.setCellValueFactory(cellData -> cellData.getValue().bezeichnungProperty());
+
 	}
-	private void populateEtappen(List<Etappe> etappen){
-	ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
-	etappenData.addAll(etappen);
-	tbview.setItems(etappenData);
+
+	private void populateEtappen(List<Etappe> etappen) {
+		ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
+		etappenData.addAll(etappen);
+		tbview.setItems(etappenData);
 	}
-	
-//	
-//	 /**
-//     * Is called by the main application to give a reference back to itself.
-//     * 
-//     * @param mainApp
-//     */
-//    public void setMainApp(MainMenuController main) {
-//        this.main = main;
-//	
-//        // Add observable list data to the table
-//        tbview.setItems(main.getEtappenData());
-//    }
-//    
-    
-   
+
 }
