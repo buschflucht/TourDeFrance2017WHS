@@ -43,8 +43,7 @@ public class EtappenController {
 	private Button btnRefreshEtappenTable;
 	@FXML
 	private Button btnCloseEtappenTable;
-	@FXML
-	private Button btnImportEtappenTable;
+
 
 	@FXML
 	public void closeEtappenTable() {

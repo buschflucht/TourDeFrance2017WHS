@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -13,18 +12,14 @@
       <ToolBar layoutY="6.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <Button fx:id="btnRefreshEtappenTable" mnemonicParsing="false" onAction="#refreshEtappenTable" text="Refresh" />
-            <Button fx:id="btnImportEtappenTable" mnemonicParsing="false" onAction="#importEtappenTable" text="Import" />
         </items>
       </ToolBar>
       <ToolBar layoutY="653.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <items>
-          <Button mnemonicParsing="false" text="Edit" />
-            <TextField />
-            <Button mnemonicParsing="false" text="Add" />
             <Button fx:id="btnCloseEtappenTable" mnemonicParsing="false" onAction="#closeEtappenTable" text="Close" />
          </items>
       </ToolBar>
-      <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" vbarPolicy="ALWAYS">
+      <ScrollPane hbarPolicy="ALWAYS" layoutY="40.0" vbarPolicy="ALWAYS" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <content>
             <TableView fx:id="tbview" prefHeight="506.0" prefWidth="786.0">
               <columns>
