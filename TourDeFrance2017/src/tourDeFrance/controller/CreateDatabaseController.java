@@ -1,5 +1,7 @@
 package tourDeFrance.controller;
 
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,7 +23,11 @@ public class CreateDatabaseController {
 	@FXML
 	public void createDB() {
 		String dummy = "";
-		dummy = DBFunctions.getInstance().createDb();
+		try {
+			dummy = DBFunctions.getInstance().createDb();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 

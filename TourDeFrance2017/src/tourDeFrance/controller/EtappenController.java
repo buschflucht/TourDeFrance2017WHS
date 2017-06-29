@@ -72,11 +72,11 @@ public class EtappenController {
 		if (result.get() == buttonTestData) {
 			// DBFunctions.getInstance().datenEingeben();
 			// DBFunctions.getInstance().datenEingebenAuswahl("testdaten");
-			try {
-				populateEtappen(EtappenDAO.selectEtappen());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+//			try {
+////				populateEtappen(EtappenDAO.selectEtappen());
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 		} else if (result.get() == buttonRealData) {
 			// DBFunctions.getInstance().datenEingebenAuswahl("test");
 		} else {
@@ -94,6 +94,12 @@ public class EtappenController {
 		colDatum.setCellValueFactory(cellData -> cellData.getValue().datumProperty());
 		colUhrzeit.setCellValueFactory(cellData -> cellData.getValue().zeitProperty());
 		colEtappenart.setCellValueFactory(cellData -> cellData.getValue().bezeichnungProperty());
+		try {
+			populateEtappen(EtappenDAO.selectEtappen());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

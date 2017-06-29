@@ -11,19 +11,19 @@ import java.util.Calendar;
 public class DBFunctions {
 
 	private static DBFunctions instance;
-
+	// Lokale Anmeldedaten
 	private static final String LOCAL_IP = "localhost";
 	private static final String LOCAL_PORT = "3306";
 	private static final String LOCAL_USER = "root";
 	private static final String LOCAL_PW = "beerenfalle03";
 	private static final String LOCAL_DB = "tourdefrance2017";
-
+	// Live Anmeldedaten
 	private static final String LIVE_IP = "193.175.198.25";
 	private static final String LIVE_PORT = "3306";
 	private static final String LIVE_USER = "tdf2017_c";
 	private static final String LIVE_PW = "tdf2017";
 	private static final String LIVE_DB = "tourdefrance2017_c";
-
+	// Tabellen
 	private static final String TABLENAMEUSER = "user";
 	private static final String TABLENAMEETAPPEN = "etappen";
 	private static final String TABLENAMEFAHRER = "fahrer";
@@ -31,13 +31,14 @@ public class DBFunctions {
 	private static final String TABLENAMERANKING = "ranking";
 	private static final String TABLENAMETIPPS = "tipps";
 	private static final String TABLENAMEETAPPENART = "etappenart";
+	// Verbindungen
 	private static final String CONNECTION_OK = "Connection succeed";
-
 	private String aktuelleConnection = "";
 	private Connection connection = null;
 	private static final String DATABASENAME = "tourdefrance2017";
 	private static Statement stmt = null;
 
+	// Singleton
 	public static DBFunctions getInstance() {
 		if (instance == null)
 			instance = new DBFunctions();
@@ -53,13 +54,13 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Stellt Verbindung zum DBMS her
+	 * Stellt Verbindung zur Datenbank her ohne Auswahl einer Datenbank
 	 * 
 	 * @param ip
 	 * @param port
 	 * @param user
 	 * @param password
-	 * @return
+	 * @return erfolgreiche Verbindung
 	 */
 	public String connect(String ipAdresse, String port, String benutzerName, String passwort) {
 
@@ -74,12 +75,13 @@ public class DBFunctions {
 
 		} catch (SQLException e) {
 			System.out.println("Connection failed! Check output console" + e);
+			e.printStackTrace();
 			return "failed";
 		}
 	}
 
 	/**
-	 * Verbindet das Programm mit der mySQL-Datenbank
+	 * Stellt eine Verbindung zur Datenbank her mit Auswahl einer Datenbank
 	 * 
 	 * @param ipAdresse
 	 *            gibt die IP Adresse der Datenbank
@@ -98,14 +100,13 @@ public class DBFunctions {
 	public String connectDB(String ipAdresse, String port, String benutzerName, String passwort, String database) {
 		String rt;
 		try {
-			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort)) 
-			 && (dbExists(connection, LOCAL_DB))) {
- 
+			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort))
+					&& (dbExists(connection, LOCAL_DB))) {
+
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
 				aktuelleConnection = "Connected:" + ipAdresse + ":" + port + "/" + database;
-				
-				
+
 				rt = CONNECTION_OK;
 
 			} else {
@@ -113,6 +114,8 @@ public class DBFunctions {
 			}
 
 		} catch (Exception x) {
+			System.out.println("Connection failed! Check output console" + x);
+			x.printStackTrace();
 			rt = "Exception:" + x.getLocalizedMessage();
 		}
 		return rt;
@@ -126,8 +129,9 @@ public class DBFunctions {
 	 * @param databaseName
 	 *            DatenbankName
 	 * @return ob eine Datenbank vorhanden ist
+	 * @throws SQLException
 	 */
-	private boolean dbExists(Connection connection, String databaseName) {
+	private boolean dbExists(Connection connection, String databaseName) throws SQLException {
 		boolean dbvorhanden = false;
 		try {
 			if ((connection != null) && (!connection.isClosed())) {
@@ -144,20 +148,24 @@ public class DBFunctions {
 				resultSet.close();
 			}
 		} catch (SQLException e) {
+			throw e;
 		}
 		return dbvorhanden;
 
 	}
 
 	/**
-	 * Schließe die Verbindung
+	 * Schließt die Verbindung
+	 * 
+	 * @throws Exception
 	 */
-	public void closeConnection() {
+	public void closeConnection() throws SQLException {
 		aktuelleConnection = "";
 		try {
 			if ((connection != null) && (!connection.isClosed()))
 				connection.close();
 		} catch (Exception x) {
+			throw x;
 		}
 	}
 
@@ -202,14 +210,14 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Diese Methode erzeugt eine Datenbank mit dem Namen als Parameter der vom
-	 * User uebergeben wird
+	 * Erzeugt eine Datenbank in MariaDB, falls bereits die Datenbank vorhanden ist
+	 * soll diese zuvor geloescht werden
 	 * 
 	 * @param databaseName
-	 *            Datenbankname der Datenbank die in PostgreSQL erstellt werden
-	 *            soll
+	 * 
+	 * @throws SQLException
 	 */
-	public String createDb() {
+	public String createDb() throws SQLException {
 		String rt = "";
 		boolean dbvorhanden = false;
 		Statement stmt;
@@ -240,8 +248,9 @@ public class DBFunctions {
 			rt = "succeed";
 
 		} catch (SQLException e) {
-
 			rt = "failed";
+			throw e;
+
 		}
 
 		return rt;
@@ -249,7 +258,7 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Lädt Testdaten user und tipps in die jeweiligen Tabellen
+	 * Laedt Testdaten user und tipps in die jeweiligen Tabellen
 	 * 
 	 * @return
 	 */
@@ -264,10 +273,9 @@ public class DBFunctions {
 					+ "user2016.csv' " + "INTO TABLE user";
 
 			stmt.executeQuery(sql);
-			
+
 			sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 					+ "tipps2016.csv' " + "INTO TABLE tipps";
-//			+ "tipps2016.csv' " + "INTO TABLE tipps" + " LINES TERMINATED BY 'newLine'";
 
 			stmt.executeQuery(sql);
 
@@ -281,7 +289,7 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Lädt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
+	 * Laedt Test-/Echtdaten von fahrer, teams und etappen in die Tabellen
 	 * 
 	 * @param auswahl
 	 *            Auswahl des nutzers ob Test-/Echtdaten
@@ -298,11 +306,11 @@ public class DBFunctions {
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "teams2016.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
-				
+
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "fahrer2016.csv' " + "INTO TABLE fahrer";
 				stmt.executeQuery(sql);
-				
+
 				sql = "LOAD DATA LOCAL INFILE './resources/Testdaten_User_Etappen_Teams_Fahrer_Tipps_2016/"
 						+ "etappen2016.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
@@ -311,7 +319,7 @@ public class DBFunctions {
 
 			} else {
 				stmt = connection.createStatement();
-				
+
 				sql = "LOAD DATA LOCAL INFILE './resources/" + "etappen2017.csv' " + "INTO TABLE etappen";
 				stmt.executeQuery(sql);
 
@@ -322,8 +330,6 @@ public class DBFunctions {
 				sql = "LOAD DATA LOCAL INFILE './resources/Echtdaten_User_Etappen_Teams_Fahrer_Tipps_2017/"
 						+ "teams2017.csv' " + "INTO TABLE teams";
 				stmt.executeQuery(sql);
-
-			
 
 				stmt.close();
 			}
@@ -383,12 +389,12 @@ public class DBFunctions {
 	}
 
 	/**
-	 * Erstellt neue Tabellen in der MySQL-Datenbank sofern bereits eine Tabelle
-	 * mit demselben Namen vorhanden ist, wird diese vorher geloescht
+	 * Erstellt neue Tabellen in der MySQL-Datenbank sofern bereits eine Tabelle mit
+	 * demselben Namen vorhanden ist, wird diese vorher geloescht
 	 * 
 	 * 
-	 * @return liefert ob die Tabellen erfolgreich angelegt wurde nachdem
-	 *         eventuell vorhandene geloescht wurden.
+	 * @return liefert ob die Tabellen erfolgreich angelegt wurde nachdem eventuell
+	 *         vorhandene geloescht wurden.
 	 */
 	public String tabellenAnlegen() {
 
@@ -435,14 +441,10 @@ public class DBFunctions {
 			stmt.execute("create table " + TABLENAMEETAPPENART + "(artID int(11) not null auto_increment,"
 					+ "bezeichnung varchar(50) null default null," + "primary key (artID))");
 			// Befüllt die Tabelle Etappenart
-			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (1, 'Einzelzeitfahren')");
-			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (2, 'Flachetappe')");
-			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (3, 'Gebirge')");
-			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " 
-					+"VALUES (4, 'Huegelig')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " + "VALUES (1, 'Einzelzeitfahren')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " + "VALUES (2, 'Flachetappe')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " + "VALUES (3, 'Gebirge')");
+			stmt.executeUpdate("INSERT INTO " + TABLENAMEETAPPENART + " " + "VALUES (4, 'Huegelig')");
 
 			// Erstellt die Tabelle etappen
 			stmt.execute("create table " + TABLENAMEETAPPEN
@@ -496,135 +498,139 @@ public class DBFunctions {
 			return "failed";
 		}
 	}
-	//RANKING
-//	public void vergebePunkte() throws SQLException
-//    {
-//        ResultSet tip = stmt.executeQuery("SELECT * FROM tipps ORDER BY userID");
-//        ResultSet eid = stmt.executeQuery("SELECT * FROM etappen ORDER BY etappenID");
-//        ResultSet points = stmt.executeQuery("SELECT * FROM ranking ORDER BY userID");
-//       
-//        boolean Continue = true;
-//       
-//        while(Continue)
-//        {
-//            if(tip.isLast())
-//            {
-//                Continue = false;
-//            }
-//            if(eid.isLast())
-//            {
-//                int punkte = 0;
-//                int punkteOld = points.getInt("punkte");
-//               
-//                if(eid.getString("fahrerPlatz1").equals(tip.getString("fahrerPlatz1")))
-//                {
-//                    punkte+=15;
-//                }
-//                if(eid.getString("fahrerPlatz2").equals(tip.getString("fahrerPlatz2")))
-//                {
-//                    punkte+=12;
-//                }
-//                if(eid.getString("fahrerPlatz3").equals(tip.getString("fahrerPlatz3")))
-//                {
-//                    punkte+=10;
-//                }
-//                if(eid.getString("teamPlatz1").equals(tip.getString("teamPlatz1")))
-//                {
-//                    punkte+=15;
-//                }
-//                if(eid.getString("teamPlatz2").equals(tip.getString("teamPlatz2")))
-//                {
-//                    punkte+=12;
-//                }
-//                if(eid.getString("teamPlatz3").equals(tip.getString("teamPlatz3")))
-//                {
-//                    punkte+=10;
-//                }
-//                if(eid.getString("fahrerGelb").equals(tip.getString("fahrerGelb")))
-//                {
-//                    punkte+=10;
-//                }
-//                if(eid.getString("fahrerGruen").equals(tip.getString("fahrerGruen")))
-//                {
-//                    punkte+=8;
-//                }
-//                if(eid.getString("fahrerBerg").equals(tip.getString("fahrerBerg")))
-//                {
-//                    punkte+=8;
-//                }
-//                if(eid.getString("fahrerDoping").equals(tip.getString("fahrerDoping")))
-//                {
-//                    punkte+=20;
-//                }
-//                else
-//                {
-//                    if(tip.getString("fahrerDoping")!= null)
-//                    {
-//                        punkte-=3;
-//                    }
-//                }
-//                if(eid.getString("teamDoping").equals(tip.getString("teamDoping")))
-//                {
-//                    punkte+=20;
-//                }
-//                else
-//                {
-//                    if(tip.getString("teamDoping")!= null)
-//                    {
-//                        punkte-=3;
-//                    }
-//                }
-//                points.updateInt("punkte", punkteOld + punkte);
-//                tip.next();
-//                points.next();
-//            }
-//            else
-//            {
-//                eid.next();
-//            }
-//        }
-//    }
-//   
-//    public void vergebePlatz() throws SQLException
-//    {
-//        ResultSet rank = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
-//        ResultSet rankPrev = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte DESC LIMIT 1000");
-//       
-//        boolean Cont = true;
-//       
-//        while(Cont)
-//        {
-//            if(rank.isLast())
-//            {
-//                Cont = false;
-//            }
-//           
-//            int rang = 1;
-//           
-//            if(rank.isFirst())
-//            {
-//                rank.updateInt("platz", rang);
-//                rank.next();
-//            }
-//            else
-//            {
-//                if(rank.getInt("punkte")==rankPrev.getInt("punkte"))
-//                {
-//                    rank.updateInt("platz", rang);
-//                }
-//                else
-//                {
-//                    rang++;
-//                    rank.updateInt("platz", rang);
-//                    rank.next();
-//                    rankPrev.next();
-//                }
-//            }
-//        }
-//    }
-//	
-//	
-//	
+	// RANKING
+	// public void vergebePunkte() throws SQLException
+	// {
+	// ResultSet tip = stmt.executeQuery("SELECT * FROM tipps ORDER BY userID");
+	// ResultSet eid = stmt.executeQuery("SELECT * FROM etappen ORDER BY
+	// etappenID");
+	// ResultSet points = stmt.executeQuery("SELECT * FROM ranking ORDER BY
+	// userID");
+	//
+	// boolean Continue = true;
+	//
+	// while(Continue)
+	// {
+	// if(tip.isLast())
+	// {
+	// Continue = false;
+	// }
+	// if(eid.isLast())
+	// {
+	// int punkte = 0;
+	// int punkteOld = points.getInt("punkte");
+	//
+	// if(eid.getString("fahrerPlatz1").equals(tip.getString("fahrerPlatz1")))
+	// {
+	// punkte+=15;
+	// }
+	// if(eid.getString("fahrerPlatz2").equals(tip.getString("fahrerPlatz2")))
+	// {
+	// punkte+=12;
+	// }
+	// if(eid.getString("fahrerPlatz3").equals(tip.getString("fahrerPlatz3")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("teamPlatz1").equals(tip.getString("teamPlatz1")))
+	// {
+	// punkte+=15;
+	// }
+	// if(eid.getString("teamPlatz2").equals(tip.getString("teamPlatz2")))
+	// {
+	// punkte+=12;
+	// }
+	// if(eid.getString("teamPlatz3").equals(tip.getString("teamPlatz3")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("fahrerGelb").equals(tip.getString("fahrerGelb")))
+	// {
+	// punkte+=10;
+	// }
+	// if(eid.getString("fahrerGruen").equals(tip.getString("fahrerGruen")))
+	// {
+	// punkte+=8;
+	// }
+	// if(eid.getString("fahrerBerg").equals(tip.getString("fahrerBerg")))
+	// {
+	// punkte+=8;
+	// }
+	// if(eid.getString("fahrerDoping").equals(tip.getString("fahrerDoping")))
+	// {
+	// punkte+=20;
+	// }
+	// else
+	// {
+	// if(tip.getString("fahrerDoping")!= null)
+	// {
+	// punkte-=3;
+	// }
+	// }
+	// if(eid.getString("teamDoping").equals(tip.getString("teamDoping")))
+	// {
+	// punkte+=20;
+	// }
+	// else
+	// {
+	// if(tip.getString("teamDoping")!= null)
+	// {
+	// punkte-=3;
+	// }
+	// }
+	// points.updateInt("punkte", punkteOld + punkte);
+	// tip.next();
+	// points.next();
+	// }
+	// else
+	// {
+	// eid.next();
+	// }
+	// }
+	// }
+	//
+	// public void vergebePlatz() throws SQLException
+	// {
+	// ResultSet rank = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte
+	// DESC LIMIT 1000");
+	// ResultSet rankPrev = stmt.executeQuery("SELECT * FROM ranking ORDER BY punkte
+	// DESC LIMIT 1000");
+	//
+	// boolean Cont = true;
+	//
+	// while(Cont)
+	// {
+	// if(rank.isLast())
+	// {
+	// Cont = false;
+	// }
+	//
+	// int rang = 1;
+	//
+	// if(rank.isFirst())
+	// {
+	// rank.updateInt("platz", rang);
+	// rank.next();
+	// }
+	// else
+	// {
+	// if(rank.getInt("punkte")==rankPrev.getInt("punkte"))
+	// {
+	// rank.updateInt("platz", rang);
+	// }
+	// else
+	// {
+	// rang++;
+	// rank.updateInt("platz", rang);
+	// rank.next();
+	// rankPrev.next();
+	// }
+	// }
+	// }
+	// }
+	//
+	//
+	//
 
 	public String getAktuelleConnection() {
 		return aktuelleConnection;

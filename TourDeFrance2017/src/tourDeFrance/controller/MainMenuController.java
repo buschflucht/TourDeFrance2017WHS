@@ -2,6 +2,7 @@ package tourDeFrance.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -216,7 +217,11 @@ public class MainMenuController implements Initializable {
 
 	@FXML
 	public void LogOut() {
-		DBFunctions.getInstance().closeConnection();
+		try {
+			DBFunctions.getInstance().closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		btnCreateDB.setVisible(false);
 		btnCreateTables.setVisible(false);
 		btnErgebnisseAusgeben.setVisible(false);
