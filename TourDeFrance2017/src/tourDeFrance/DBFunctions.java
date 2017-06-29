@@ -433,7 +433,7 @@ public class DBFunctions {
 		File fileGruen = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
 				+ "Testdaten_Ergebnisse_Punktewertung_2016");
 
-		String sql = "";
+		String sql = "";;
 
 		try {
 			stmt = connection.createStatement();
