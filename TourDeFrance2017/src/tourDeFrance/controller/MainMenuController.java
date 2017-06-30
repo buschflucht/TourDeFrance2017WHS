@@ -190,7 +190,21 @@ public class MainMenuController implements Initializable {
 
 	@FXML
 	public void pressErgebnisseEinlesen() {
-		DBFunctions.getInstance().ergebnisseEingeben();
+		String tableCreate = "";
+		tableCreate = DBFunctions.getInstance().ergebnisseEingeben();
+		Alert alert = new Alert(AlertType.INFORMATION);
+
+		if (tableCreate == "succeed") {
+			alert.setTitle("Success");
+			alert.setHeaderText(null);
+			alert.setContentText("successfully entered results!");
+			alert.showAndWait();
+		} else {
+			alert.setTitle("Failed");
+			alert.setHeaderText(null);
+			alert.setContentText("The results could not be entered ");
+			alert.showAndWait();
+		}
 	}
 
 	@FXML

@@ -22,9 +22,9 @@ public class DBFunctions {
 
 	// Lokale Anmeldedaten
 	private static final String LOCAL_IP = "localhost";
-	private static final String LOCAL_PORT = "3306";
+	private static final String LOCAL_PORT = "3311";
 	private static final String LOCAL_USER = "root";
-	private static final String LOCAL_PW = "beerenfalle03";
+	private static final String LOCAL_PW = "chestworkout";
 	private static final String LOCAL_DB = "tourdefrance2017";
 	// Live Anmeldedaten
 	private static final String LIVE_IP = "193.175.198.25";
@@ -447,11 +447,11 @@ public class DBFunctions {
 	 */
 	public String ergebnisseEingeben() {
 
-		File fileBerg = new File("C:/Users/Julian/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+		File fileBerg = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
 				+ "Testdaten_Ergebnisse_Bergwertung_2016");
-		File fileGelb = new File("C:/Users/Julian/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+		File fileGelb = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
 				+ "Testdaten_Ergebnisse_Gesamtwertung_2016");
-		File fileGruen = new File("C:/Users/Julian/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
+		File fileGruen = new File("C:/Users/Mehmet/git/TourDeFrance2017WHS/TourDeFrance2017/resources/"
 				+ "Testdaten_Ergebnisse_Punktewertung_2016");
 
 		String sql = "";
