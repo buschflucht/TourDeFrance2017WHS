@@ -1,10 +1,16 @@
 package tourDeFrance.controller;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import tourDeFrance.model.Etappe;
+import tourDeFrance.model.EtappenDAO;
 
 public class ErgebnisseAusgebenController {
 
@@ -31,12 +37,19 @@ public class ErgebnisseAusgebenController {
 	@FXML
 	public void initialize() {
 
-		colEtappenNummer.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
-		colEtappenSieger.setCellValueFactory(cellData -> cellData.getValue().startOrtProperty());
-		colSiegerTeam.setCellValueFactory(cellData -> cellData.getValue().zielOrtProperty());
-		colSiegerZeit.setCellValueFactory(cellData -> cellData.getValue().laengeProperty().asString());
+		colEtappenNummer.setCellValueFactory(cellData -> cellData.getValue().etappenNummerProperty().asString());
 		colDatum.setCellValueFactory(cellData -> cellData.getValue().datumProperty());
+		try {
+			populateErgebnisse(EtappenDAO.selectErgebnisse());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+	}
+	private void populateErgebnisse(List<Etappe> etappen) {
+		ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
+		etappenData.addAll(etappen);
+		tbview.setItems(etappenData);
 	}
 
 }

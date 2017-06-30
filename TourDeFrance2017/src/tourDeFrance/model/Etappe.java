@@ -55,6 +55,7 @@ public class Etappe {
 		this.datum = new SimpleStringProperty();
 		this.zeit = new SimpleStringProperty();
 		this.bezeichnung = new SimpleStringProperty();
+		this.etappennummer = new SimpleIntegerProperty();
 
 	}
 

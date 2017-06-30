@@ -16,10 +16,8 @@ public class UserDAO {
 	 * Waehlt die erforderlichen Spalten aus der Datenbank aus und erzeugt eine
 	 * Liste
 	 * 
-	 * @return Etappen Liste
+	 * @return User Liste
 	 * @throws SQLException
-	 * 
-	 * 
 	 * 
 	 */
 	public static List<User> selectUser() throws SQLException {
@@ -37,7 +35,7 @@ public class UserDAO {
 	 * 
 	 * @param rs
 	 *            ResultSet
-	 * @return ArrayListe von Etappe
+	 * @return ArrayListe von User
 	 * @throws SQLException
 	 */
 	public static List<User> getUserFromResultSet(ResultSet rs) throws SQLException {

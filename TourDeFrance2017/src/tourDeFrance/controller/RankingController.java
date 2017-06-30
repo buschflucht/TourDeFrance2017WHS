@@ -25,22 +25,21 @@ public class RankingController {
 	private TableColumn<User, String> colTipper;
 	@FXML
 	private TableColumn<User, String> colPunkte;
-	
-	
-	
+
 	@FXML
 	public void closeShowRanking() {
 		MainMenuController.getInstance().closeTab();
 	}
+
 	@FXML
 	public void initialize() {
 
-//		colPlatz.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());
-		colTipper.setCellValueFactory(cellData -> Bindings.concat(
-			    cellData.getValue().vorNameProperty(),
-			    "            ",
-			    cellData.getValue().nachNameProperty()));
-//		colPunkte.setCellValueFactory(cellData -> cellData.getValue().punkteIDProperty().asString());
+		// colPlatz.setCellValueFactory(cellData ->
+		// cellData.getValue().etappenIDProperty().asString());
+		colTipper.setCellValueFactory(cellData -> Bindings.concat(cellData.getValue().vorNameProperty(), "            ",
+				cellData.getValue().nachNameProperty()));
+		// colPunkte.setCellValueFactory(cellData ->
+		// cellData.getValue().punkteIDProperty().asString());
 		try {
 			populateRanking(UserDAO.selectUser());
 		} catch (SQLException e) {
@@ -48,13 +47,11 @@ public class RankingController {
 		}
 
 	}
-
+	//Befuellt Ranking TableView
 	private void populateRanking(List<User> user) {
 		ObservableList<User> userData = FXCollections.observableArrayList();
 		userData.addAll(user);
 		tbViewR.setItems(userData);
 	}
-	
-	
-	
+
 }

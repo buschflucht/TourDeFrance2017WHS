@@ -56,25 +56,21 @@ public class MainMenuController implements Initializable {
 	private Button btnShowRanking;
 	@FXML
 	private Button btnImportCsv;
-	
 
 	private static MainMenuController instance;
 
 	public static MainMenuController getInstance() {
 		return instance;
 	}
-	
-  
 
-  private static ImageView buildImage(String imgPatch) {
-          Image i = new Image(imgPatch);
-          ImageView imageView = new ImageView();
-          imageView.setFitHeight(16);
-          imageView.setFitWidth(16);
-          imageView.setImage(i);
-          return imageView;
-      }
-	
+	private static ImageView buildImage(String imgPatch) {
+		Image i = new Image(imgPatch);
+		ImageView imageView = new ImageView();
+		imageView.setFitHeight(16);
+		imageView.setFitWidth(16);
+		imageView.setImage(i);
+		return imageView;
+	}
 
 	@FXML
 	public void openLogin() {

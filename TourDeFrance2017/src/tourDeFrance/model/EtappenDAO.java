@@ -27,6 +27,43 @@ public class EtappenDAO {
 		return etappen;
 
 	}
+	/**
+	 * Waehlt die erforderlichen Spalten aus der Datenbank aus und erzeugt eine
+	 * Liste
+	 * @return etappenListe
+	 * @throws SQLException
+	 */
+	public static List<Etappe> selectErgebnisse() throws SQLException {
+		String selectStmt = "SELECT e.etappennummer, e.datum"
+				+ " FROM etappen e  WHERE e.datum < NOW()"; 
+		Statement stmt = DBFunctions.getInstance().getConnection().createStatement();
+		ResultSet rsEtappe = stmt.executeQuery(selectStmt);
+		List<Etappe> etappen = getErgebnisseFromResultSet(rsEtappe);
+		return etappen;
+
+	}
+	
+	/**
+	 * Holt die Daten aus der Datenbank fuer die TableView
+	 * 
+	 * @param rs
+	 *            ResultSet
+	 * @return ArrayListe von Etappe
+	 * @throws SQLException
+	 */
+	public static List<Etappe> getErgebnisseFromResultSet(ResultSet rs) throws SQLException {
+		List<Etappe> rt = new ArrayList<Etappe>();
+		while (rs.next()) {
+			Etappe ep = new Etappe();
+			ep.setEtappenNummer(rs.getInt("etappennummer"));
+			Timestamp t = rs.getTimestamp("datum");
+			LocalDateTime d = t.toLocalDateTime();
+			ep.setDatum(d.toLocalDate());
+			rt.add(ep);
+		}
+		return rt;
+
+	}
 	
 
 	/**
