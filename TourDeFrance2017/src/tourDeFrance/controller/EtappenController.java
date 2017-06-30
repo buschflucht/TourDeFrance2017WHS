@@ -44,11 +44,6 @@ public class EtappenController {
 	}
 
 	@FXML
-	public void refreshEtappenTable() {
-
-	}
-
-	@FXML
 	public void initialize() {
 
 		colEtappe.setCellValueFactory(cellData -> cellData.getValue().etappenIDProperty().asString());

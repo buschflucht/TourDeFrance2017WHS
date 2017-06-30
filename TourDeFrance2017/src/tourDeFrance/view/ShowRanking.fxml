@@ -16,12 +16,12 @@
       </ToolBar>
       <ScrollPane hbarPolicy="ALWAYS" layoutX="66.0" layoutY="66.0" prefHeight="414.0" prefWidth="800.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <TableView prefHeight="399.0" prefWidth="786.0">
+            <TableView fx:id="tbViewR" prefHeight="399.0" prefWidth="786.0">
               <columns>
-                <TableColumn prefWidth="150.0" text="Platz" />
-                <TableColumn minWidth="0.0" prefWidth="133.0" text="Tipper" />
-                  <TableColumn minWidth="0.0" prefWidth="108.0" />
-                  <TableColumn minWidth="0.0" prefWidth="153.0" text="Punkte" />
+                <TableColumn fx:id="colPlatz" prefWidth="232.0" text="Platz" />
+                <TableColumn fx:id="colTipper" minWidth="0.0" prefWidth="296.0" text="Tipper" />
+                  <TableColumn minWidth="0.0" prefWidth="0.0" />
+                  <TableColumn fx:id="colPunkte" minWidth="0.0" prefWidth="245.0" text="Punkte" />
               </columns>
             </TableView>
          </content>
