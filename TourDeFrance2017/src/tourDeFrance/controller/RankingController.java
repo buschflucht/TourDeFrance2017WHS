@@ -47,7 +47,8 @@ public class RankingController {
 		}
 
 	}
-	//Befuellt Ranking TableView
+
+	// Befuellt Ranking TableView
 	private void populateRanking(List<User> user) {
 		ObservableList<User> userData = FXCollections.observableArrayList();
 		userData.addAll(user);

@@ -36,7 +36,9 @@ public class ErgebnisseAusgebenController {
 
 	@FXML
 	public void initialize() {
-
+		// colEtappenSieger.setCellValueFactory(cellData -> cellData.getValue());
+		// colSiegerZeit.setCellValueFactory(cellData -> cellData.getValue());
+		// colSiegerTeam.setCellFactory(cellData -> cellData.getValue());
 		colEtappenNummer.setCellValueFactory(cellData -> cellData.getValue().etappenNummerProperty().asString());
 		colDatum.setCellValueFactory(cellData -> cellData.getValue().datumProperty());
 		try {
@@ -46,6 +48,7 @@ public class ErgebnisseAusgebenController {
 		}
 
 	}
+
 	private void populateErgebnisse(List<Etappe> etappen) {
 		ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
 		etappenData.addAll(etappen);

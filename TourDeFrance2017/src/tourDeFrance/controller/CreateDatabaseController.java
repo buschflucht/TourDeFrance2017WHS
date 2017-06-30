@@ -28,26 +28,26 @@ public class CreateDatabaseController implements Initializable {
 
 	@FXML
 	public void createDB() {
-		String dummy = "";
+		String dbCreate = "";
 		try {
-			dummy = DBFunctions.getInstance().createDb(txtDataBaseName.getText());
+			dbCreate = DBFunctions.getInstance().createDb(txtDataBaseName.getText());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 
-		if (dummy == "succeed") {
+		if (dbCreate == "succeed") {
 			alert.setTitle("Successful Connection");
 			alert.setHeaderText(null);
-			alert.setContentText("Database "+ txtDataBaseName.getText() + " created!");
+			alert.setContentText("Database " + txtDataBaseName.getText() + " created!");
 			alert.showAndWait();
 			MainMenuController.getInstance().openLogin();
 			closeCreateDB();
 		} else {
 			alert.setTitle("Fehlgeschlagen");
 			alert.setHeaderText(null);
-			alert.setContentText("Creation of "+ txtDataBaseName.getText() + " failed");
+			alert.setContentText("Creation of " + txtDataBaseName.getText() + " failed");
 
 			alert.showAndWait();
 		}
@@ -56,7 +56,6 @@ public class CreateDatabaseController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		txtDataBaseName.setText(DBFunctions.getInstance().getDatabaseName());
-		
 	}
 
 }

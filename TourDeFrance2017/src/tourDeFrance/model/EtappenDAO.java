@@ -20,29 +20,30 @@ public class EtappenDAO {
 	 */
 	public static List<Etappe> selectEtappen() throws SQLException {
 		String selectStmt = "SELECT e.etappenID, e.startort, e.zielort, e.laenge, e.datum, a.bezeichnung"
-				+ " FROM etappen e left join etappenart a on e.art=a.artID"; 
+				+ " FROM etappen e left join etappenart a on e.art=a.artID";
 		Statement stmt = DBFunctions.getInstance().getConnection().createStatement();
 		ResultSet rsEtappe = stmt.executeQuery(selectStmt);
 		List<Etappe> etappen = getEtappenFromResultSet(rsEtappe);
 		return etappen;
 
 	}
+
 	/**
 	 * Waehlt die erforderlichen Spalten aus der Datenbank aus und erzeugt eine
 	 * Liste
+	 * 
 	 * @return etappenListe
 	 * @throws SQLException
 	 */
 	public static List<Etappe> selectErgebnisse() throws SQLException {
-		String selectStmt = "SELECT e.etappennummer, e.datum"
-				+ " FROM etappen e  WHERE e.datum < NOW()"; 
+		String selectStmt = "SELECT e.etappennummer, e.datum" + " FROM etappen e  WHERE e.datum < NOW()";
 		Statement stmt = DBFunctions.getInstance().getConnection().createStatement();
 		ResultSet rsEtappe = stmt.executeQuery(selectStmt);
 		List<Etappe> etappen = getErgebnisseFromResultSet(rsEtappe);
 		return etappen;
 
 	}
-	
+
 	/**
 	 * Holt die Daten aus der Datenbank fuer die TableView
 	 * 
@@ -64,7 +65,6 @@ public class EtappenDAO {
 		return rt;
 
 	}
-	
 
 	/**
 	 * Holt die Daten aus der Datenbank fuer die TableView

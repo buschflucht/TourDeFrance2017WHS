@@ -63,8 +63,8 @@ public class MainMenuController implements Initializable {
 		return instance;
 	}
 
-	private static ImageView buildImage(String imgPatch) {
-		Image i = new Image(imgPatch);
+	private static ImageView buildImage(String img) {
+		Image i = new Image(img);
 		ImageView imageView = new ImageView();
 		imageView.setFitHeight(16);
 		imageView.setFitWidth(16);
@@ -136,7 +136,7 @@ public class MainMenuController implements Initializable {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(Main.class.getResource("view/DataEtappen.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
-			Tab tb = new Tab("Etappenplan", anchor);
+			Tab tb = new Tab("Staged Plan", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
 			} else {
@@ -155,7 +155,7 @@ public class MainMenuController implements Initializable {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(Main.class.getResource("view/ErgebnisseAusgeben.fxml"));
 			AnchorPane anchor = (AnchorPane) fxmlLoader.load();
-			Tab tb = new Tab("beendete Ergebnisse", anchor);
+			Tab tb = new Tab("Finished Results", anchor);
 			if (tbPane.getTabs().isEmpty()) {
 				tbPane.getTabs().add(tb);
 
@@ -213,7 +213,7 @@ public class MainMenuController implements Initializable {
 	public void importCsv() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Import");
-		alert.setHeaderText("Choose how to import your .csv Data");
+		alert.setHeaderText("Choose how to import your csv Data");
 		alert.setContentText("Test Data or Real Data");
 
 		ButtonType buttonTestData = new ButtonType("TestData");

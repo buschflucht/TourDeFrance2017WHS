@@ -60,7 +60,8 @@ public class EtappenController {
 		}
 
 	}
-	//Befuellt die TableView
+
+	// Befuellt die TableView
 	private void populateEtappen(List<Etappe> etappen) {
 		ObservableList<Etappe> etappenData = FXCollections.observableArrayList();
 		etappenData.addAll(etappen);

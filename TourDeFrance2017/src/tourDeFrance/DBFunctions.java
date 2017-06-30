@@ -11,6 +11,7 @@ public class DBFunctions {
 
 	private static DBFunctions instance;
 	private String databaseName = "";
+
 	public String getDatabaseName() {
 		return databaseName;
 	}
@@ -63,7 +64,6 @@ public class DBFunctions {
 		return connection;
 	}
 
-		
 	/**
 	 * 
 	 * @param ipAdresse
@@ -82,8 +82,8 @@ public class DBFunctions {
 
 			String url = "jdbc:mariadb://" + ipAdresse + ":" + port + "?useSSL=false";
 			connection = DriverManager.getConnection(url, benutzerName, passwort);
-			aktuelleConnection = "Connected to " + ipAdresse + ":" +"\n" + port;
-			
+			aktuelleConnection = "Connected to " + ipAdresse + ":" + "\n" + port;
+
 			rt = CONNECTION_OK;
 
 		} catch (SQLException e) {
@@ -115,16 +115,16 @@ public class DBFunctions {
 		String rt;
 		try {
 			if (CONNECTION_OK.equals(connect(ipAdresse, port, benutzerName, passwort))
-					&& (dbExists(connection, LIVE_DB)||(dbExists(connection,LOCAL_DB)))) {
-				
+					&& (dbExists(connection, LIVE_DB) || (dbExists(connection, LOCAL_DB)))) {
+
 				String url = "jdbc:mysql://" + ipAdresse + ":" + port + "/" + database;
 				connection = DriverManager.getConnection(url, benutzerName, passwort);
-				aktuelleConnection = "Connected to " + ipAdresse + ":"+"\n"  + port + "/" + database;
-				
+				aktuelleConnection = "Connected to " + ipAdresse + ":" + "\n" + port + "/" + database;
+
 				rt = CONNECTION_OK;
 
 			} else {
-				rt = "Die Datenbank existiert (noch)nicht";
+				rt = "Die Datenbank existiert nicht";
 			}
 
 		} catch (Exception x) {
@@ -177,7 +177,7 @@ public class DBFunctions {
 	 * @return verbinde Lokal mit DB
 	 */
 	public String connectLocalDB() {
-		
+
 		return connectDB(LOCAL_IP, LOCAL_PORT, LOCAL_USER, LOCAL_PW, LOCAL_DB);
 	}
 
@@ -188,7 +188,7 @@ public class DBFunctions {
 	 * @return verbinde Live mit DB
 	 */
 	public String connectLIVEDB() {
-		
+
 		return connectDB(LIVE_IP, LIVE_PORT, LIVE_USER, LIVE_PW, LIVE_DB);
 	}
 

@@ -10,7 +10,6 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
 public class User {
 
 	private IntegerProperty userID;
@@ -24,20 +23,20 @@ public class User {
 	private final ReadOnlyStringWrapper fullname = new ReadOnlyStringWrapper();
 
 	public User() {
-		
+
 		this.vorname = new SimpleStringProperty();
 		this.nachname = new SimpleStringProperty();
 		fullname.bind(Bindings.concat(vorname, " ", nachname));
 	}
-	
-	 public ReadOnlyStringProperty nameProperty() {
-	        return fullname.getReadOnlyProperty();
-	    }
 
-	    public final String getName() {
-	        return fullname.get();
-	    }
-	
+	public ReadOnlyStringProperty nameProperty() {
+		return fullname.getReadOnlyProperty();
+	}
+
+	public final String getName() {
+		return fullname.get();
+	}
+
 	// UserID
 	public int getEtappenID() {
 		return userID.get();
@@ -89,7 +88,7 @@ public class User {
 	public StringProperty nachNameProperty() {
 		return nachname;
 	}
-	
+
 	// Punkte
 	public int getPunkte() {
 		return punkte.get();
@@ -102,8 +101,5 @@ public class User {
 	public IntegerProperty punkteIDProperty() {
 		return punkte;
 	}
-	
-	
-	
 
 }

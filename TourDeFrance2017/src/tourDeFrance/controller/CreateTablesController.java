@@ -20,12 +20,12 @@ public class CreateTablesController {
 
 	@FXML
 	public void createTables() {
-		String dummy = "";
-		dummy = DBFunctions.getInstance().tabellenAnlegen();
+		String tableCreate = "";
+		tableCreate = DBFunctions.getInstance().tabellenAnlegen();
 		String dataBaseName = DBFunctions.getInstance().getDatabaseName();
 		Alert alert = new Alert(AlertType.INFORMATION);
 
-		if (dummy == "succeed") {
+		if (tableCreate == "succeed") {
 			alert.setTitle("Success");
 			alert.setHeaderText(null);
 			alert.setContentText("Created all Tables in " + dataBaseName + "!");
